@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { ArrowDown, MessageCircle } from "lucide-react";
-import { LogoMark } from "@/components/site/logo";
 import { waLink } from "@/lib/site-content";
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -21,9 +20,6 @@ export function Hero() {
 
       {/* Grain */}
       <div className="grain absolute inset-0" />
-
-      {/* Oversized watermark emblem */}
-      <LogoMark className="pointer-events-none absolute -right-24 -top-24 h-[32rem] w-[32rem] text-avorio/[0.05] md:-right-16 md:-top-32 md:h-[42rem] md:w-[42rem]" />
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pt-28 pb-20 md:px-10">
         <motion.p

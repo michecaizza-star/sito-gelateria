@@ -1,7 +1,6 @@
 import { Container } from "@/components/site/container";
 import { SectionHeading } from "@/components/site/section-heading";
 import { Reveal } from "@/components/site/reveal";
-import { LogoMark } from "@/components/site/logo";
 import { ingredients } from "@/lib/site-content";
 
 export function Territorio() {
@@ -10,7 +9,7 @@ export function Territorio() {
       id="territorio"
       className="relative overflow-hidden bg-notte py-24 text-avorio md:py-32"
     >
-      <LogoMark className="pointer-events-none absolute -left-32 top-1/2 h-[36rem] w-[36rem] -translate-y-1/2 text-avorio/[0.04]" />
+      <div className="pattern-agrumi pointer-events-none absolute inset-0 opacity-[0.12]" />
 
       <Container className="relative">
         <SectionHeading

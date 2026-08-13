@@ -7,7 +7,7 @@ export function Footer() {
   return (
     <footer className="bg-notte py-16 text-avorio/70">
       <Container className="flex flex-col items-center gap-10 text-center">
-        <Logo variant="light" />
+        <Logo plate size={48} />
 
         <nav className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm">
           {navLinks.map((link) => (

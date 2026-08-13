@@ -1,7 +1,6 @@
 import { Container } from "@/components/site/container";
 import { SectionHeading } from "@/components/site/section-heading";
 import { Reveal } from "@/components/site/reveal";
-import { LogoMark } from "@/components/site/logo";
 
 const values = [
   {
@@ -47,7 +46,6 @@ export function Story() {
         <div className="lg:col-span-5">
           <Reveal delay={0.15}>
             <div className="relative overflow-hidden rounded-[2rem] bg-notte px-8 py-14 text-avorio">
-              <LogoMark className="absolute -bottom-10 -left-10 h-56 w-56 text-avorio/[0.06]" />
               <ul className="relative space-y-9">
                 {values.map((v, i) => (
                   <li key={v.title} className="flex gap-5">
