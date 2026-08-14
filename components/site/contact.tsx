@@ -117,15 +117,15 @@ export function Contact() {
           <div className="flex flex-col gap-6 lg:col-span-7">
             <Reveal delay={0.1} className="relative h-56 overflow-hidden rounded-3xl sm:h-64">
               <Image
-                src="/images/campobello-aerea.jpg"
-                alt="Campobello di Licata vista dall'alto"
+                src="/images/campobello-piazza.webp"
+                alt="Piazza di Campobello di Licata"
                 fill
                 sizes="(min-width: 1024px) 55vw, 90vw"
                 className="object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-notte/70 via-transparent to-transparent" />
               <p className="absolute bottom-4 left-5 right-5 font-display text-lg italic text-avorio">
-                Campobello di Licata, dall&apos;alto
+                Campobello di Licata
               </p>
             </Reveal>
 
