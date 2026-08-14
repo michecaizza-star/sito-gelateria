@@ -26,9 +26,17 @@ export function Hero() {
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,47,82,0.6)_0%,rgba(10,47,82,0.4)_35%,rgba(10,47,82,0.8)_75%,rgba(10,47,82,0.96)_100%)]" />
       <div className="grain absolute inset-0 opacity-[0.5]" />
 
-      {/* Logo watermark */}
-      <div className="pointer-events-none absolute -right-[10%] -top-[8%] h-[70%] w-[70%] opacity-[0.08] mix-blend-luminosity sm:h-[60%] sm:w-[60%]">
-        <Image src="/logo-mari.png" alt="" fill className="object-contain" />
+      {/* Logo watermark — rendered as a soft light emboss so the mark reads
+          clearly over both the photo and the dark gradient, like a watermark
+          pressed into paper. Same artwork, just tinted for this effect. */}
+      <div className="pointer-events-none absolute -right-[15%] -top-[10%] h-[80%] w-[80%] opacity-[0.16] sm:h-[65%] sm:w-[65%]">
+        <Image
+          src="/logo-mari.png"
+          alt=""
+          fill
+          className="object-contain"
+          style={{ filter: "brightness(0) invert(1)" }}
+        />
       </div>
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-16 pt-40 md:px-10 md:pb-20">

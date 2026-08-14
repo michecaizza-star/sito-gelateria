@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Clock, MapPin, MessageCircle, Navigation, Phone } from "lucide-react";
 import { Container } from "@/components/site/container";
 import { SectionHeading } from "@/components/site/section-heading";
@@ -113,12 +114,26 @@ export function Contact() {
             </Reveal>
           </div>
 
-          <div className="lg:col-span-7">
-            <Reveal delay={0.15} className="h-full min-h-[22rem] overflow-hidden rounded-3xl">
+          <div className="flex flex-col gap-6 lg:col-span-7">
+            <Reveal delay={0.1} className="relative h-56 overflow-hidden rounded-3xl sm:h-64">
+              <Image
+                src="/images/campobello-aerea.jpg"
+                alt="Campobello di Licata vista dall'alto"
+                fill
+                sizes="(min-width: 1024px) 55vw, 90vw"
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-notte/70 via-transparent to-transparent" />
+              <p className="absolute bottom-4 left-5 right-5 font-display text-lg italic text-avorio">
+                Campobello di Licata, dall&apos;alto
+              </p>
+            </Reveal>
+
+            <Reveal delay={0.2} className="h-full min-h-[18rem] overflow-hidden rounded-3xl">
               <iframe
                 title="Mappa MARÌ — Via Edison 189, Campobello di Licata (AG)"
                 src={mapEmbedSrc}
-                className="h-full min-h-[22rem] w-full grayscale-[0.3] contrast-[1.05]"
+                className="h-full min-h-[18rem] w-full grayscale-[0.3] contrast-[1.05]"
                 style={{ border: 0 }}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"

@@ -6,12 +6,17 @@ export function SoloSicilia() {
   return (
     <section
       id="solo-sicilia"
-      className="relative flex min-h-[85vh] items-center overflow-hidden bg-[radial-gradient(ellipse_120%_80%_at_50%_-10%,#154269_0%,#0A2F52_55%,#081f38_100%)] text-avorio"
+      className="relative flex min-h-[85vh] items-center overflow-hidden bg-notte text-avorio"
     >
-      <div className="pattern-agrumi pointer-events-none absolute inset-0 opacity-[0.18]" />
-      <div className="pointer-events-none absolute -bottom-[15%] -left-[10%] h-[70%] w-[70%] opacity-[0.06]">
-        <Image src="/logo-mari.png" alt="" fill className="object-contain" />
-      </div>
+      <Image
+        src="/images/campobello-fontana.jpg"
+        alt="Fontana monumentale, Campobello di Licata"
+        fill
+        sizes="100vw"
+        className="object-cover"
+      />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,47,82,0.88)_0%,rgba(10,47,82,0.6)_45%,rgba(10,47,82,0.9)_100%)]" />
+      <div className="pattern-agrumi pointer-events-none absolute inset-0 opacity-[0.12]" />
 
       <Container className="relative py-24 text-center">
         <Reveal>
