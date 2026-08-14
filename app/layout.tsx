@@ -14,9 +14,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "MARÌ — Gelateria Artigianale Siciliana",
+  title: "MARÌ — Tastalu. Solo Sicilia.",
   description:
-    "MARÌ: gelati, granite e dolci artigianali siciliani, realizzati con materie prime locali e a km 0. La Sicilia in ogni cucchiaio.",
+    "MARÌ: prodotti artigianali siciliani nati a Campobello di Licata (AG). Materie prime siciliane, produttori locali, filiere vicine. Solo Sicilia. Tastalu.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

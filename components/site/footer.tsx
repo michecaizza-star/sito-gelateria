@@ -1,20 +1,38 @@
+import { MessageCircle } from "lucide-react";
 import { Container } from "@/components/site/container";
 import { Logo } from "@/components/site/logo";
 import { FacebookIcon, InstagramIcon } from "@/components/site/social-icons";
-import { navLinks, contactInfo } from "@/lib/site-content";
+import { contactInfo, waLink } from "@/lib/site-content";
 
 export function Footer() {
   return (
     <footer className="bg-notte py-16 text-avorio/70">
-      <Container className="flex flex-col items-center gap-10 text-center">
+      <Container className="flex flex-col items-center gap-8 text-center">
         <Logo plate size={48} />
 
+        <p className="font-display text-2xl italic text-avorio">Tastalu.</p>
+
+        <div className="text-sm leading-relaxed text-avorio/70">
+          <p>{contactInfo.addressLine1}</p>
+          <p>{contactInfo.addressLine2}</p>
+        </div>
+
         <nav className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm">
-          {navLinks.map((link) => (
-            <a key={link.href} href={link.href} className="hover:text-avorio">
-              {link.label}
-            </a>
-          ))}
+          <a href={waLink()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 hover:text-avorio">
+            WhatsApp <MessageCircle className="h-3.5 w-3.5" />
+          </a>
+          <a href={contactInfo.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-avorio">
+            Instagram
+          </a>
+          <a href="#contatti" className="hover:text-avorio">
+            Contatti
+          </a>
+          <a href="/privacy" className="hover:text-avorio">
+            Privacy
+          </a>
+          <a href="/cookie" className="hover:text-avorio">
+            Cookie
+          </a>
         </nav>
 
         <div className="flex gap-4">
@@ -39,8 +57,10 @@ export function Footer() {
         </div>
 
         <div className="w-full border-t border-avorio/10 pt-8 text-xs">
-          <p>© {new Date().getFullYear()} MARÌ Gelateria Artigianale — Tutti i diritti riservati</p>
-          <p className="mt-1.5">{contactInfo.address}</p>
+          <p className="font-display text-base italic tracking-wide text-avorio/90">
+            MARÌ — SOLO SICILIA.
+          </p>
+          <p className="mt-2">© {new Date().getFullYear()} MARÌ — Tutti i diritti riservati</p>
         </div>
       </Container>
     </footer>

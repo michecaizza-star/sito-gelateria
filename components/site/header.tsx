@@ -52,13 +52,13 @@ export function Header() {
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
-              "rounded-full px-5 py-2.5 text-sm font-medium transition-colors",
+              "rounded-full px-5 py-2.5 font-display text-sm italic transition-colors",
               scrolled
                 ? "bg-notte text-avorio hover:bg-mari"
                 : "bg-avorio text-notte hover:bg-oro"
             )}
           >
-            Ordina su WhatsApp
+            Tastalu — Ordina
           </a>
         </div>
 
@@ -93,9 +93,9 @@ export function Header() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setOpen(false)}
-              className="mt-2 rounded-full bg-notte px-5 py-3 text-center text-sm font-medium text-avorio"
+              className="mt-2 rounded-full bg-notte px-5 py-3 text-center font-display text-sm italic text-avorio"
             >
-              Ordina su WhatsApp
+              Tastalu — Ordina
             </a>
           </nav>
         </div>

@@ -1,4 +1,4 @@
-import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { Clock, MapPin, MessageCircle, Navigation, Phone } from "lucide-react";
 import { Container } from "@/components/site/container";
 import { SectionHeading } from "@/components/site/section-heading";
 import { Reveal } from "@/components/site/reveal";
@@ -6,51 +6,42 @@ import { FacebookIcon, InstagramIcon } from "@/components/site/social-icons";
 import { contactInfo, openingHours, waLink } from "@/lib/site-content";
 
 export function Contact() {
-  const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+  const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
     contactInfo.mapsQuery
   )}`;
+  const mapEmbedSrc = `https://www.google.com/maps?q=${encodeURIComponent(
+    contactInfo.mapsQuery
+  )}&output=embed`;
 
   return (
     <section id="contatti" className="relative overflow-hidden bg-mari py-24 text-avorio md:py-32">
       <div className="pattern-agrumi absolute inset-0 opacity-[0.15]" />
 
-      <Container className="relative grid grid-cols-1 gap-16 lg:grid-cols-12">
-        <div className="lg:col-span-5">
-          <SectionHeading
-            eyebrow="Contatti"
-            title="Vieni a trovarci"
-            tone="light"
-            description="Siamo nel cuore della Sicilia. Passa in gelateria o ordina comodamente su WhatsApp."
-          />
+      <Container className="relative">
+        <SectionHeading
+          eyebrow="Contatti"
+          title="MARÌ"
+          tone="light"
+          description={`${contactInfo.addressLine1} — ${contactInfo.addressLine2}`}
+          className="mb-14"
+        />
 
-          <Reveal delay={0.15} className="mt-10">
-            <a
-              href={waLink()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 rounded-full bg-avorio py-3.5 pl-6 pr-4 text-sm font-medium text-notte transition-colors hover:bg-oro"
-            >
-              Ordina su WhatsApp
-              <MessageCircle className="h-4 w-4" />
-            </a>
-          </Reveal>
-        </div>
-
-        <div className="lg:col-span-7">
-          <Reveal delay={0.1}>
-            <div className="grid grid-cols-1 gap-px overflow-hidden rounded-3xl bg-avorio/15 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <Reveal className="grid grid-cols-1 gap-px overflow-hidden rounded-3xl bg-avorio/15 sm:grid-cols-2 lg:grid-cols-1">
               <div className="space-y-6 bg-mari px-8 py-9">
                 <div className="flex gap-4">
                   <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-oro" />
                   <div>
                     <p className="text-sm font-medium">Indirizzo</p>
                     <a
-                      href={mapsHref}
+                      href={directionsHref}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-1 block text-sm text-avorio/75 underline decoration-avorio/30 underline-offset-4 hover:text-avorio"
+                      className="mt-1 inline-flex items-center gap-1.5 text-sm text-avorio/75 underline decoration-avorio/30 underline-offset-4 hover:text-avorio"
                     >
                       {contactInfo.address}
+                      <Navigation className="h-3.5 w-3.5" />
                     </a>
                   </div>
                 </div>
@@ -58,25 +49,12 @@ export function Contact() {
                 <div className="flex gap-4">
                   <Phone className="mt-0.5 h-5 w-5 shrink-0 text-oro" />
                   <div>
-                    <p className="text-sm font-medium">Telefono</p>
+                    <p className="text-sm font-medium">Telefono / WhatsApp</p>
                     <a
                       href={`tel:${contactInfo.phone.replace(/\s+/g, "")}`}
                       className="mt-1 block text-sm text-avorio/75 hover:text-avorio"
                     >
                       {contactInfo.phone}
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <Mail className="mt-0.5 h-5 w-5 shrink-0 text-oro" />
-                  <div>
-                    <p className="text-sm font-medium">Email</p>
-                    <a
-                      href={`mailto:${contactInfo.email}`}
-                      className="mt-1 block text-sm text-avorio/75 hover:text-avorio"
-                    >
-                      {contactInfo.email}
                     </a>
                   </div>
                 </div>
@@ -120,8 +98,33 @@ export function Contact() {
                   ))}
                 </ul>
               </div>
-            </div>
-          </Reveal>
+            </Reveal>
+
+            <Reveal delay={0.1} className="mt-6">
+              <a
+                href={waLink()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-oro py-4 text-sm font-semibold uppercase tracking-wide text-notte transition-colors hover:bg-avorio sm:w-auto sm:px-8"
+              >
+                Ordina su WhatsApp →
+                <MessageCircle className="h-4 w-4" />
+              </a>
+            </Reveal>
+          </div>
+
+          <div className="lg:col-span-7">
+            <Reveal delay={0.15} className="h-full min-h-[22rem] overflow-hidden rounded-3xl">
+              <iframe
+                title="Mappa MARÌ — Via Edison 189, Campobello di Licata (AG)"
+                src={mapEmbedSrc}
+                className="h-full min-h-[22rem] w-full grayscale-[0.3] contrast-[1.05]"
+                style={{ border: 0 }}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </Reveal>
+          </div>
         </div>
       </Container>
     </section>

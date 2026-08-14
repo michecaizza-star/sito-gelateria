@@ -1,7 +1,10 @@
 import { Header } from "@/components/site/header";
 import { Hero } from "@/components/site/hero";
+import { Tastalu } from "@/components/site/tastalu";
 import { Story } from "@/components/site/story";
 import { Products } from "@/components/site/products";
+import { MateriePrime } from "@/components/site/materie-prime";
+import { SoloSicilia } from "@/components/site/solo-sicilia";
 import { Territorio } from "@/components/site/territorio";
 import { Gallery } from "@/components/site/gallery";
 import { Contact } from "@/components/site/contact";
@@ -14,8 +17,11 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
+        <Tastalu />
         <Story />
         <Products />
+        <MateriePrime />
+        <SoloSicilia />
         <Territorio />
         <Gallery />
         <Contact />

@@ -2,10 +2,10 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 /**
- * Renders the original MARÌ logo file. Do not recreate or reinterpret
- * this mark — replace /public/logo-mari.png with the client-provided
- * artwork; this component only controls size and, where needed, a
- * light backing plate for legibility on dark sections.
+ * Renders the official MARÌ logo file (/public/logo-mari.png) — never
+ * recreate or reinterpret this mark. Uses object-contain inside a
+ * square box so the real artwork's own aspect ratio is always
+ * preserved, however the source file is cropped.
  */
 export function Logo({
   className,
@@ -19,15 +19,16 @@ export function Logo({
   plate?: boolean;
 }) {
   const img = (
-    <Image
-      src="/logo-mari.png"
-      alt="MARÌ"
-      width={size * 4}
-      height={size * 4.5}
-      priority
-      className={cn("w-auto object-contain", imgClassName)}
-      style={{ height: size }}
-    />
+    <div className={cn("relative aspect-square", imgClassName)} style={{ height: size }}>
+      <Image
+        src="/logo-mari.png"
+        alt="MARÌ"
+        fill
+        priority
+        sizes={`${size * 3}px`}
+        className="object-contain"
+      />
+    </div>
   );
 
   if (!plate) {
