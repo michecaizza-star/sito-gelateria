@@ -10,7 +10,6 @@ export const navLinks = [
   { href: "#prodotti", label: "Prodotti" },
   { href: "#materie-prime", label: "Materie prime" },
   { href: "#solo-sicilia", label: "Solo Sicilia" },
-  { href: "#gallery", label: "Gallery" },
   { href: "#contatti", label: "Contatti" },
 ];
 
@@ -170,18 +169,6 @@ export const ingredients: Ingredient[] = [
   },
 ];
 
-export const galleryItems: { label: string; tone: Tone; type: "photo" | "texture"; src?: string }[] = [
-  { label: "Paste di mandorla", tone: "sabbia", type: "photo", src: "/images/prodotto-paste-mandorla.png" },
-  { label: "Crostate artigianali", tone: "melograno", type: "photo", src: "/images/prodotto-crostata.png" },
-  { label: "Mandorla siciliana", tone: "sabbia", type: "photo", src: "/images/ingrediente-mandorla.png" },
-  { label: "Buccellati", tone: "notte", type: "photo", src: "/images/prodotto-buccellati.png" },
-  { label: "Ricotta siciliana", tone: "avorio", type: "photo", src: "/images/ingrediente-ricotta.png" },
-  { label: "Sbriciolata alla ricotta", tone: "notte", type: "photo", src: "/images/prodotto-sbriciolata.png" },
-  { label: "Agrumi siciliani", tone: "oro", type: "photo", src: "/images/ingrediente-arance.png" },
-  { label: "Biscotti Regina", tone: "oro", type: "photo", src: "/images/prodotto-regina.png" },
-  { label: "Ciambelle siciliane", tone: "sabbia", type: "photo", src: "/images/prodotto-ciambelle.png" },
-  { label: "Zuccotti", tone: "melograno", type: "photo", src: "/images/prodotto-zuccotti.png" },
-];
 
 export const openingHours: { day: string; hours: string }[] = [
   { day: "Lunedì – Giovedì", hours: "07:00 – 21:30" },
