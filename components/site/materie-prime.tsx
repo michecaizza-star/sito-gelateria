@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Container } from "@/components/site/container";
@@ -37,22 +38,41 @@ export function MateriePrime() {
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
           {/* Ingredient photo panel */}
           <div className="lg:col-span-6">
-            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[1.75rem]">
+            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[1.75rem] bg-avorio">
               <AnimatePresence mode="wait">
-                <motion.div
-                  key={current.slug}
-                  initial={{ opacity: 0, scale: 1.03 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                  className={`grain absolute inset-0 ${toneClasses[current.tone]}`}
-                >
-                  <span
-                    className={`absolute left-7 top-7 font-display text-8xl italic ${lightTones.has(current.tone) ? "text-notte/15" : "text-avorio/20"}`}
+                {current.image ? (
+                  <motion.div
+                    key={current.slug}
+                    initial={{ opacity: 0, scale: 1.03 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    className="absolute inset-0"
                   >
-                    {current.name.charAt(0)}
-                  </span>
-                </motion.div>
+                    <Image
+                      src={current.image}
+                      alt={current.name}
+                      fill
+                      sizes="(min-width: 1024px) 40vw, 90vw"
+                      className="object-cover"
+                    />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key={current.slug}
+                    initial={{ opacity: 0, scale: 1.03 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    className={`grain absolute inset-0 ${toneClasses[current.tone]}`}
+                  >
+                    <span
+                      className={`absolute left-7 top-7 font-display text-8xl italic ${lightTones.has(current.tone) ? "text-notte/15" : "text-avorio/20"}`}
+                    >
+                      {current.name.charAt(0)}
+                    </span>
+                  </motion.div>
+                )}
               </AnimatePresence>
             </div>
           </div>
@@ -67,10 +87,7 @@ export function MateriePrime() {
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
               >
-                <p className="text-xs font-medium uppercase tracking-[0.3em] text-oro">
-                  {current.origin}
-                </p>
-                <h3 className="mt-3 font-display text-4xl italic sm:text-5xl">
+                <h3 className="font-display text-4xl italic sm:text-5xl">
                   {current.name}
                 </h3>
                 <p className="mt-5 max-w-lg text-base leading-relaxed text-avorio/75 sm:text-lg">

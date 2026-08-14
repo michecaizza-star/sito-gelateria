@@ -1,32 +1,19 @@
+import Image from "next/image";
 import { Container } from "@/components/site/container";
 import { SectionHeading } from "@/components/site/section-heading";
 import { Reveal } from "@/components/site/reveal";
 import { products, comingSoon, waLink, type Product } from "@/lib/site-content";
 
-const toneClasses: Record<Product["tone"], string> = {
-  mari: "bg-[radial-gradient(circle_at_30%_25%,#2f78b8,45%,#0F4C81_75%,#0A2F52_100%)]",
-  notte: "bg-[radial-gradient(circle_at_30%_25%,#154269,45%,#0A2F52_75%,#061422_100%)]",
-  oro: "bg-[radial-gradient(circle_at_30%_25%,#e6c98a,45%,#D4B26A_75%,#a9853f_100%)]",
-  pistacchio: "bg-[radial-gradient(circle_at_30%_25%,#aec688,45%,#8EA760_75%,#5f7940_100%)]",
-  melograno: "bg-[radial-gradient(circle_at_30%_25%,#b25361,45%,#8E2E3A_75%,#5e1e27_100%)]",
-  sabbia: "bg-[radial-gradient(circle_at_30%_25%,#f2e9d8,45%,#E8DDCB_75%,#c9b795_100%)]",
-  avorio: "bg-[radial-gradient(circle_at_30%_25%,#ffffff,45%,#F8F5EF_75%,#ddd6c8_100%)]",
-};
-
-const lightTones = new Set<Product["tone"]>(["sabbia", "avorio"]);
-
 function ProductPanel({ product }: { product: Product }) {
-  const isLight = lightTones.has(product.tone);
   return (
-    <div className="group relative aspect-[4/5] w-full overflow-hidden rounded-[1.75rem]">
-      <div
-        className={`grain absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-105 ${toneClasses[product.tone]}`}
+    <div className="group relative aspect-[4/5] w-full overflow-hidden rounded-[1.75rem] bg-avorio">
+      <Image
+        src={product.image}
+        alt={product.name}
+        fill
+        sizes="(min-width: 1024px) 40vw, 90vw"
+        className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
       />
-      <span
-        className={`absolute left-6 top-6 font-display text-7xl italic ${isLight ? "text-notte/15" : "text-avorio/25"}`}
-      >
-        {product.name.charAt(0)}
-      </span>
 
       {/* Ingredient chip, appears near the product on hover */}
       <div className="absolute bottom-5 right-5 translate-y-2 rounded-full bg-avorio/95 px-4 py-2 text-xs font-medium text-notte opacity-0 shadow-md transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
@@ -96,7 +83,7 @@ export function Products() {
           {biscotti.map((product, i) => (
             <Reveal key={product.slug} delay={i * 0.08}>
               <p className="mb-3 text-xs font-medium uppercase tracking-[0.25em] text-oro">
-                {i === 0 ? "Biscotti siciliani" : " "}
+                {i === 0 ? "Biscotti siciliani" : " "}
               </p>
               <ProductPanel product={product} />
               <h3 className="mt-4 font-display text-2xl text-notte">

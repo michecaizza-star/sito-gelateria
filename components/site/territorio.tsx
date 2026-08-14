@@ -73,7 +73,7 @@ export function Territorio() {
         </div>
 
         <div className="lg:col-span-6">
-          <Reveal delay={0.15}>
+          <Reveal delay={0.15} className="relative">
             <div className="relative aspect-[4/5] overflow-hidden rounded-[1.75rem] lg:aspect-[3/4]">
               <Image
                 src="/images/campobello-fontana.jpg"
@@ -83,6 +83,18 @@ export function Territorio() {
                 className="object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-notte/70 via-transparent to-transparent" />
+            </div>
+
+            <div className="absolute -bottom-10 -left-6 hidden w-44 overflow-hidden rounded-2xl border-4 border-notte shadow-xl lg:-left-10 lg:block lg:w-52">
+              <div className="relative aspect-[4/3]">
+                <Image
+                  src="/images/campobello-aerea.jpg"
+                  alt="Vista aerea di Campobello di Licata"
+                  fill
+                  sizes="220px"
+                  className="object-cover"
+                />
+              </div>
             </div>
           </Reveal>
         </div>

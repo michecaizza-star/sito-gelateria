@@ -69,6 +69,9 @@
     background: var(--color-oro);
     color: var(--color-notte);
   }
+  section[id] {
+    scroll-margin-top: 5.5rem;
+  }
 }
 
 @layer utilities {

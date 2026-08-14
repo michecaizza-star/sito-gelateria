@@ -14,8 +14,8 @@ export function Hero() {
       className="relative flex min-h-[100svh] w-full items-end overflow-hidden bg-notte text-avorio"
     >
       <Image
-        src="/images/campobello-fontana.jpg"
-        alt="Sicilia, entroterra agrigentino"
+        src="/images/hero-pasticceria.png"
+        alt="Selezione di dolci artigianali MARÌ"
         fill
         priority
         sizes="100vw"
@@ -23,8 +23,13 @@ export function Hero() {
       />
 
       {/* Cinematic brand-toned wash over the photo */}
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,47,82,0.55)_0%,rgba(10,47,82,0.35)_35%,rgba(10,47,82,0.75)_75%,rgba(10,47,82,0.95)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,47,82,0.6)_0%,rgba(10,47,82,0.4)_35%,rgba(10,47,82,0.8)_75%,rgba(10,47,82,0.96)_100%)]" />
       <div className="grain absolute inset-0 opacity-[0.5]" />
+
+      {/* Logo watermark */}
+      <div className="pointer-events-none absolute -right-[10%] -top-[8%] h-[70%] w-[70%] opacity-[0.08] mix-blend-luminosity sm:h-[60%] sm:w-[60%]">
+        <Image src="/logo-mari.png" alt="" fill className="object-contain" />
+      </div>
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-16 pt-40 md:px-10 md:pb-20">
         <motion.p
@@ -33,16 +38,16 @@ export function Hero() {
           transition={{ duration: 0.7, ease }}
           className="mb-4 text-xs font-medium uppercase tracking-[0.4em] text-oro"
         >
-          MARÌ · Campobello di Licata
+          Campobello di Licata · Sicilia
         </motion.p>
 
-        <h1 className="font-display text-[16vw] italic leading-[0.82] tracking-tight whitespace-nowrap sm:text-[15vw] md:text-[13vw] lg:text-[11rem]">
-          {"TASTALU".split("").map((letter, i) => (
+        <h1 className="font-display text-[15vw] leading-[0.85] tracking-tight whitespace-nowrap sm:text-[13vw] md:text-[11vw] lg:text-[9rem]">
+          {"MARÌ".split("").map((letter, i) => (
             <motion.span
               key={i}
               initial={{ y: 40, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.1 + i * 0.045, ease }}
+              transition={{ duration: 0.8, delay: 0.1 + i * 0.06, ease }}
               className="inline-block"
             >
               {letter}
@@ -51,10 +56,19 @@ export function Hero() {
         </h1>
 
         <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.5, ease }}
+          className="mt-1 font-display text-3xl italic text-oro sm:text-4xl"
+        >
+          Tastalu.
+        </motion.p>
+
+        <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.65, ease }}
-          className="mt-7 max-w-md text-base leading-relaxed text-avorio/85 sm:text-lg"
+          className="mt-6 max-w-md text-base leading-relaxed text-avorio/85 sm:text-lg"
         >
           Prodotti artigianali. Materie prime siciliane. Solo Sicilia.
         </motion.p>
@@ -83,6 +97,15 @@ export function Hero() {
             Scopri MARÌ
           </a>
         </motion.div>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 1.2 }}
+          className="mt-10 text-[11px] text-avorio/45"
+        >
+          Immagini dei prodotti generate con intelligenza artificiale, a scopo illustrativo.
+        </motion.p>
       </div>
 
       <motion.a

@@ -63,6 +63,10 @@ export function Gallery() {
             </Reveal>
           ))}
         </div>
+
+        <p className="mt-8 text-center text-[11px] text-testo/40">
+          Immagini generate con intelligenza artificiale, a scopo illustrativo.
+        </p>
       </Container>
     </section>
   );

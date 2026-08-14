@@ -3,23 +3,19 @@ import { cn } from "@/lib/utils";
 
 /**
  * Renders the official MARÌ logo file (/public/logo-mari.png) — never
- * recreate or reinterpret this mark. Uses object-contain inside a
- * square box so the real artwork's own aspect ratio is always
- * preserved, however the source file is cropped.
+ * recreate or reinterpret this mark. The file has been processed to a
+ * transparent background so it blends directly into any section
+ * background instead of sitting in a visible box.
  */
 export function Logo({
   className,
-  imgClassName,
   size = 40,
-  plate = false,
 }: {
   className?: string;
-  imgClassName?: string;
   size?: number;
-  plate?: boolean;
 }) {
-  const img = (
-    <div className={cn("relative aspect-square", imgClassName)} style={{ height: size }}>
+  return (
+    <div className={cn("relative aspect-square", className)} style={{ height: size }}>
       <Image
         src="/logo-mari.png"
         alt="MARÌ"
@@ -28,21 +24,6 @@ export function Logo({
         sizes={`${size * 3}px`}
         className="object-contain"
       />
-    </div>
-  );
-
-  if (!plate) {
-    return <div className={className}>{img}</div>;
-  }
-
-  return (
-    <div
-      className={cn(
-        "inline-flex items-center justify-center rounded-xl bg-avorio/95 px-3 py-2 shadow-sm",
-        className
-      )}
-    >
-      {img}
     </div>
   );
 }

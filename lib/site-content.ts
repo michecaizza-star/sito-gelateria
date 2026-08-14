@@ -23,6 +23,7 @@ export interface Product {
   description: string;
   ingredient: string;
   tone: Tone;
+  image: string;
 }
 
 export const products: Product[] = [
@@ -33,6 +34,7 @@ export const products: Product[] = [
     description: "Biscotti tradizionali siciliani ricoperti di sesamo.",
     ingredient: "Sesamo e grano siciliano",
     tone: "oro",
+    image: "/images/prodotto-regina.png",
   },
   {
     slug: "zuccotti",
@@ -41,6 +43,7 @@ export const products: Product[] = [
     description: "Dolci della tradizione, realizzati artigianalmente.",
     ingredient: "Ricetta antica siciliana",
     tone: "sabbia",
+    image: "/images/prodotto-zuccotti.png",
   },
   {
     slug: "buccellati",
@@ -49,6 +52,7 @@ export const products: Product[] = [
     description: "Biscotti siciliani ripieni, legati alla tradizione dell'isola.",
     ingredient: "Fichi e frutta secca",
     tone: "melograno",
+    image: "/images/prodotto-buccellati.png",
   },
   {
     slug: "paste-di-mandorla",
@@ -56,6 +60,7 @@ export const products: Product[] = [
     description: "Realizzate valorizzando la mandorla siciliana, con la ricetta della tradizione.",
     ingredient: "Mandorla siciliana",
     tone: "sabbia",
+    image: "/images/prodotto-paste-mandorla.png",
   },
   {
     slug: "ciambelle-siciliane",
@@ -63,6 +68,7 @@ export const products: Product[] = [
     description: "Ciambelle morbide della tradizione locale, cotte ogni giorno.",
     ingredient: "Ricetta della tradizione",
     tone: "oro",
+    image: "/images/prodotto-ciambelle.png",
   },
   {
     slug: "crostate-artigianali",
@@ -70,6 +76,7 @@ export const products: Product[] = [
     description: "Realizzate con marmellate e confetture di frutta locale e siciliana.",
     ingredient: "Frutta siciliana",
     tone: "melograno",
+    image: "/images/prodotto-crostata.png",
   },
   {
     slug: "sbriciolata-ricotta",
@@ -77,6 +84,7 @@ export const products: Product[] = [
     description: "Friabile e morbida, realizzata con ricotta siciliana fresca.",
     ingredient: "Ricotta siciliana",
     tone: "notte",
+    image: "/images/prodotto-sbriciolata.png",
   },
 ];
 
@@ -85,71 +93,68 @@ export const comingSoon = ["Gelati", "Granite", "Brioche", "Prodotti stagionali"
 export interface Ingredient {
   slug: string;
   name: string;
-  origin: string;
   story: string;
   usedIn: string;
   tone: Tone;
+  image?: string;
 }
 
 export const ingredients: Ingredient[] = [
   {
     slug: "mandorla",
     name: "Mandorla siciliana",
-    origin: "Avola, Siracusa",
     story:
       "Uno degli ingredienti simbolo della nostra pasticceria. La scegliamo per le nostre paste di mandorla e per le produzioni in cui vogliamo ritrovare il sapore autentico della tradizione siciliana.",
     usedIn: "Paste di mandorla",
     tone: "sabbia",
+    image: "/images/ingrediente-mandorla.png",
   },
   {
     slug: "ricotta",
     name: "Ricotta siciliana",
-    origin: "Entroterra siciliano",
     story:
       "Fresca, lavorata secondo la tradizione dei piccoli allevamenti locali. È il cuore della nostra sbriciolata e di molte lavorazioni dolciarie.",
     usedIn: "Sbriciolata alla ricotta",
     tone: "avorio",
+    image: "/images/ingrediente-ricotta.png",
   },
   {
     slug: "pistacchio",
     name: "Pistacchio siciliano",
-    origin: "Bronte, Catania",
     story:
-      "Raccolto a mano sulle pendici dell'Etna. Un ingrediente che stiamo destinando alle produzioni MARÌ presenti e future.",
+      "Un ingrediente pregiato della pasticceria siciliana, che stiamo destinando alle produzioni MARÌ presenti e future.",
     usedIn: "Produzioni presenti e future",
     tone: "pistacchio",
   },
   {
     slug: "limoni",
     name: "Limoni siciliani",
-    origin: "Siracusa, IGP",
     story:
-      "Coltivati a pochi passi dal mare, con una nota acida e profumata che usiamo per bilanciare le nostre crostate e produzioni stagionali.",
+      "Una nota acida e profumata che usiamo per bilanciare le nostre crostate e produzioni stagionali.",
     usedIn: "Crostate artigianali",
     tone: "oro",
+    image: "/images/ingrediente-limoni.png",
   },
   {
     slug: "arance",
     name: "Arance siciliane",
-    origin: "Ribera, Agrigento",
     story:
-      "Arance DOP della nostra stessa provincia, l'agrigentino. Le lavoriamo in marmellate e confetture per le crostate della tradizione.",
+      "Le lavoriamo in marmellate e confetture per le nostre crostate della tradizione.",
     usedIn: "Crostate artigianali",
     tone: "melograno",
+    image: "/images/ingrediente-arance.png",
   },
   {
     slug: "frutta-locale",
     name: "Frutta locale",
-    origin: "Entroterra agrigentino",
     story:
-      "Frutta di stagione dei produttori vicini a noi, trasformata in marmellate e confetture per crostate, granite e produzioni stagionali.",
+      "Frutta di stagione, trasformata in marmellate e confetture per crostate, granite e produzioni stagionali.",
     usedIn: "Crostate artigianali",
     tone: "melograno",
   },
   {
     slug: "grani",
     name: "Grani e farine siciliane",
-    origin: "Campagne dell'entroterra",
     story:
       "Privilegiati quando disponibili, per gli impasti dei nostri prodotti da forno: dai biscotti della tradizione alle basi delle nostre crostate.",
     usedIn: "Biscotti Regina, Zuccotti, Buccellati",
@@ -158,34 +163,24 @@ export const ingredients: Ingredient[] = [
   {
     slug: "miele",
     name: "Miele siciliano",
-    origin: "Sicilia",
     story:
       "Utilizzato per addolcire alcune delle nostre lavorazioni della tradizione, in alternativa allo zucchero raffinato.",
     usedIn: "Dolci della tradizione",
     tone: "oro",
   },
-  {
-    slug: "cioccolato-modica",
-    name: "Cioccolato di Modica",
-    origin: "Modica, Ragusa, IGP",
-    story:
-      "Lavorato a freddo secondo l'antica tradizione, mantiene la sua consistenza granulosa e il gusto intenso e non zuccheroso.",
-    usedIn: "Buccellati",
-    tone: "notte",
-  },
 ];
 
 export const galleryItems: { label: string; tone: Tone; type: "photo" | "texture"; src?: string }[] = [
-  { label: "Campobello di Licata, vista aerea", tone: "sabbia", type: "photo", src: "/images/campobello-aerea.jpg" },
-  { label: "Fontana monumentale, Campobello di Licata", tone: "notte", type: "photo", src: "/images/campobello-fontana.jpg" },
-  { label: "Mandorla siciliana", tone: "sabbia", type: "texture" },
-  { label: "Laboratorio artigianale", tone: "notte", type: "texture" },
-  { label: "Ricotta siciliana", tone: "avorio", type: "texture" },
-  { label: "Agrumeti dell'entroterra", tone: "oro", type: "texture" },
-  { label: "Mani al lavoro", tone: "melograno", type: "texture" },
-  { label: "Grano siciliano", tone: "sabbia", type: "texture" },
-  { label: "Packaging MARÌ", tone: "mari", type: "texture" },
-  { label: "Cioccolato di Modica", tone: "notte", type: "texture" },
+  { label: "Paste di mandorla", tone: "sabbia", type: "photo", src: "/images/prodotto-paste-mandorla.png" },
+  { label: "Crostate artigianali", tone: "melograno", type: "photo", src: "/images/prodotto-crostata.png" },
+  { label: "Mandorla siciliana", tone: "sabbia", type: "photo", src: "/images/ingrediente-mandorla.png" },
+  { label: "Buccellati", tone: "notte", type: "photo", src: "/images/prodotto-buccellati.png" },
+  { label: "Ricotta siciliana", tone: "avorio", type: "photo", src: "/images/ingrediente-ricotta.png" },
+  { label: "Sbriciolata alla ricotta", tone: "notte", type: "photo", src: "/images/prodotto-sbriciolata.png" },
+  { label: "Agrumi siciliani", tone: "oro", type: "photo", src: "/images/ingrediente-arance.png" },
+  { label: "Biscotti Regina", tone: "oro", type: "photo", src: "/images/prodotto-regina.png" },
+  { label: "Ciambelle siciliane", tone: "sabbia", type: "photo", src: "/images/prodotto-ciambelle.png" },
+  { label: "Zuccotti", tone: "melograno", type: "photo", src: "/images/prodotto-zuccotti.png" },
 ];
 
 export const openingHours: { day: string; hours: string }[] = [

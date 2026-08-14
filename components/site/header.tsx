@@ -28,7 +28,7 @@ export function Header() {
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-10">
         <a href="#top" className="flex items-center">
-          <Logo plate size={32} />
+          <Logo size={40} className="drop-shadow-[0_1px_8px_rgba(248,245,239,0.55)]" />
         </a>
 
         <nav className="hidden items-center gap-9 lg:flex">

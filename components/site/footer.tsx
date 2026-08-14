@@ -8,7 +8,7 @@ export function Footer() {
   return (
     <footer className="bg-notte py-16 text-avorio/70">
       <Container className="flex flex-col items-center gap-8 text-center">
-        <Logo plate size={48} />
+        <Logo size={52} />
 
         <p className="font-display text-2xl italic text-avorio">Tastalu.</p>
 
@@ -61,6 +61,9 @@ export function Footer() {
             MARÌ — SOLO SICILIA.
           </p>
           <p className="mt-2">© {new Date().getFullYear()} MARÌ — Tutti i diritti riservati</p>
+          <p className="mt-1 text-avorio/40">
+            Immagini dei prodotti generate con intelligenza artificiale, a scopo illustrativo.
+          </p>
         </div>
       </Container>
     </footer>
