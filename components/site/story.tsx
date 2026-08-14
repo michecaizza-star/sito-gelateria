@@ -9,58 +9,64 @@ export function Story() {
         <div className="lg:col-span-7">
           <SectionHeading
             eyebrow="La nostra storia"
-            title="Nata a Campobello di Licata."
+            title="Ci sono nomi che non hanno bisogno di essere spiegati."
             className="mb-8"
           />
           <Reveal delay={0.1} className="max-w-xl space-y-5 text-base leading-relaxed text-testo/75 sm:text-lg">
             <p>
-              MARÌ nasce a <strong className="font-medium text-notte">Campobello di Licata</strong>,
-              nel cuore della Sicilia, da una storia che comincia molto prima
-              del brand.
+              <strong className="font-medium text-notte">MARÌ</strong> è uno di questi.
             </p>
             <p>
-              Da circa <strong className="font-medium text-notte">15 anni</strong>, la nostra
-              famiglia porta avanti qui un&apos;attività nata come bar,
-              pasticceria e gelateria, crescendo insieme al paese e
-              mantenendo uno stretto legame con le ricette, i sapori e le
-              materie prime del territorio.
+              È un nome che ci accompagna da sempre. Un richiamo semplice,
+              familiare, pronunciato così tante volte da diventare parte dei
+              nostri ricordi: <em className="text-notte">&ldquo;Marì…&rdquo;</em>
             </p>
             <p>
-              Ma il nome MARÌ nasce ancora prima. È un{" "}
-              <strong className="font-medium text-notte">omaggio a nostra nonna</strong> e a un
-              gesto semplice che, in famiglia, faceva parte della
-              quotidianità. Tutti passavamo da lei e, per chiamarla, bastava
-              dire: <em className="text-notte">&ldquo;Marì…&rdquo;</em>
+              Una parola quotidiana, di quelle che con il tempo finiscono per
+              custodire molto più di ciò che dicono.
             </p>
             <p>
-              Da quella casa, da quei momenti e da quel modo familiare di
-              stare insieme nasce l&apos;identità del brand. Anche{" "}
-              <strong className="font-medium text-notte">TASTALU</strong>, il claim di MARÌ,
-              viene da lì. Quando portavamo qualcosa da assaggiare alla
-              nonna, la frase era sempre la stessa:{" "}
+              E spesso, subito dopo, arrivava un invito. Quando c&apos;era
+              qualcosa di buono, qualcosa appena fatto o semplicemente
+              qualcosa che valeva la pena condividere, veniva naturale dire:{" "}
               <em className="text-notte">&ldquo;Marì, tastalu.&rdquo;</em> Assaggialo.
               Provalo.
             </p>
             <p>
-              Due parole semplici che oggi racchiudono tutto il progetto:{" "}
-              <strong className="font-medium text-notte">MARÌ</strong> è da dove veniamo,{" "}
-              <strong className="font-medium text-notte">TASTALU</strong> è il gesto con cui
-              vogliamo raccontarlo.
+              MARÌ nasce da qui. Da un ricordo, ma soprattutto da un modo di
+              intendere il cibo:{" "}
+              <strong className="font-medium text-notte">
+                fare qualcosa di buono e avere subito voglia di farlo
+                assaggiare.
+              </strong>
             </p>
             <p>
-              Da questa memoria nasce un progetto contemporaneo con un
-              obiettivo preciso: continuare la tradizione, valorizzando ciò
-              che la Sicilia ci offre. Mandorle, ricotta, agrumi, frutta,
-              farine e produzioni locali diventano il punto di partenza per
-              creare prodotti artigianali profondamente legati alla nostra
-              terra, privilegiando materie prime siciliane e produttori
-              locali ogni volta che è possibile.
+              È lo stesso spirito che da oltre quindici anni accompagna il
+              nostro lavoro a{" "}
+              <strong className="font-medium text-notte">Campobello di Licata</strong>,
+              dove siamo nati come bar, pasticceria e gelateria.
             </p>
             <p>
-              MARÌ nasce a Campobello di Licata, ma guarda oltre: vogliamo
-              custodire ciò che abbiamo imparato qui e, nel tempo, portare
-              questi sapori e questa storia anche fuori dalla Sicilia.
+              Oggi quella storia prende una forma nuova. MARÌ nasce per
+              continuare ciò che abbiamo sempre fatto, ma con una scelta
+              ancora più precisa:{" "}
+              <strong className="font-medium text-notte">partire dalla nostra terra.</strong>
             </p>
+            <p>
+              Dalle mandorle, dalla ricotta, dagli agrumi, dalla frutta,
+              dalle ricette e dalle materie prime che la Sicilia ci offre.
+              Valorizzarle, trasformarle e raccontarle attraverso ciò che
+              sappiamo fare.
+            </p>
+            <p>
+              Con l&apos;ambizione di partire da Campobello di Licata e
+              portare, un giorno, questi sapori anche più lontano.
+            </p>
+            <p>
+              <strong className="font-medium text-notte">Solo Sicilia</strong> è la scelta.{" "}
+              <strong className="font-medium text-notte">TASTALU</strong> è l&apos;invito.
+            </p>
+            <p>Perché, in fondo, tutto è cominciato così.</p>
           </Reveal>
         </div>
 

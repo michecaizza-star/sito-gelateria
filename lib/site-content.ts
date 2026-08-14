@@ -5,11 +5,14 @@ export function waLink(message: string = WHATSAPP_MESSAGE) {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 }
 
+export const HORECA_EMAIL = "michecaizza@gmail.com";
+
 export const navLinks = [
   { href: "#storia", label: "Storia" },
   { href: "#prodotti", label: "Prodotti" },
   { href: "#materie-prime", label: "Materie prime" },
   { href: "#solo-sicilia", label: "Solo Sicilia" },
+  { href: "#horeca", label: "Horeca" },
   { href: "#contatti", label: "Contatti" },
 ];
 
@@ -85,6 +88,14 @@ export const products: Product[] = [
     tone: "notte",
     image: "/images/prodotto-sbriciolata.png",
   },
+  {
+    slug: "frutta-martorana",
+    name: "Frutta martorana",
+    description: "Pasta di mandorla modellata e dipinta a mano nelle forme della frutta siciliana.",
+    ingredient: "Mandorla siciliana",
+    tone: "pistacchio",
+    image: "/images/prodotto-frutta-martorana.png",
+  },
 ];
 
 export const comingSoon = ["Gelati", "Granite", "Brioche", "Prodotti stagionali"];
@@ -104,7 +115,7 @@ export const ingredients: Ingredient[] = [
     name: "Mandorla siciliana",
     story:
       "Uno degli ingredienti simbolo della nostra pasticceria. La scegliamo per le nostre paste di mandorla e per le produzioni in cui vogliamo ritrovare il sapore autentico della tradizione siciliana.",
-    usedIn: "Paste di mandorla",
+    usedIn: "Paste di mandorla, Frutta martorana",
     tone: "sabbia",
     image: "/images/ingrediente-mandorla.png",
   },
@@ -124,6 +135,7 @@ export const ingredients: Ingredient[] = [
       "Un ingrediente pregiato della pasticceria siciliana, che stiamo destinando alle produzioni MARÌ presenti e future.",
     usedIn: "Produzioni presenti e future",
     tone: "pistacchio",
+    image: "/images/ingrediente-pistacchio.png",
   },
   {
     slug: "limoni",
