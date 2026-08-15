@@ -103,81 +103,90 @@ export const comingSoon = ["Gelati", "Granite", "Brioche", "Prodotti stagionali"
 export interface Ingredient {
   slug: string;
   name: string;
+  origin: string;
   story: string;
-  usedIn: string;
+  usedIn?: string;
   tone: Tone;
   image?: string;
 }
 
 export const ingredients: Ingredient[] = [
   {
-    slug: "mandorla",
-    name: "Mandorla siciliana",
+    slug: "miele",
+    name: "Miele",
+    origin: "Campobello di Licata · AG",
     story:
-      "Uno degli ingredienti simbolo della nostra pasticceria. La scegliamo per le nostre paste di mandorla e per le produzioni in cui vogliamo ritrovare il sapore autentico della tradizione siciliana.",
+      "Miele locale dal gusto pieno e aromatico, con delicate note floreali e una dolcezza che cambia seguendo le fioriture.",
+    usedIn: "Dolci della tradizione",
+    tone: "oro",
+    image: "/images/ingrediente-miele.png",
+  },
+  {
+    slug: "mandorle",
+    name: "Mandorle",
+    origin: "Campobello di Licata · AG",
+    story:
+      "Mandorle dal sapore intenso e dalla consistenza croccante. Un ingrediente semplice, coltivato da sempre nelle campagne intorno a noi.",
     usedIn: "Paste di mandorla, Frutta martorana",
     tone: "sabbia",
     image: "/images/ingrediente-mandorla.png",
   },
   {
-    slug: "ricotta",
-    name: "Ricotta siciliana",
-    story:
-      "Fresca, lavorata secondo la tradizione dei piccoli allevamenti locali. È il cuore della nostra sbriciolata e di molte lavorazioni dolciarie.",
-    usedIn: "Sbriciolata alla ricotta",
-    tone: "avorio",
-    image: "/images/ingrediente-ricotta.png",
-  },
-  {
     slug: "pistacchio",
-    name: "Pistacchio siciliano",
+    name: "Pistacchio",
+    origin: "Raffadali · AG",
     story:
-      "Un ingrediente pregiato della pasticceria siciliana, che stiamo destinando alle produzioni MARÌ presenti e future.",
+      "Pistacchio dal gusto profondo e persistente, con note naturalmente tostate e un profilo aromatico che non ha bisogno di essere corretto.",
     usedIn: "Produzioni presenti e future",
     tone: "pistacchio",
     image: "/images/ingrediente-pistacchio.png",
   },
   {
-    slug: "limoni",
-    name: "Limoni siciliani",
-    story:
-      "Una nota acida e profumata che usiamo per bilanciare le nostre crostate e produzioni stagionali.",
-    usedIn: "Crostate artigianali",
-    tone: "oro",
-    image: "/images/ingrediente-limoni.png",
-  },
-  {
     slug: "arance",
-    name: "Arance siciliane",
+    name: "Arance",
+    origin: "Ribera · AG",
     story:
-      "Le lavoriamo in marmellate e confetture per le nostre crostate della tradizione.",
+      "Dolci, succose e intensamente profumate. Arance che portano nelle nostre ricette tutta la freschezza degli agrumeti di Ribera.",
     usedIn: "Crostate artigianali",
     tone: "melograno",
     image: "/images/ingrediente-arance.png",
   },
   {
-    slug: "frutta-locale",
-    name: "Frutta locale",
+    slug: "limoni",
+    name: "Limoni",
+    origin: "Siracusa · SR",
     story:
-      "Frutta di stagione, trasformata in marmellate e confetture per crostate, granite e produzioni stagionali.",
+      "Scorza ricca di oli essenziali, profumo intenso e una freschezza netta. Pochi ingredienti riescono a farsi riconoscere così facilmente.",
     usedIn: "Crostate artigianali",
-    tone: "melograno",
+    tone: "oro",
+    image: "/images/ingrediente-limoni.png",
   },
   {
-    slug: "grani",
-    name: "Grani e farine siciliane",
+    slug: "farina",
+    name: "Farina",
+    origin: "Provincia di Agrigento",
     story:
-      "Privilegiati quando disponibili, per gli impasti dei nostri prodotti da forno: dai biscotti della tradizione alle basi delle nostre crostate.",
+      "Farina da grano coltivato nel territorio, scelta per dare alle nostre preparazioni struttura, fragranza e un sapore autentico.",
     usedIn: "Biscotti Regina, Zuccotti, Buccellati",
     tone: "sabbia",
   },
   {
-    slug: "miele",
-    name: "Miele siciliano",
+    slug: "zucchine",
+    name: "Zucchine",
+    origin: "Produzione locale",
     story:
-      "Utilizzato per addolcire alcune delle nostre lavorazioni della tradizione, in alternativa allo zucchero raffinato.",
-    usedIn: "Dolci della tradizione",
-    tone: "oro",
+      "Coltivate vicino a noi e raccolte seguendo la stagione. Una materia prima semplice, legata alle ricette che appartengono alla nostra tradizione.",
+    tone: "pistacchio",
+  },
+  {
+    slug: "fichi",
+    name: "Fichi",
+    origin: "Catania · CT",
+    story:
+      "Fichi dalla polpa morbida, carnosa e naturalmente dolce. Un gusto pieno che raggiunge il suo meglio quando il frutto è perfettamente maturo.",
+    usedIn: "Buccellati",
+    tone: "melograno",
+    image: "/images/ingrediente-fichi.png",
   },
 ];
 

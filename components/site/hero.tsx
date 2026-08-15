@@ -14,8 +14,8 @@ export function Hero() {
       className="relative flex min-h-[100svh] w-full items-end overflow-hidden bg-notte text-avorio"
     >
       <Image
-        src="/images/hero-pasticceria.png"
-        alt="Selezione di dolci artigianali MARÌ"
+        src="/images/hero-sicilia.png"
+        alt="Campagne siciliane, agrumeti e mandorleti al tramonto"
         fill
         priority
         sizes="100vw"
@@ -110,9 +110,9 @@ export function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.2 }}
-          className="mt-10 text-[11px] text-avorio/45"
+          className="mt-10 max-w-[calc(100%-6rem)] text-[11px] text-avorio/45 sm:max-w-none"
         >
-          Immagini dei prodotti generate con intelligenza artificiale, a scopo illustrativo.
+          Immagini generate con intelligenza artificiale, a scopo illustrativo.
         </motion.p>
       </div>
 

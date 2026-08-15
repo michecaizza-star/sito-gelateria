@@ -8,7 +8,7 @@ export function Footer() {
   return (
     <footer className="bg-notte py-16 text-avorio/70">
       <Container className="flex flex-col items-center gap-8 text-center">
-        <Logo size={52} />
+        <Logo size={52} invert />
 
         <p className="font-display text-2xl italic text-avorio">Tastalu.</p>
 

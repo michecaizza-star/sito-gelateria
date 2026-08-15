@@ -87,16 +87,21 @@ export function MateriePrime() {
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
               >
-                <h3 className="font-display text-4xl italic sm:text-5xl">
+                <p className="text-xs font-medium uppercase tracking-[0.3em] text-oro">
+                  {current.origin}
+                </p>
+                <h3 className="mt-3 font-display text-4xl italic sm:text-5xl">
                   {current.name}
                 </h3>
                 <p className="mt-5 max-w-lg text-base leading-relaxed text-avorio/75 sm:text-lg">
                   {current.story}
                 </p>
-                <p className="mt-6 text-sm text-avorio/60">
-                  La trovi in{" "}
-                  <span className="font-medium text-oro">→ {current.usedIn}</span>
-                </p>
+                {current.usedIn && (
+                  <p className="mt-6 text-sm text-avorio/60">
+                    La trovi in{" "}
+                    <span className="font-medium text-oro">→ {current.usedIn}</span>
+                  </p>
+                )}
               </motion.div>
             </AnimatePresence>
 

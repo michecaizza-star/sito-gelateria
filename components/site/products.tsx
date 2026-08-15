@@ -76,8 +76,22 @@ export function Products() {
           eyebrow="Solo Sicilia"
           title="I nostri prodotti"
           description="Ogni prodotto nasce da un ingrediente protagonista e da una lavorazione artigianale, quotidiana, senza scorciatoie."
-          className="mb-8"
+          className="mb-10"
         />
+
+        <Reveal className="relative mb-14 aspect-[16/9] w-full overflow-hidden rounded-[2rem] sm:aspect-[21/9]">
+          <Image
+            src="/images/hero-pasticceria.png"
+            alt="Selezione di prodotti artigianali MARÌ"
+            fill
+            sizes="100vw"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-notte/60 via-transparent to-transparent" />
+          <p className="absolute bottom-5 left-6 right-6 font-display text-xl italic text-avorio sm:text-2xl">
+            Il mondo MARÌ, in un unico sguardo.
+          </p>
+        </Reveal>
 
         <div className="grid grid-cols-1 gap-6 border-t border-notte/10 pt-10 sm:grid-cols-3">
           {biscotti.map((product, i) => (

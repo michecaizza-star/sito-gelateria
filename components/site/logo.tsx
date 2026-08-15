@@ -10,9 +10,12 @@ import { cn } from "@/lib/utils";
 export function Logo({
   className,
   size = 40,
+  invert = false,
 }: {
   className?: string;
   size?: number;
+  /** Render as a white emboss (display-only filter, same artwork) for legibility on dark backgrounds. */
+  invert?: boolean;
 }) {
   return (
     <div className={cn("relative aspect-square", className)} style={{ height: size }}>
@@ -23,6 +26,7 @@ export function Logo({
         priority
         sizes={`${size * 3}px`}
         className="object-contain"
+        style={invert ? { filter: "brightness(0) invert(1)" } : undefined}
       />
     </div>
   );
