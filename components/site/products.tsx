@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Container } from "@/components/site/container";
 import { SectionHeading } from "@/components/site/section-heading";
 import { Reveal } from "@/components/site/reveal";
+import { AddToCart } from "@/components/site/add-to-cart";
 import { products, comingSoon, waLink, type Product } from "@/lib/site-content";
 
 function ProductPanel({ product }: { product: Product }) {
@@ -49,13 +50,16 @@ function ProductRow({ product, index }: { product: Product; index: number }) {
           Materia prima protagonista:{" "}
           <span className="text-testo/80">{product.ingredient}</span>
         </p>
+
+        <AddToCart product={product} />
+
         <a
           href={waLink(`Ciao MARÌ! Vorrei sapere di più su: ${product.name}`)}
           target="_blank"
           rel="noopener noreferrer"
-          className="group/link mt-6 inline-flex items-center gap-1.5 font-display text-lg italic text-notte transition-colors hover:text-mari"
+          className="group/link mt-4 inline-flex items-center gap-1.5 font-display text-base italic text-notte/70 transition-colors hover:text-mari"
         >
-          Tastalu
+          Tastalu — chiedi info
           <span className="transition-transform group-hover/link:translate-x-1">
             →
           </span>
@@ -106,13 +110,16 @@ export function Products() {
               <p className="mt-2 text-sm leading-relaxed text-testo/70">
                 {product.description}
               </p>
+
+              <AddToCart product={product} />
+
               <a
                 href={waLink(`Ciao MARÌ! Vorrei sapere di più su: ${product.name}`)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group/link mt-3 inline-flex items-center gap-1.5 font-display text-base italic text-notte transition-colors hover:text-mari"
+                className="group/link mt-3 inline-flex items-center gap-1.5 font-display text-sm italic text-notte/70 transition-colors hover:text-mari"
               >
-                Tastalu
+                Tastalu — chiedi info
                 <span className="transition-transform group-hover/link:translate-x-1">
                   →
                 </span>

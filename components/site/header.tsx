@@ -1,10 +1,33 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, ShoppingBag, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/site/logo";
 import { navLinks, waLink } from "@/lib/site-content";
+import { useCart } from "@/lib/cart-context";
+
+function CartTrigger({ tone }: { tone: "light" | "dark" }) {
+  const { open, totalCount } = useCart();
+  return (
+    <button
+      type="button"
+      onClick={open}
+      aria-label="Apri carrello"
+      className={cn(
+        "relative flex h-9 w-9 items-center justify-center",
+        tone === "dark" ? "text-notte" : "text-avorio"
+      )}
+    >
+      <ShoppingBag className="h-5 w-5" />
+      {totalCount > 0 && (
+        <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-oro px-1 text-[10px] font-semibold text-notte">
+          {totalCount}
+        </span>
+      )}
+    </button>
+  );
+}
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -50,7 +73,8 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="hidden lg:block">
+        <div className="hidden items-center gap-2 lg:flex">
+          <CartTrigger tone={scrolled ? "dark" : "light"} />
           <a
             href={waLink()}
             target="_blank"
@@ -66,17 +90,17 @@ export function Header() {
           </a>
         </div>
 
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          aria-label={open ? "Chiudi menu" : "Apri menu"}
-          className={cn(
-            "lg:hidden",
-            scrolled || open ? "text-notte" : "text-avorio"
-          )}
-        >
-          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
+        <div className="flex items-center gap-1 lg:hidden">
+          <CartTrigger tone={scrolled || open ? "dark" : "light"} />
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-label={open ? "Chiudi menu" : "Apri menu"}
+            className={cn(scrolled || open ? "text-notte" : "text-avorio")}
+          >
+            {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
       </div>
 
       {open && (
