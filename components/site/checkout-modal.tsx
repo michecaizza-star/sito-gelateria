@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CreditCard, Lock, MessageCircle, X } from "lucide-react";
 import { useCart, isShippingComplete } from "@/lib/cart-context";
@@ -9,7 +9,15 @@ import { PAYPAL_CLIENT_ID, NEXI_PAYMENT_LINK_URL } from "@/lib/payments-config";
 import { loadComuni, extractProvince, type Comune } from "@/lib/comuni";
 import { Combobox, type ComboboxOption } from "@/components/site/combobox";
 
-type GiftFormStatus = "idle" | "sending" | "sent" | "error";
+interface GiftData {
+  nome: string;
+  cognome: string;
+  eta: string;
+  dove: string;
+  racconto: string;
+}
+
+const EMPTY_GIFT: GiftData = { nome: "", cognome: "", eta: "", dove: "", racconto: "" };
 
 declare global {
   interface Window {
@@ -41,14 +49,14 @@ export function CheckoutModal({
     clear,
   } = useCart();
   const [method, setMethod] = useState<Method>("gift");
+  const [giftData, setGiftData] = useState<GiftData>(EMPTY_GIFT);
   const [cardError, setCardError] = useState<string | null>(null);
-  const [giftFormStatus, setGiftFormStatus] = useState<GiftFormStatus>("idle");
   const [shippingTouched, setShippingTouched] = useState(false);
   const [comuni, setComuni] = useState<Comune[]>([]);
   const paypalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (method !== "shipping" || comuni.length > 0) return;
+    if (!open || comuni.length > 0) return;
     let cancelled = false;
     loadComuni().then((data) => {
       if (!cancelled) setComuni(data);
@@ -56,7 +64,7 @@ export function CheckoutModal({
     return () => {
       cancelled = true;
     };
-  }, [method, comuni.length]);
+  }, [open, comuni.length]);
 
   const provinceOptions = useMemo<ComboboxOption[]>(
     () => extractProvince(comuni).map((p) => ({ label: `${p.nome} (${p.sigla})`, value: p.sigla })),
@@ -66,6 +74,10 @@ export function CheckoutModal({
     const scoped = shipping.provincia ? comuni.filter((c) => c.s === shipping.provincia) : comuni;
     return scoped.map((c) => ({ label: c.n, value: c.n }));
   }, [comuni, shipping.provincia]);
+  const allCityOptions = useMemo<ComboboxOption[]>(
+    () => comuni.map((c) => ({ label: `${c.n} (${c.s})`, value: c.n })),
+    [comuni]
+  );
   const capOptions = useMemo<ComboboxOption[]>(() => {
     const match = comuni.find((c) => c.n === shipping.citta);
     return (match?.c ?? []).map((cap) => ({ label: cap, value: cap }));
@@ -93,8 +105,8 @@ export function CheckoutModal({
 
   function handleClose() {
     setMethod("gift");
+    setGiftData(EMPTY_GIFT);
     setCardError(null);
-    setGiftFormStatus("idle");
     setShippingTouched(false);
     onClose();
   }
@@ -105,38 +117,36 @@ export function CheckoutModal({
     if (isShippingComplete(shipping)) setMethod("choose");
   }
 
-  async function handleGiftFormSubmit(e: FormEvent<HTMLFormElement>) {
+  function handleGiftFormSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const form = e.currentTarget;
-    const data = new FormData(form);
-
-    const payload = {
-      _subject: `Profilo cliente per regalo personalizzato — ${data.get("nome") || ""}`,
-      Nome: data.get("nome"),
-      Cognome: data.get("cognome"),
-      "Età": data.get("eta"),
-      "Dove vive": data.get("dove"),
-      "Qualcosa da condividere": data.get("racconto"),
-    };
-
-    setGiftFormStatus("sending");
-    try {
-      const res = await fetch(`https://formsubmit.co/ajax/${GIFT_PROFILE_EMAIL}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-      if (!res.ok) throw new Error("request failed");
-      setGiftFormStatus("sent");
-      form.reset();
-      setMethod("shipping");
-    } catch {
-      setGiftFormStatus("error");
-    }
+    setMethod("shipping");
   }
+
+  // Il profilo per il regalo viene inviato solo a ordine davvero
+  // completato (WhatsApp inviato o pagamento PayPal confermato), non
+  // appena si compila il form: altrimenti arriverebbe anche per ordini
+  // mai portati a termine.
+  const sendGiftProfileIfAny = useCallback(() => {
+    const hasContent = Object.values(giftData).some((v) => v.trim());
+    if (!hasContent) return;
+    fetch(`https://formsubmit.co/ajax/${GIFT_PROFILE_EMAIL}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        _subject: `Profilo cliente per regalo personalizzato — ${giftData.nome || ""}`,
+        Nome: giftData.nome,
+        Cognome: giftData.cognome,
+        "Età": giftData.eta,
+        "Dove vive": giftData.dove,
+        "Qualcosa da condividere": giftData.racconto,
+      }),
+    }).catch(() => {
+      // invio best-effort, non blocca il completamento dell'ordine
+    });
+  }, [giftData]);
 
   useEffect(() => {
     if (method !== "paypal" || !paypalRef.current || totalPrice == null) return;
@@ -159,6 +169,7 @@ export function CheckoutModal({
             actions: { order: { capture: () => Promise<unknown> } }
           ) => {
             await actions.order.capture();
+            sendGiftProfileIfAny();
             clear();
             setMethod("done");
           },
@@ -188,7 +199,7 @@ export function CheckoutModal({
     return () => {
       cancelled = true;
     };
-  }, [method, totalPrice, clear]);
+  }, [method, totalPrice, clear, sendGiftProfileIfAny]);
 
   function handleCardCheckout() {
     setCardError(null);
@@ -221,6 +232,7 @@ export function CheckoutModal({
     const noteBlock = note.trim() ? `\n\nNote: ${note.trim()}` : "";
     const msg = `Ciao MARÌ! Vorrei ordinare:\n${lines.join("\n")}${summaryBlock}${shippingBlock}${noteBlock}\n\nTastalu 🍋`;
     window.open(waLink(msg), "_blank", "noopener,noreferrer");
+    sendGiftProfileIfAny();
     clear();
     setMethod("done");
   }
@@ -270,7 +282,8 @@ export function CheckoutModal({
                       </span>
                       <input
                         type="text"
-                        name="nome"
+                        value={giftData.nome}
+                        onChange={(e) => setGiftData((prev) => ({ ...prev, nome: e.target.value }))}
                         className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
                       />
                     </label>
@@ -280,7 +293,8 @@ export function CheckoutModal({
                       </span>
                       <input
                         type="text"
-                        name="cognome"
+                        value={giftData.cognome}
+                        onChange={(e) => setGiftData((prev) => ({ ...prev, cognome: e.target.value }))}
                         className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
                       />
                     </label>
@@ -290,55 +304,40 @@ export function CheckoutModal({
                       </span>
                       <input
                         type="number"
-                        name="eta"
+                        value={giftData.eta}
+                        onChange={(e) => setGiftData((prev) => ({ ...prev, eta: e.target.value }))}
                         min={0}
                         max={120}
                         className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
                       />
                     </label>
-                    <label className="block">
-                      <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
-                        Dove vivi
-                      </span>
-                      <input
-                        type="text"
-                        name="dove"
-                        className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
-                      />
-                    </label>
+                    <Combobox
+                      label="Dove vivi"
+                      options={allCityOptions}
+                      value={giftData.dove}
+                      onSelect={(o) => setGiftData((prev) => ({ ...prev, dove: o.value }))}
+                      placeholder={comuni.length ? "Inizia a scrivere…" : "Caricamento…"}
+                      disabled={comuni.length === 0}
+                    />
                   </div>
                   <label className="block">
                     <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
                       Raccontaci qualcosa di te
                     </span>
                     <textarea
-                      name="racconto"
+                      value={giftData.racconto}
+                      onChange={(e) => setGiftData((prev) => ({ ...prev, racconto: e.target.value }))}
                       rows={3}
                       className="mt-1.5 w-full resize-none border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
                     />
                   </label>
 
-                  <div className="flex items-center justify-between gap-3 pt-1">
-                    <button
-                      type="submit"
-                      disabled={giftFormStatus === "sending"}
-                      className="rounded-full bg-pistacchio px-5 py-2.5 text-xs font-semibold text-notte transition-colors hover:opacity-90 disabled:opacity-60"
-                    >
-                      {giftFormStatus === "sending" ? "Invio…" : "Continua →"}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setMethod("shipping")}
-                      className="text-xs text-testo/50 underline"
-                    >
-                      Salta, continua
-                    </button>
-                  </div>
-                  {giftFormStatus === "error" && (
-                    <p className="text-xs text-melograno">
-                      Qualcosa è andato storto, riprova più tardi.
-                    </p>
-                  )}
+                  <button
+                    type="submit"
+                    className="w-full rounded-full bg-notte py-3 text-sm font-semibold text-avorio transition-colors hover:bg-mari"
+                  >
+                    Continua →
+                  </button>
                 </form>
               </div>
             ) : method === "shipping" ? (
