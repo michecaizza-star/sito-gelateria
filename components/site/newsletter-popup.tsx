@@ -6,27 +6,36 @@ import { X } from "lucide-react";
 import { Logo } from "@/components/site/logo";
 import { NewsletterForm } from "@/components/site/newsletter-form";
 
-const STORAGE_KEY = "mari-newsletter-popup-seen";
+const SUBSCRIBED_KEY = "mari-newsletter-subscribed";
+const DISMISSED_AT_KEY = "mari-newsletter-dismissed-at";
+const RESHOW_AFTER_MS = 7 * 24 * 60 * 60 * 1000; // 7 giorni
 
 export function NewsletterPopup() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    let seen = true;
+    let shouldShow = true;
     try {
-      seen = window.localStorage.getItem(STORAGE_KEY) === "1";
+      if (window.localStorage.getItem(SUBSCRIBED_KEY) === "1") {
+        shouldShow = false;
+      } else {
+        const dismissedAt = Number(window.localStorage.getItem(DISMISSED_AT_KEY) ?? 0);
+        if (dismissedAt && Date.now() - dismissedAt < RESHOW_AFTER_MS) {
+          shouldShow = false;
+        }
+      }
     } catch {
       // ignore unavailable storage
     }
-    if (seen) return;
+    if (!shouldShow) return;
 
     const timer = setTimeout(() => setOpen(true), 1400);
     return () => clearTimeout(timer);
   }, []);
 
-  function markSeen() {
+  function markSubscribed() {
     try {
-      window.localStorage.setItem(STORAGE_KEY, "1");
+      window.localStorage.setItem(SUBSCRIBED_KEY, "1");
     } catch {
       // ignore unavailable storage
     }
@@ -34,7 +43,11 @@ export function NewsletterPopup() {
 
   function dismiss() {
     setOpen(false);
-    markSeen();
+    try {
+      window.localStorage.setItem(DISMISSED_AT_KEY, String(Date.now()));
+    } catch {
+      // ignore unavailable storage
+    }
   }
 
   return (
@@ -77,7 +90,7 @@ export function NewsletterPopup() {
               sconto per il tuo primo ordine da MARÌ.
             </p>
 
-            <NewsletterForm onSubscribed={markSeen} />
+            <NewsletterForm onSubscribed={markSubscribed} />
 
             <p className="mt-4 text-xs text-testo/40">
               Nessuno spam, puoi disiscriverti quando vuoi.
