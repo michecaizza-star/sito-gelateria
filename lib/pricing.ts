@@ -5,11 +5,13 @@ export interface ProductVariants {
 
 export const productVariants: Record<string, ProductVariants> = {
   "frutta-martorana": {
-    flavors: ["S", "Arancia", "Caffè", "Pistacchio", "Mandorla"],
     sizes: ["500g", "1kg"],
   },
   "biscotti-regina": {
     sizes: ["250g", "500g"],
+  },
+  "paste-di-mandorla": {
+    flavors: ["S", "Arancia", "Caffè", "Pistacchio", "Mandorla", "Mix"],
   },
   buccellati: {
     sizes: ["250g", "500g"],

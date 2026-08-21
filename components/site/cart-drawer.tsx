@@ -28,6 +28,8 @@ export function CartDrawer() {
     shippingCost,
     totalPrice,
     hasUnknownPrice,
+    note,
+    setNote,
   } = useCart();
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [codeInput, setCodeInput] = useState("");
@@ -155,6 +157,19 @@ export function CartDrawer() {
 
               {items.length > 0 && (
                 <div className="border-t border-notte/10 px-6 py-5">
+                  <label className="mb-4 block">
+                    <span className="mb-1.5 block text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
+                      Note per l&apos;ordine (facoltativo)
+                    </span>
+                    <textarea
+                      value={note}
+                      onChange={(e) => setNote(e.target.value)}
+                      rows={2}
+                      placeholder="Es. allergie, orario di ritiro, richieste particolari…"
+                      className="w-full resize-none rounded-2xl border border-notte/20 bg-transparent px-3.5 py-2.5 text-xs text-notte outline-none placeholder:text-testo/40 focus:border-oro"
+                    />
+                  </label>
+
                   {discountCode ? (
                     <div className="mb-4 flex items-center justify-between rounded-full bg-pistacchio/20 px-4 py-2 text-xs">
                       <span className="flex items-center gap-1.5 font-medium text-notte">
