@@ -33,6 +33,12 @@ export interface Product {
   ingredient: string;
   tone: Tone;
   image: string;
+  /**
+   * TODO — indicazioni generiche, da verificare/correggere con la vera
+   * shelf-life dei prodotti prima di pubblicarle come informazione
+   * ufficiale (usate anche dal chatbot).
+   */
+  conservation: string;
 }
 
 export const products: Product[] = [
@@ -44,6 +50,7 @@ export const products: Product[] = [
     ingredient: "Sesamo e grano siciliano",
     tone: "oro",
     image: "/images/prodotto-regina.png",
+    conservation: "In luogo fresco e asciutto, in contenitore ermetico, lontano da fonti di calore e umidità.",
   },
   {
     slug: "zuccotti",
@@ -53,6 +60,7 @@ export const products: Product[] = [
     ingredient: "Ricetta antica siciliana",
     tone: "sabbia",
     image: "/images/prodotto-zuccotti.png",
+    conservation: "In luogo fresco e asciutto, in contenitore ermetico, lontano da fonti di calore e umidità.",
   },
   {
     slug: "buccellati",
@@ -62,6 +70,7 @@ export const products: Product[] = [
     ingredient: "Fichi e frutta secca",
     tone: "melograno",
     image: "/images/prodotto-buccellati.png",
+    conservation: "In luogo fresco e asciutto, in contenitore ermetico; una volta aperta la confezione, consumare preferibilmente entro pochi giorni.",
   },
   {
     slug: "paste-di-mandorla",
@@ -70,6 +79,7 @@ export const products: Product[] = [
     ingredient: "Mandorla siciliana",
     tone: "sabbia",
     image: "/images/prodotto-paste-mandorla.png",
+    conservation: "In luogo fresco e asciutto, in contenitore ermetico a temperatura ambiente.",
   },
   {
     slug: "ciambelle-siciliane",
@@ -78,6 +88,7 @@ export const products: Product[] = [
     ingredient: "Ricetta della tradizione",
     tone: "oro",
     image: "/images/prodotto-ciambelle.png",
+    conservation: "A temperatura ambiente in contenitore chiuso; da consumare preferibilmente entro 2-3 giorni per apprezzarne al meglio la morbidezza.",
   },
   {
     slug: "crostate-artigianali",
@@ -86,6 +97,7 @@ export const products: Product[] = [
     ingredient: "Frutta siciliana",
     tone: "melograno",
     image: "/images/prodotto-crostata.png",
+    conservation: "A temperatura ambiente in contenitore chiuso per 2-3 giorni; una volta tagliate, si consiglia di conservarle in frigorifero.",
   },
   {
     slug: "sbriciolata-ricotta",
@@ -94,6 +106,7 @@ export const products: Product[] = [
     ingredient: "Ricotta siciliana",
     tone: "notte",
     image: "/images/prodotto-sbriciolata.png",
+    conservation: "In frigorifero, per la presenza di ricotta fresca; consumare entro 2-3 giorni dall'acquisto.",
   },
   {
     slug: "frutta-martorana",
@@ -102,6 +115,7 @@ export const products: Product[] = [
     ingredient: "Mandorla siciliana",
     tone: "pistacchio",
     image: "/images/prodotto-frutta-martorana.png",
+    conservation: "In luogo fresco e asciutto, in contenitore chiuso; si conserva bene anche per diverse settimane.",
   },
   {
     slug: "croccante",
@@ -111,6 +125,7 @@ export const products: Product[] = [
     tone: "oro",
     // Immagine segnaposto: sostituire con una foto reale del prodotto.
     image: "/images/prodotto-croccante.png",
+    conservation: "In luogo fresco e asciutto, in contenitore ermetico, lontano dall'umidità.",
   },
 ];
 
