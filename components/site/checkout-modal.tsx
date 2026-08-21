@@ -332,12 +332,21 @@ export function CheckoutModal({
                     />
                   </label>
 
-                  <button
-                    type="submit"
-                    className="w-full rounded-full bg-notte py-3 text-sm font-semibold text-avorio transition-colors hover:bg-mari"
-                  >
-                    Continua →
-                  </button>
+                  <div className="flex items-center justify-between gap-3 pt-1">
+                    <button
+                      type="submit"
+                      className="rounded-full bg-pistacchio px-5 py-2.5 text-xs font-semibold text-notte transition-colors hover:opacity-90"
+                    >
+                      Continua →
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setMethod("shipping")}
+                      className="text-xs text-testo/50 underline"
+                    >
+                      Salta questo passaggio
+                    </button>
+                  </div>
                 </form>
               </div>
             ) : method === "shipping" ? (
