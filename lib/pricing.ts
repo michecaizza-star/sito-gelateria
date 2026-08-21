@@ -33,7 +33,7 @@ export const productVariants: Record<string, ProductVariants> = {
  * "Prezzo da definire" al suo posto e non lo somma al totale.
  */
 export const placeholderPrices: Record<string, number | null> = {
-  "biscotti-regina": null,
+  "biscotti-regina": 8.50,
   zuccotti: null,
   buccellati: null,
   "paste-di-mandorla": null,
