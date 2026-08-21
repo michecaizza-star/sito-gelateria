@@ -8,6 +8,12 @@ import {
   useMemo,
   useState,
 } from "react";
+import {
+  NEWSLETTER_DISCOUNT_CODE,
+  NEWSLETTER_DISCOUNT_RATE,
+  FREE_SHIPPING_THRESHOLD,
+  SHIPPING_COST,
+} from "@/lib/site-content";
 
 export interface CartItem {
   id: string;
@@ -30,15 +36,23 @@ interface CartContextValue {
   open: () => void;
   close: () => void;
   totalCount: number;
-  totalPrice: number | null;
   hasUnknownPrice: boolean;
+  subtotal: number | null;
+  discountCode: string | null;
+  discountAmount: number;
+  applyDiscountCode: (code: string) => boolean;
+  removeDiscountCode: () => void;
+  shippingCost: number | null;
+  totalPrice: number | null;
 }
 
 const CartContext = createContext<CartContextValue | null>(null);
 const STORAGE_KEY = "mari-cart-v1";
+const DISCOUNT_STORAGE_KEY = "mari-discount-v1";
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
+  const [discountCode, setDiscountCode] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [hydrated, setHydrated] = useState(false);
 
@@ -50,6 +64,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       const raw = window.localStorage.getItem(STORAGE_KEY);
       // eslint-disable-next-line react-hooks/set-state-in-effect
       if (raw) setItems(JSON.parse(raw));
+      const rawDiscount = window.localStorage.getItem(DISCOUNT_STORAGE_KEY);
+      if (rawDiscount) setDiscountCode(rawDiscount);
     } catch {
       // ignore malformed/unavailable storage
     }
@@ -64,6 +80,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       // ignore quota/unavailable storage
     }
   }, [items, hydrated]);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    try {
+      if (discountCode) window.localStorage.setItem(DISCOUNT_STORAGE_KEY, discountCode);
+      else window.localStorage.removeItem(DISCOUNT_STORAGE_KEY);
+    } catch {
+      // ignore quota/unavailable storage
+    }
+  }, [discountCode, hydrated]);
 
   const addItem = useCallback<CartContextValue["addItem"]>((item) => {
     setItems((prev) => {
@@ -92,7 +118,21 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     );
   }, []);
 
-  const clear = useCallback(() => setItems([]), []);
+  const clear = useCallback(() => {
+    setItems([]);
+    setDiscountCode(null);
+  }, []);
+
+  const applyDiscountCode = useCallback((code: string) => {
+    const normalized = code.trim().toUpperCase();
+    if (normalized.length > 0 && normalized === NEWSLETTER_DISCOUNT_CODE.toUpperCase()) {
+      setDiscountCode(normalized);
+      return true;
+    }
+    return false;
+  }, []);
+
+  const removeDiscountCode = useCallback(() => setDiscountCode(null), []);
 
   const totalCount = useMemo(
     () => items.reduce((sum, i) => sum + i.quantity, 0),
@@ -102,13 +142,25 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     () => items.some((i) => i.price == null),
     [items]
   );
-  const totalPrice = useMemo(
+  const subtotal = useMemo(
     () =>
       hasUnknownPrice
         ? null
         : items.reduce((sum, i) => sum + (i.price ?? 0) * i.quantity, 0),
     [items, hasUnknownPrice]
   );
+  const discountAmount = useMemo(
+    () => (subtotal != null && discountCode ? subtotal * NEWSLETTER_DISCOUNT_RATE : 0),
+    [subtotal, discountCode]
+  );
+  const shippingCost = useMemo(() => {
+    if (subtotal == null || items.length === 0) return null;
+    return subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
+  }, [subtotal, items.length]);
+  const totalPrice = useMemo(() => {
+    if (subtotal == null) return null;
+    return subtotal - discountAmount + (shippingCost ?? 0);
+  }, [subtotal, discountAmount, shippingCost]);
 
   const value: CartContextValue = {
     items,
@@ -120,8 +172,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     open: () => setIsOpen(true),
     close: () => setIsOpen(false),
     totalCount,
-    totalPrice,
     hasUnknownPrice,
+    subtotal,
+    discountCode,
+    discountAmount,
+    applyDiscountCode,
+    removeDiscountCode,
+    shippingCost,
+    totalPrice,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

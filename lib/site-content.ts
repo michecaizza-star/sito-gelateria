@@ -8,7 +8,11 @@ export function waLink(message: string = WHATSAPP_MESSAGE) {
 export const HORECA_EMAIL = "michecaizza@gmail.com";
 export const NEWSLETTER_EMAIL = "michecaizza@gmail.com";
 export const NEWSLETTER_DISCOUNT_CODE = "TASTALU10";
+export const NEWSLETTER_DISCOUNT_RATE = 0.1;
 export const GIFT_PROFILE_EMAIL = "michecaizza@gmail.com";
+
+export const FREE_SHIPPING_THRESHOLD = 75;
+export const SHIPPING_COST = 4.99;
 
 export const navLinks = [
   { href: "#storia", label: "Storia" },

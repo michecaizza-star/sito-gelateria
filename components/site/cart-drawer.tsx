@@ -1,20 +1,47 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { Minus, Plus, ShoppingBag, X } from "lucide-react";
+import { Minus, Plus, ShoppingBag, Tag, X } from "lucide-react";
 import { useCart } from "@/lib/cart-context";
 import { CheckoutModal } from "@/components/site/checkout-modal";
+import { FREE_SHIPPING_THRESHOLD } from "@/lib/site-content";
 
 function formatPrice(value: number) {
   return value.toLocaleString("it-IT", { style: "currency", currency: "EUR" });
 }
 
 export function CartDrawer() {
-  const { items, isOpen, close, updateQuantity, removeItem, totalCount, totalPrice, hasUnknownPrice } =
-    useCart();
+  const {
+    items,
+    isOpen,
+    close,
+    updateQuantity,
+    removeItem,
+    totalCount,
+    subtotal,
+    discountCode,
+    discountAmount,
+    applyDiscountCode,
+    removeDiscountCode,
+    shippingCost,
+    totalPrice,
+    hasUnknownPrice,
+  } = useCart();
   const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [codeInput, setCodeInput] = useState("");
+  const [codeError, setCodeError] = useState<string | null>(null);
+
+  function handleApplyCode(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setCodeError(null);
+    if (applyDiscountCode(codeInput)) {
+      setCodeInput("");
+    } else {
+      setCodeError("Codice non valido.");
+    }
+  }
 
   return (
     <>
@@ -128,19 +155,84 @@ export function CartDrawer() {
 
               {items.length > 0 && (
                 <div className="border-t border-notte/10 px-6 py-5">
-                  <div className="mb-4 flex items-center justify-between">
-                    <span className="text-sm text-testo/70">
-                      Totale ({totalCount} {totalCount === 1 ? "articolo" : "articoli"})
-                    </span>
+                  {discountCode ? (
+                    <div className="mb-4 flex items-center justify-between rounded-full bg-pistacchio/20 px-4 py-2 text-xs">
+                      <span className="flex items-center gap-1.5 font-medium text-notte">
+                        <Tag className="h-3.5 w-3.5" />
+                        Codice {discountCode} applicato
+                      </span>
+                      <button
+                        type="button"
+                        onClick={removeDiscountCode}
+                        className="text-testo/50 underline hover:text-notte"
+                      >
+                        Rimuovi
+                      </button>
+                    </div>
+                  ) : (
+                    <form onSubmit={handleApplyCode} className="mb-4 flex gap-2">
+                      <input
+                        type="text"
+                        value={codeInput}
+                        onChange={(e) => setCodeInput(e.target.value)}
+                        placeholder="Codice sconto"
+                        className="w-full flex-1 rounded-full border border-notte/20 bg-transparent px-4 py-2 text-xs text-notte outline-none placeholder:text-testo/40 focus:border-oro"
+                      />
+                      <button
+                        type="submit"
+                        className="whitespace-nowrap rounded-full border border-notte/20 px-4 py-2 text-xs font-semibold text-notte transition-colors hover:border-notte"
+                      >
+                        Applica
+                      </button>
+                    </form>
+                  )}
+                  {codeError && (
+                    <p className="mb-4 -mt-2 text-xs text-melograno">{codeError}</p>
+                  )}
+
+                  <div className="space-y-1.5 text-sm">
+                    <div className="flex items-center justify-between text-testo/70">
+                      <span>Subtotale ({totalCount} {totalCount === 1 ? "articolo" : "articoli"})</span>
+                      <span>{subtotal == null ? "Da definire" : formatPrice(subtotal)}</span>
+                    </div>
+                    {discountAmount > 0 && (
+                      <div className="flex items-center justify-between text-pistacchio">
+                        <span>Sconto</span>
+                        <span>-{formatPrice(discountAmount)}</span>
+                      </div>
+                    )}
+                    <div className="flex items-center justify-between text-testo/70">
+                      <span>Spedizione</span>
+                      <span>
+                        {shippingCost == null
+                          ? "Da definire"
+                          : shippingCost === 0
+                            ? "Gratuita"
+                            : formatPrice(shippingCost)}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="mt-3 mb-4 flex items-center justify-between border-t border-notte/10 pt-3">
+                    <span className="text-sm font-medium text-testo/70">Totale</span>
                     <span className="font-display text-xl text-notte">
                       {totalPrice == null ? "Da definire" : formatPrice(totalPrice)}
                     </span>
                   </div>
-                  {hasUnknownPrice && (
+
+                  {hasUnknownPrice ? (
                     <p className="mb-4 text-xs text-testo/50">
                       Alcuni prodotti non hanno ancora un prezzo pubblicato:
-                      confermeremo il totale con te su WhatsApp.
+                      confermeremo il totale (spedizione inclusa) con te su
+                      WhatsApp.
                     </p>
+                  ) : (
+                    shippingCost != null &&
+                    shippingCost > 0 && (
+                      <p className="mb-4 text-xs text-testo/50">
+                        Ti mancano {formatPrice(FREE_SHIPPING_THRESHOLD - (subtotal ?? 0))} per la spedizione gratuita.
+                      </p>
+                    )
                   )}
                   <button
                     type="button"
