@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CreditCard, Lock, MessageCircle, X } from "lucide-react";
-import { useCart } from "@/lib/cart-context";
+import { useCart, isShippingComplete } from "@/lib/cart-context";
 import { waLink, GIFT_PROFILE_EMAIL } from "@/lib/site-content";
 import { PAYPAL_CLIENT_ID, NEXI_PAYMENT_LINK_URL } from "@/lib/payments-config";
 
@@ -17,7 +17,7 @@ declare global {
   }
 }
 
-type Method = "gift" | "choose" | "paypal" | "done";
+type Method = "shipping" | "gift" | "choose" | "paypal" | "done";
 
 export function CheckoutModal({
   open,
@@ -26,17 +26,36 @@ export function CheckoutModal({
   open: boolean;
   onClose: () => void;
 }) {
-  const { items, subtotal, discountCode, discountAmount, shippingCost, totalPrice, note, clear } = useCart();
-  const [method, setMethod] = useState<Method>("gift");
+  const {
+    items,
+    subtotal,
+    discountCode,
+    discountAmount,
+    shippingCost,
+    totalPrice,
+    note,
+    shipping,
+    updateShipping,
+    clear,
+  } = useCart();
+  const [method, setMethod] = useState<Method>("shipping");
   const [cardError, setCardError] = useState<string | null>(null);
   const [giftFormStatus, setGiftFormStatus] = useState<GiftFormStatus>("idle");
+  const [shippingTouched, setShippingTouched] = useState(false);
   const paypalRef = useRef<HTMLDivElement>(null);
 
   function handleClose() {
-    setMethod("gift");
+    setMethod("shipping");
     setCardError(null);
     setGiftFormStatus("idle");
+    setShippingTouched(false);
     onClose();
+  }
+
+  function handleShippingSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setShippingTouched(true);
+    if (isShippingComplete(shipping)) setMethod("gift");
   }
 
   async function handleGiftFormSubmit(e: FormEvent<HTMLFormElement>) {
@@ -149,8 +168,11 @@ export function CheckoutModal({
     }
     if (totalPrice != null) summary.push(`Totale: ${fmt(totalPrice)}`);
     const summaryBlock = summary.length ? `\n\n${summary.join("\n")}` : "";
+    const shippingBlock = isShippingComplete(shipping)
+      ? `\n\nSpedire a:\n${shipping.nome}\n${shipping.indirizzo}\n${shipping.cap} ${shipping.citta}${shipping.provincia ? " (" + shipping.provincia + ")" : ""}\nTel: ${shipping.telefono}`
+      : "";
     const noteBlock = note.trim() ? `\n\nNote: ${note.trim()}` : "";
-    const msg = `Ciao MARÌ! Vorrei ordinare:\n${lines.join("\n")}${summaryBlock}${noteBlock}\n\nTastalu 🍋`;
+    const msg = `Ciao MARÌ! Vorrei ordinare:\n${lines.join("\n")}${summaryBlock}${shippingBlock}${noteBlock}\n\nTastalu 🍋`;
     window.open(waLink(msg), "_blank", "noopener,noreferrer");
     clear();
     setMethod("done");
@@ -183,7 +205,105 @@ export function CheckoutModal({
               <X className="h-5 w-5" />
             </button>
 
-            {method === "gift" ? (
+            {method === "shipping" ? (
+              <div className="max-h-[80vh] overflow-y-auto py-2 text-left">
+                <p className="text-center font-display text-2xl italic text-notte">
+                  Dove consegniamo il tuo ordine?
+                </p>
+                <p className="mx-auto mt-2 max-w-sm text-center text-xs leading-relaxed text-testo/60">
+                  Ci servono questi dati per organizzare la consegna. Li
+                  ricorderemo per i tuoi prossimi ordini.
+                </p>
+                <form onSubmit={handleShippingSubmit} className="mt-5 space-y-4">
+                  <label className="block">
+                    <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
+                      Nome e cognome
+                    </span>
+                    <input
+                      type="text"
+                      value={shipping.nome}
+                      onChange={(e) => updateShipping({ nome: e.target.value })}
+                      required
+                      className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
+                    />
+                  </label>
+                  <label className="block">
+                    <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
+                      Telefono
+                    </span>
+                    <input
+                      type="tel"
+                      value={shipping.telefono}
+                      onChange={(e) => updateShipping({ telefono: e.target.value })}
+                      required
+                      className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
+                    />
+                  </label>
+                  <label className="block">
+                    <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
+                      Indirizzo (via e civico)
+                    </span>
+                    <input
+                      type="text"
+                      value={shipping.indirizzo}
+                      onChange={(e) => updateShipping({ indirizzo: e.target.value })}
+                      required
+                      className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
+                    />
+                  </label>
+                  <div className="grid grid-cols-3 gap-3">
+                    <label className="block">
+                      <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
+                        CAP
+                      </span>
+                      <input
+                        type="text"
+                        value={shipping.cap}
+                        onChange={(e) => updateShipping({ cap: e.target.value })}
+                        required
+                        className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
+                      />
+                    </label>
+                    <label className="col-span-2 block">
+                      <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
+                        Città
+                      </span>
+                      <input
+                        type="text"
+                        value={shipping.citta}
+                        onChange={(e) => updateShipping({ citta: e.target.value })}
+                        required
+                        className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
+                      />
+                    </label>
+                  </div>
+                  <label className="block">
+                    <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
+                      Provincia
+                    </span>
+                    <input
+                      type="text"
+                      value={shipping.provincia}
+                      onChange={(e) => updateShipping({ provincia: e.target.value })}
+                      className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
+                    />
+                  </label>
+
+                  {shippingTouched && !isShippingComplete(shipping) && (
+                    <p className="text-xs text-melograno">
+                      Compila almeno nome, telefono, indirizzo, CAP e città.
+                    </p>
+                  )}
+
+                  <button
+                    type="submit"
+                    className="w-full rounded-full bg-notte py-3 text-sm font-semibold text-avorio transition-colors hover:bg-mari"
+                  >
+                    Continua →
+                  </button>
+                </form>
+              </div>
+            ) : method === "gift" ? (
               <div className="max-h-[80vh] overflow-y-auto py-2 text-left">
                 <p className="text-center font-display text-2xl italic text-notte">
                   Un piccolo regalo, solo per te
