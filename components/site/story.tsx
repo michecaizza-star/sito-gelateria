@@ -74,15 +74,15 @@ export function Story() {
         <div className="lg:col-span-5 lg:pt-20">
           <Reveal delay={0.15}>
             <div className="rounded-[2rem] bg-notte px-8 py-14 text-center text-avorio sm:px-10">
-              <p className="font-display text-4xl italic leading-tight sm:text-5xl">
+              <Logo size={96} invert className="mx-auto" />
+              <p className="mt-8 font-display text-4xl italic leading-tight sm:text-5xl">
                 &ldquo;Marì, tastalu.&rdquo;
               </p>
               <p className="mt-4 text-sm uppercase tracking-[0.3em] text-oro">
                 Assaggialo. Provalo.
               </p>
               <div className="mx-auto mt-8 h-px w-12 bg-avorio/20" />
-              <Logo size={44} invert className="mx-auto mt-8" />
-              <p className="mt-3 text-sm leading-relaxed text-avorio/65">
+              <p className="mt-8 text-sm leading-relaxed text-avorio/65">
                 Una storia di famiglia, diventata un invito ad assaggiare la
                 Sicilia.
               </p>

@@ -17,7 +17,7 @@ declare global {
   }
 }
 
-type Method = "choose" | "paypal" | "card" | "done";
+type Method = "gift" | "choose" | "paypal" | "done";
 
 export function CheckoutModal({
   open,
@@ -27,13 +27,13 @@ export function CheckoutModal({
   onClose: () => void;
 }) {
   const { items, totalPrice, clear } = useCart();
-  const [method, setMethod] = useState<Method>("choose");
+  const [method, setMethod] = useState<Method>("gift");
   const [cardError, setCardError] = useState<string | null>(null);
   const [giftFormStatus, setGiftFormStatus] = useState<GiftFormStatus>("idle");
   const paypalRef = useRef<HTMLDivElement>(null);
 
   function handleClose() {
-    setMethod("choose");
+    setMethod("gift");
     setCardError(null);
     setGiftFormStatus("idle");
     onClose();
@@ -66,6 +66,7 @@ export function CheckoutModal({
       if (!res.ok) throw new Error("request failed");
       setGiftFormStatus("sent");
       form.reset();
+      setMethod("choose");
     } catch {
       setGiftFormStatus("error");
     }
@@ -172,111 +173,102 @@ export function CheckoutModal({
               <X className="h-5 w-5" />
             </button>
 
-            {method === "done" ? (
-              <div className="max-h-[80vh] overflow-y-auto py-6 text-center">
+            {method === "gift" ? (
+              <div className="max-h-[80vh] overflow-y-auto py-2 text-left">
+                <p className="text-center font-display text-2xl italic text-notte">
+                  Un piccolo regalo, solo per te
+                </p>
+                <p className="mx-auto mt-2 max-w-sm text-center text-xs leading-relaxed text-testo/60">
+                  Prima di procedere al pagamento, se vuoi raccontaci
+                  qualcosa di te: prepareremo una sorpresa pensata apposta,
+                  da consegnarti insieme al tuo ordine. Campo facoltativo.
+                </p>
+                <form onSubmit={handleGiftFormSubmit} className="mt-5 space-y-4">
+                  <div className="grid grid-cols-2 gap-3">
+                    <label className="block">
+                      <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
+                        Nome
+                      </span>
+                      <input
+                        type="text"
+                        name="nome"
+                        className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
+                      />
+                    </label>
+                    <label className="block">
+                      <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
+                        Cognome
+                      </span>
+                      <input
+                        type="text"
+                        name="cognome"
+                        className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
+                      />
+                    </label>
+                    <label className="block">
+                      <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
+                        Età
+                      </span>
+                      <input
+                        type="number"
+                        name="eta"
+                        min={0}
+                        max={120}
+                        className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
+                      />
+                    </label>
+                    <label className="block">
+                      <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
+                        Dove vivi
+                      </span>
+                      <input
+                        type="text"
+                        name="dove"
+                        className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
+                      />
+                    </label>
+                  </div>
+                  <label className="block">
+                    <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
+                      Raccontaci qualcosa di te
+                    </span>
+                    <textarea
+                      name="racconto"
+                      rows={3}
+                      className="mt-1.5 w-full resize-none border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
+                    />
+                  </label>
+
+                  <div className="flex items-center justify-between gap-3 pt-1">
+                    <button
+                      type="submit"
+                      disabled={giftFormStatus === "sending"}
+                      className="rounded-full bg-pistacchio px-5 py-2.5 text-xs font-semibold text-notte transition-colors hover:opacity-90 disabled:opacity-60"
+                    >
+                      {giftFormStatus === "sending" ? "Invio…" : "Continua →"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setMethod("choose")}
+                      className="text-xs text-testo/50 underline"
+                    >
+                      Salta, vai al pagamento
+                    </button>
+                  </div>
+                  {giftFormStatus === "error" && (
+                    <p className="text-xs text-melograno">
+                      Qualcosa è andato storto, riprova più tardi.
+                    </p>
+                  )}
+                </form>
+              </div>
+            ) : method === "done" ? (
+              <div className="py-6 text-center">
                 <p className="font-display text-3xl italic text-notte">Grazie!</p>
                 <p className="mt-3 text-sm leading-relaxed text-testo/70">
                   Il tuo ordine è stato inviato. Ti risponderemo al più presto
                   — Tastalu.
                 </p>
-
-                <div className="mt-8 border-t border-notte/10 pt-6 text-left">
-                  {giftFormStatus === "sent" ? (
-                    <p className="text-center font-display text-lg italic text-notte">
-                      Grazie per averci raccontato qualcosa di te! 🎁
-                    </p>
-                  ) : (
-                    <>
-                      <p className="text-center font-display text-lg italic text-notte">
-                        Un piccolo regalo, solo per te
-                      </p>
-                      <p className="mx-auto mt-2 max-w-sm text-center text-xs leading-relaxed text-testo/60">
-                        Se vuoi, raccontaci qualcosa di te: prepareremo una
-                        sorpresa pensata apposta, da consegnarti insieme al
-                        tuo ordine. Campo facoltativo.
-                      </p>
-                      <form onSubmit={handleGiftFormSubmit} className="mt-5 space-y-4">
-                        <div className="grid grid-cols-2 gap-3">
-                          <label className="block">
-                            <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
-                              Nome
-                            </span>
-                            <input
-                              type="text"
-                              name="nome"
-                              className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
-                            />
-                          </label>
-                          <label className="block">
-                            <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
-                              Cognome
-                            </span>
-                            <input
-                              type="text"
-                              name="cognome"
-                              className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
-                            />
-                          </label>
-                          <label className="block">
-                            <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
-                              Età
-                            </span>
-                            <input
-                              type="number"
-                              name="eta"
-                              min={0}
-                              max={120}
-                              className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
-                            />
-                          </label>
-                          <label className="block">
-                            <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
-                              Dove vivi
-                            </span>
-                            <input
-                              type="text"
-                              name="dove"
-                              className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
-                            />
-                          </label>
-                        </div>
-                        <label className="block">
-                          <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
-                            Raccontaci qualcosa di te
-                          </span>
-                          <textarea
-                            name="racconto"
-                            rows={3}
-                            className="mt-1.5 w-full resize-none border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
-                          />
-                        </label>
-
-                        <div className="flex items-center justify-between gap-3 pt-1">
-                          <button
-                            type="submit"
-                            disabled={giftFormStatus === "sending"}
-                            className="rounded-full bg-pistacchio px-5 py-2.5 text-xs font-semibold text-notte transition-colors hover:opacity-90 disabled:opacity-60"
-                          >
-                            {giftFormStatus === "sending" ? "Invio…" : "Condividi"}
-                          </button>
-                          <button
-                            type="button"
-                            onClick={handleClose}
-                            className="text-xs text-testo/50 underline"
-                          >
-                            No grazie, magari un&apos;altra volta
-                          </button>
-                        </div>
-                        {giftFormStatus === "error" && (
-                          <p className="text-xs text-melograno">
-                            Qualcosa è andato storto, riprova più tardi.
-                          </p>
-                        )}
-                      </form>
-                    </>
-                  )}
-                </div>
-
                 <button
                   type="button"
                   onClick={handleClose}
