@@ -3,6 +3,7 @@ import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/lib/cart-context";
 import { CartDrawer } from "@/components/site/cart-drawer";
+import { NewsletterPopup } from "@/components/site/newsletter-popup";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <CartProvider>
           {children}
           <CartDrawer />
+          <NewsletterPopup />
         </CartProvider>
       </body>
     </html>
