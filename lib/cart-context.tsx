@@ -28,24 +28,36 @@ export interface CartItem {
 
 export interface ShippingInfo {
   nome: string;
+  cognome: string;
   telefono: string;
   indirizzo: string;
   cap: string;
   citta: string;
   provincia: string;
+  infoConsegna: string;
 }
 
 const EMPTY_SHIPPING: ShippingInfo = {
   nome: "",
+  cognome: "",
   telefono: "",
   indirizzo: "",
   cap: "",
   citta: "",
   provincia: "",
+  infoConsegna: "",
 };
 
 export function isShippingComplete(s: ShippingInfo) {
-  return Boolean(s.nome.trim() && s.telefono.trim() && s.indirizzo.trim() && s.cap.trim() && s.citta.trim());
+  return Boolean(
+    s.nome.trim() &&
+      s.cognome.trim() &&
+      s.telefono.trim() &&
+      s.indirizzo.trim() &&
+      s.cap.trim() &&
+      s.citta.trim() &&
+      s.provincia.trim()
+  );
 }
 
 interface CartContextValue {

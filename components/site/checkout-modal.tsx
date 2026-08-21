@@ -19,7 +19,7 @@ declare global {
   }
 }
 
-type Method = "shipping" | "gift" | "choose" | "paypal" | "done";
+type Method = "gift" | "shipping" | "choose" | "paypal" | "done";
 
 export function CheckoutModal({
   open,
@@ -40,7 +40,7 @@ export function CheckoutModal({
     updateShipping,
     clear,
   } = useCart();
-  const [method, setMethod] = useState<Method>("shipping");
+  const [method, setMethod] = useState<Method>("gift");
   const [cardError, setCardError] = useState<string | null>(null);
   const [giftFormStatus, setGiftFormStatus] = useState<GiftFormStatus>("idle");
   const [shippingTouched, setShippingTouched] = useState(false);
@@ -78,7 +78,7 @@ export function CheckoutModal({
     updateShipping({
       citta: option.value,
       provincia: match?.s ?? shipping.provincia,
-      cap: match?.c[0] ?? shipping.cap,
+      cap: match?.c.length === 1 ? match.c[0] : "",
     });
   }
 
@@ -92,7 +92,7 @@ export function CheckoutModal({
   }
 
   function handleClose() {
-    setMethod("shipping");
+    setMethod("gift");
     setCardError(null);
     setGiftFormStatus("idle");
     setShippingTouched(false);
@@ -102,7 +102,7 @@ export function CheckoutModal({
   function handleShippingSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setShippingTouched(true);
-    if (isShippingComplete(shipping)) setMethod("gift");
+    if (isShippingComplete(shipping)) setMethod("choose");
   }
 
   async function handleGiftFormSubmit(e: FormEvent<HTMLFormElement>) {
@@ -132,7 +132,7 @@ export function CheckoutModal({
       if (!res.ok) throw new Error("request failed");
       setGiftFormStatus("sent");
       form.reset();
-      setMethod("choose");
+      setMethod("shipping");
     } catch {
       setGiftFormStatus("error");
     }
@@ -216,7 +216,7 @@ export function CheckoutModal({
     if (totalPrice != null) summary.push(`Totale: ${fmt(totalPrice)}`);
     const summaryBlock = summary.length ? `\n\n${summary.join("\n")}` : "";
     const shippingBlock = isShippingComplete(shipping)
-      ? `\n\nSpedire a:\n${shipping.nome}\n${shipping.indirizzo}\n${shipping.cap} ${shipping.citta}${shipping.provincia ? " (" + shipping.provincia + ")" : ""}\nTel: ${shipping.telefono}`
+      ? `\n\nSpedire a:\n${shipping.nome} ${shipping.cognome}\n${shipping.indirizzo}\n${shipping.cap} ${shipping.citta} (${shipping.provincia})\nTel: ${shipping.telefono}${shipping.infoConsegna.trim() ? `\nInfo consegna: ${shipping.infoConsegna.trim()}` : ""}`
       : "";
     const noteBlock = note.trim() ? `\n\nNote: ${note.trim()}` : "";
     const msg = `Ciao MARÌ! Vorrei ordinare:\n${lines.join("\n")}${summaryBlock}${shippingBlock}${noteBlock}\n\nTastalu 🍋`;
@@ -252,97 +252,7 @@ export function CheckoutModal({
               <X className="h-5 w-5" />
             </button>
 
-            {method === "shipping" ? (
-              <div className="max-h-[80vh] overflow-y-auto py-2 text-left">
-                <p className="text-center font-display text-2xl italic text-notte">
-                  Dove consegniamo il tuo ordine?
-                </p>
-                <p className="mx-auto mt-2 max-w-sm text-center text-xs leading-relaxed text-testo/60">
-                  Ci servono questi dati per organizzare la consegna. Li
-                  ricorderemo per i tuoi prossimi ordini.
-                </p>
-                <form onSubmit={handleShippingSubmit} className="mt-5 space-y-4">
-                  <label className="block">
-                    <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
-                      Nome e cognome
-                    </span>
-                    <input
-                      type="text"
-                      value={shipping.nome}
-                      onChange={(e) => updateShipping({ nome: e.target.value })}
-                      required
-                      className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
-                    />
-                  </label>
-                  <label className="block">
-                    <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
-                      Telefono
-                    </span>
-                    <input
-                      type="tel"
-                      value={shipping.telefono}
-                      onChange={(e) => updateShipping({ telefono: e.target.value })}
-                      required
-                      className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
-                    />
-                  </label>
-                  <label className="block">
-                    <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
-                      Indirizzo (via e civico)
-                    </span>
-                    <input
-                      type="text"
-                      value={shipping.indirizzo}
-                      onChange={(e) => updateShipping({ indirizzo: e.target.value })}
-                      required
-                      className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
-                    />
-                  </label>
-                  <Combobox
-                    label="Città"
-                    options={cityOptions}
-                    value={shipping.citta}
-                    onSelect={handleSelectCity}
-                    placeholder={comuni.length ? "Inizia a scrivere…" : "Caricamento…"}
-                    disabled={comuni.length === 0}
-                    required
-                  />
-                  <div className="grid grid-cols-2 gap-3">
-                    <Combobox
-                      label="Provincia"
-                      options={provinceOptions}
-                      value={provinciaDisplayValue}
-                      onSelect={handleSelectProvincia}
-                      placeholder={comuni.length ? "Inizia a scrivere…" : "Caricamento…"}
-                      disabled={comuni.length === 0}
-                    />
-                    <Combobox
-                      label="CAP"
-                      options={capOptions}
-                      value={shipping.cap}
-                      onSelect={(o) => updateShipping({ cap: o.value })}
-                      placeholder="Inizia a scrivere…"
-                      disabled={capOptions.length === 0}
-                      disabledHint="Seleziona prima la città"
-                      required
-                    />
-                  </div>
-
-                  {shippingTouched && !isShippingComplete(shipping) && (
-                    <p className="text-xs text-melograno">
-                      Compila almeno nome, telefono, indirizzo, CAP e città.
-                    </p>
-                  )}
-
-                  <button
-                    type="submit"
-                    className="w-full rounded-full bg-notte py-3 text-sm font-semibold text-avorio transition-colors hover:bg-mari"
-                  >
-                    Continua →
-                  </button>
-                </form>
-              </div>
-            ) : method === "gift" ? (
+            {method === "gift" ? (
               <div className="max-h-[80vh] overflow-y-auto py-2 text-left">
                 <p className="text-center font-display text-2xl italic text-notte">
                   Un piccolo regalo, solo per te
@@ -418,10 +328,10 @@ export function CheckoutModal({
                     </button>
                     <button
                       type="button"
-                      onClick={() => setMethod("choose")}
+                      onClick={() => setMethod("shipping")}
                       className="text-xs text-testo/50 underline"
                     >
-                      Salta, vai al pagamento
+                      Salta, continua
                     </button>
                   </div>
                   {giftFormStatus === "error" && (
@@ -429,6 +339,123 @@ export function CheckoutModal({
                       Qualcosa è andato storto, riprova più tardi.
                     </p>
                   )}
+                </form>
+              </div>
+            ) : method === "shipping" ? (
+              <div className="max-h-[80vh] overflow-y-auto py-2 text-left">
+                <p className="text-center font-display text-2xl italic text-notte">
+                  Dove consegniamo il tuo ordine?
+                </p>
+                <p className="mx-auto mt-2 max-w-sm text-center text-xs leading-relaxed text-testo/60">
+                  Ci servono questi dati per organizzare la consegna. Li
+                  ricorderemo per i tuoi prossimi ordini.
+                </p>
+                <form onSubmit={handleShippingSubmit} className="mt-5 space-y-4">
+                  <div className="grid grid-cols-2 gap-3">
+                    <label className="block">
+                      <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
+                        Nome
+                      </span>
+                      <input
+                        type="text"
+                        value={shipping.nome}
+                        onChange={(e) => updateShipping({ nome: e.target.value })}
+                        required
+                        className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
+                      />
+                    </label>
+                    <label className="block">
+                      <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
+                        Cognome
+                      </span>
+                      <input
+                        type="text"
+                        value={shipping.cognome}
+                        onChange={(e) => updateShipping({ cognome: e.target.value })}
+                        required
+                        className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
+                      />
+                    </label>
+                  </div>
+                  <label className="block">
+                    <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
+                      Telefono
+                    </span>
+                    <input
+                      type="tel"
+                      value={shipping.telefono}
+                      onChange={(e) => updateShipping({ telefono: e.target.value })}
+                      required
+                      className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
+                    />
+                  </label>
+                  <label className="block">
+                    <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
+                      Indirizzo (via e civico)
+                    </span>
+                    <input
+                      type="text"
+                      value={shipping.indirizzo}
+                      onChange={(e) => updateShipping({ indirizzo: e.target.value })}
+                      required
+                      className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
+                    />
+                  </label>
+                  <Combobox
+                    label="Città"
+                    options={cityOptions}
+                    value={shipping.citta}
+                    onSelect={handleSelectCity}
+                    placeholder={comuni.length ? "Inizia a scrivere…" : "Caricamento…"}
+                    disabled={comuni.length === 0}
+                    required
+                  />
+                  <div className="grid grid-cols-2 gap-3">
+                    <Combobox
+                      label="Provincia"
+                      options={provinceOptions}
+                      value={provinciaDisplayValue}
+                      onSelect={handleSelectProvincia}
+                      placeholder={comuni.length ? "Inizia a scrivere…" : "Caricamento…"}
+                      disabled={comuni.length === 0}
+                      required
+                    />
+                    <Combobox
+                      label="CAP"
+                      options={capOptions}
+                      value={shipping.cap}
+                      onSelect={(o) => updateShipping({ cap: o.value })}
+                      placeholder="Inizia a scrivere…"
+                      disabled={capOptions.length === 0}
+                      disabledHint="Seleziona prima la città"
+                      required
+                    />
+                  </div>
+                  <label className="block">
+                    <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
+                      Info aggiuntive per la consegna (facoltativo)
+                    </span>
+                    <textarea
+                      value={shipping.infoConsegna}
+                      onChange={(e) => updateShipping({ infoConsegna: e.target.value })}
+                      rows={2}
+                      placeholder="Es. citofono, piano, punto di riferimento…"
+                      className="mt-1.5 w-full resize-none border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
+                    />
+                  </label>
+
+                  {shippingTouched && !isShippingComplete(shipping) && (
+                    <p className="text-xs text-melograno">
+                      Compila tutti i campi (tranne le info aggiuntive, facoltative).
+                    </p>
+                  )}
+
+                  <button
+                    type="submit"
+                    className="w-full rounded-full bg-notte py-3 text-sm font-semibold text-avorio transition-colors hover:bg-mari"
+                  >
+                    Continua →
+                  </button>
                 </form>
               </div>
             ) : method === "done" ? (
