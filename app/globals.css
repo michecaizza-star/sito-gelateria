@@ -1,0 +1,117 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --radius: 0.5rem;
+
+  /* MARÌ brand palette */
+  --color-mari: #0f4c81;
+  --color-notte: #0a2f52;
+  --color-avorio: #f8f5ef;
+  --color-sabbia: #e8ddcb;
+  --color-oro: #d4b26a;
+  --color-pistacchio: #8ea760;
+  --color-melograno: #8e2e3a;
+  --color-testo: #2d2d2d;
+
+  --background: var(--color-avorio);
+  --foreground: var(--color-testo);
+  --primary: var(--color-mari);
+  --primary-foreground: var(--color-avorio);
+  --secondary: var(--color-sabbia);
+  --secondary-foreground: var(--color-notte);
+  --accent: var(--color-oro);
+  --accent-foreground: var(--color-notte);
+  --border: color-mix(in srgb, var(--color-notte) 12%, transparent);
+  --ring: var(--color-oro);
+}
+
+@theme inline {
+  --color-mari: var(--color-mari);
+  --color-notte: var(--color-notte);
+  --color-avorio: var(--color-avorio);
+  --color-sabbia: var(--color-sabbia);
+  --color-oro: var(--color-oro);
+  --color-pistacchio: var(--color-pistacchio);
+  --color-melograno: var(--color-melograno);
+  --color-testo: var(--color-testo);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+
+  --font-display: var(--font-playfair);
+  --font-sans: var(--font-inter);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  ::selection {
+    background: var(--color-oro);
+    color: var(--color-notte);
+  }
+  section[id] {
+    scroll-margin-top: 5.5rem;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Fine grain texture, used sparingly over color fields for a tactile, editorial finish */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Thin citrus-slice line pattern used as a subtle repeating divider/background accent */
+  .pattern-agrumi {
+    background-image: radial-gradient(
+      circle at center,
+      transparent 0,
+      transparent 60%,
+      color-mix(in srgb, var(--color-oro) 35%, transparent) 61%,
+      transparent 62%
+    );
+    background-size: 56px 56px;
+  }
+
+  .animate-marquee {
+    animation: marquee 28s linear infinite;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
