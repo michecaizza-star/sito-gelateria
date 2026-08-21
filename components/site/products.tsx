@@ -57,7 +57,7 @@ function ProductRow({ product, index }: { product: Product; index: number }) {
 
         <AddToCart product={product} />
 
-        <div className="mt-4 flex items-center gap-5">
+        <div className="mt-4 flex flex-col items-start gap-3">
           <Link
             href={`/prodotti/${product.slug}`}
             className="group/link inline-flex items-center gap-1.5 font-display text-base italic text-notte transition-colors hover:text-mari"
@@ -118,7 +118,7 @@ export function Products() {
 
               <AddToCart product={product} />
 
-              <div className="mt-3 flex flex-wrap items-center gap-4">
+              <div className="mt-3 flex flex-col items-start gap-2.5">
                 <Link
                   href={`/prodotti/${product.slug}`}
                   className="group/link inline-flex items-center gap-1.5 font-display text-sm italic text-notte transition-colors hover:text-mari"
