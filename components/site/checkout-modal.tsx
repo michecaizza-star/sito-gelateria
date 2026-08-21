@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CreditCard, Lock, MessageCircle, X } from "lucide-react";
 import { useCart, isShippingComplete } from "@/lib/cart-context";
 import { waLink, GIFT_PROFILE_EMAIL } from "@/lib/site-content";
 import { PAYPAL_CLIENT_ID, NEXI_PAYMENT_LINK_URL } from "@/lib/payments-config";
+import { loadComuni, extractProvince, type Comune } from "@/lib/comuni";
+import { Combobox, type ComboboxOption } from "@/components/site/combobox";
 
 type GiftFormStatus = "idle" | "sending" | "sent" | "error";
 
@@ -42,7 +44,52 @@ export function CheckoutModal({
   const [cardError, setCardError] = useState<string | null>(null);
   const [giftFormStatus, setGiftFormStatus] = useState<GiftFormStatus>("idle");
   const [shippingTouched, setShippingTouched] = useState(false);
+  const [comuni, setComuni] = useState<Comune[]>([]);
   const paypalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (method !== "shipping" || comuni.length > 0) return;
+    let cancelled = false;
+    loadComuni().then((data) => {
+      if (!cancelled) setComuni(data);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [method, comuni.length]);
+
+  const provinceOptions = useMemo<ComboboxOption[]>(
+    () => extractProvince(comuni).map((p) => ({ label: `${p.nome} (${p.sigla})`, value: p.sigla })),
+    [comuni]
+  );
+  const cityOptions = useMemo<ComboboxOption[]>(() => {
+    const scoped = shipping.provincia ? comuni.filter((c) => c.s === shipping.provincia) : comuni;
+    return scoped.map((c) => ({ label: c.n, value: c.n }));
+  }, [comuni, shipping.provincia]);
+  const capOptions = useMemo<ComboboxOption[]>(() => {
+    const match = comuni.find((c) => c.n === shipping.citta);
+    return (match?.c ?? []).map((cap) => ({ label: cap, value: cap }));
+  }, [comuni, shipping.citta]);
+  const provinciaDisplayValue =
+    provinceOptions.find((p) => p.value === shipping.provincia)?.label ?? shipping.provincia;
+
+  function handleSelectCity(option: ComboboxOption) {
+    const match = comuni.find((c) => c.n === option.value);
+    updateShipping({
+      citta: option.value,
+      provincia: match?.s ?? shipping.provincia,
+      cap: match?.c[0] ?? shipping.cap,
+    });
+  }
+
+  function handleSelectProvincia(option: ComboboxOption) {
+    const match = comuni.find((c) => c.n === shipping.citta);
+    const cityStillValid = match?.s === option.value;
+    updateShipping({
+      provincia: option.value,
+      ...(cityStillValid ? {} : { citta: "", cap: "" }),
+    });
+  }
 
   function handleClose() {
     setMethod("shipping");
@@ -251,43 +298,35 @@ export function CheckoutModal({
                       className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
                     />
                   </label>
-                  <div className="grid grid-cols-3 gap-3">
-                    <label className="block">
-                      <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
-                        CAP
-                      </span>
-                      <input
-                        type="text"
-                        value={shipping.cap}
-                        onChange={(e) => updateShipping({ cap: e.target.value })}
-                        required
-                        className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
-                      />
-                    </label>
-                    <label className="col-span-2 block">
-                      <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
-                        Città
-                      </span>
-                      <input
-                        type="text"
-                        value={shipping.citta}
-                        onChange={(e) => updateShipping({ citta: e.target.value })}
-                        required
-                        className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
-                      />
-                    </label>
-                  </div>
-                  <label className="block">
-                    <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
-                      Provincia
-                    </span>
-                    <input
-                      type="text"
-                      value={shipping.provincia}
-                      onChange={(e) => updateShipping({ provincia: e.target.value })}
-                      className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
+                  <Combobox
+                    label="Città"
+                    options={cityOptions}
+                    value={shipping.citta}
+                    onSelect={handleSelectCity}
+                    placeholder={comuni.length ? "Inizia a scrivere…" : "Caricamento…"}
+                    disabled={comuni.length === 0}
+                    required
+                  />
+                  <div className="grid grid-cols-2 gap-3">
+                    <Combobox
+                      label="Provincia"
+                      options={provinceOptions}
+                      value={provinciaDisplayValue}
+                      onSelect={handleSelectProvincia}
+                      placeholder={comuni.length ? "Inizia a scrivere…" : "Caricamento…"}
+                      disabled={comuni.length === 0}
                     />
-                  </label>
+                    <Combobox
+                      label="CAP"
+                      options={capOptions}
+                      value={shipping.cap}
+                      onSelect={(o) => updateShipping({ cap: o.value })}
+                      placeholder="Inizia a scrivere…"
+                      disabled={capOptions.length === 0}
+                      disabledHint="Seleziona prima la città"
+                      required
+                    />
+                  </div>
 
                   {shippingTouched && !isShippingComplete(shipping) && (
                     <p className="text-xs text-melograno">
