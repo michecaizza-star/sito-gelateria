@@ -1,6 +1,7 @@
 import { Container } from "@/components/site/container";
 import { SectionHeading } from "@/components/site/section-heading";
 import { Reveal } from "@/components/site/reveal";
+import { Logo } from "@/components/site/logo";
 
 export function Story() {
   return (
@@ -80,9 +81,7 @@ export function Story() {
                 Assaggialo. Provalo.
               </p>
               <div className="mx-auto mt-8 h-px w-12 bg-avorio/20" />
-              <p className="mt-8 font-display text-xl italic">
-                MARÌ. TASTALU.
-              </p>
+              <Logo size={44} invert className="mx-auto mt-8" />
               <p className="mt-3 text-sm leading-relaxed text-avorio/65">
                 Una storia di famiglia, diventata un invito ad assaggiare la
                 Sicilia.
