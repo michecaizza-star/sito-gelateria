@@ -206,7 +206,7 @@ export function getChatbotReply(rawText: string): ChatReply {
   if (product) {
     return {
       text: describeProduct(product),
-      links: [{ label: "Vai al prodotto", href: "#prodotti" }],
+      links: [{ label: `Scopri ${product.name}`, href: `/prodotti/${product.slug}` }],
     };
   }
 
@@ -214,21 +214,21 @@ export function getChatbotReply(rawText: string): ChatReply {
   if (ingredient) {
     return {
       text: describeIngredient(ingredient),
-      links: [{ label: "Scopri le materie prime", href: "#materie-prime" }],
+      links: [{ label: "Scopri le materie prime", href: "/#materie-prime" }],
     };
   }
 
   if (PRODUCT_LIST_RE.test(text)) {
     return {
       text: `Ecco i nostri prodotti:\n${PRODUCT_LIST_TEXT}\n\nChiedimi di uno in particolare per formati, prezzo e conservazione.`,
-      links: [{ label: "Vai ai prodotti", href: "#prodotti" }],
+      links: [{ label: "Vai ai prodotti", href: "/#prodotti" }],
     };
   }
 
   if (INGREDIENT_LIST_RE.test(text)) {
     return {
       text: `Le nostre materie prime, quasi tutte siciliane:\n${INGREDIENT_LIST_TEXT}`,
-      links: [{ label: "Scopri le materie prime", href: "#materie-prime" }],
+      links: [{ label: "Scopri le materie prime", href: "/#materie-prime" }],
     };
   }
 
@@ -249,7 +249,7 @@ export function getChatbotReply(rawText: string): ChatReply {
   if (DISCOUNT_RE.test(text)) {
     return {
       text: `Iscrivendoti alla newsletter ricevi subito un codice sconto del 10% sul primo ordine, da inserire nel carrello. Se ce l'hai già, il codice è ${NEWSLETTER_DISCOUNT_CODE}.`,
-      links: [{ label: "Iscriviti alla newsletter", href: "#top" }],
+      links: [{ label: "Iscriviti alla newsletter", href: "/#top" }],
     };
   }
 
@@ -262,7 +262,7 @@ export function getChatbotReply(rawText: string): ChatReply {
   if (PRICE_RE.test(text)) {
     return {
       text: "I prezzi sono indicati su ogni prodotto e nel carrello (li trovi anche sommati con spedizione e eventuale sconto). Dimmi un prodotto specifico se vuoi il suo prezzo.",
-      links: [{ label: "Vai ai prodotti", href: "#prodotti" }],
+      links: [{ label: "Vai ai prodotti", href: "/#prodotti" }],
     };
   }
 
@@ -270,7 +270,7 @@ export function getChatbotReply(rawText: string): ChatReply {
     return {
       text: "Per ordinare: scegli i prodotti nella sezione Prodotti, aggiungili al carrello (icona in alto a destra), poi clicca su \"Vai al pagamento\". Puoi pagare con WhatsApp, PayPal o carta (Nexi).",
       links: [
-        { label: "Vai ai prodotti", href: "#prodotti" },
+        { label: "Vai ai prodotti", href: "/#prodotti" },
         { label: "Scrivici su WhatsApp", href: waLink(), external: true },
       ],
     };
@@ -285,14 +285,14 @@ export function getChatbotReply(rawText: string): ChatReply {
   if (LOCATION_RE.test(text)) {
     return {
       text: `Ci trovi a ${contactInfo.address}.`,
-      links: [{ label: "Vai ai contatti", href: "#contatti" }],
+      links: [{ label: "Vai ai contatti", href: "/#contatti" }],
     };
   }
 
   if (HORECA_RE.test(text)) {
     return {
       text: "Realizziamo prodotti personalizzati per bar, hotel, ristoranti e attività Horeca. Raccontaci la tua idea nel modulo dedicato.",
-      links: [{ label: "Vai a MARÌ per Horeca", href: "#horeca" }],
+      links: [{ label: "Vai a MARÌ per Horeca", href: "/#horeca" }],
     };
   }
 

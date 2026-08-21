@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/lib/cart-context";
+import { ChatbotProvider } from "@/lib/chatbot-context";
 import { CartDrawer } from "@/components/site/cart-drawer";
 import { NewsletterPopup } from "@/components/site/newsletter-popup";
+import { WhatsAppButton } from "@/components/site/whatsapp-button";
+import { Chatbot } from "@/components/site/chatbot";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -30,9 +33,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col bg-avorio text-testo font-sans">
         <CartProvider>
-          {children}
-          <CartDrawer />
-          <NewsletterPopup />
+          <ChatbotProvider>
+            {children}
+            <CartDrawer />
+            <NewsletterPopup />
+            <WhatsAppButton />
+            <Chatbot />
+          </ChatbotProvider>
         </CartProvider>
       </body>
     </html>

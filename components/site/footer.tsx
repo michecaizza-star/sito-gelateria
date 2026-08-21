@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { MessageCircle } from "lucide-react";
 import { Container } from "@/components/site/container";
 import { Logo } from "@/components/site/logo";
@@ -24,9 +25,9 @@ export function Footer() {
           <a href={contactInfo.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-avorio">
             Instagram
           </a>
-          <a href="#contatti" className="hover:text-avorio">
+          <Link href="/#contatti" className="hover:text-avorio">
             Contatti
-          </a>
+          </Link>
           <a href="/privacy" className="hover:text-avorio">
             Privacy
           </a>

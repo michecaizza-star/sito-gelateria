@@ -15,12 +15,12 @@ export const FREE_SHIPPING_THRESHOLD = 75;
 export const SHIPPING_COST = 4.99;
 
 export const navLinks = [
-  { href: "#storia", label: "Storia" },
-  { href: "#prodotti", label: "Prodotti" },
-  { href: "#materie-prime", label: "Materie prime" },
-  { href: "#solo-sicilia", label: "Solo Sicilia" },
-  { href: "#horeca", label: "Horeca" },
-  { href: "#contatti", label: "Contatti" },
+  { href: "/#storia", label: "Storia" },
+  { href: "/#prodotti", label: "Prodotti" },
+  { href: "/#materie-prime", label: "Materie prime" },
+  { href: "/#solo-sicilia", label: "Solo Sicilia" },
+  { href: "/#horeca", label: "Horeca" },
+  { href: "/#contatti", label: "Contatti" },
 ];
 
 export type Tone = "mari" | "notte" | "oro" | "pistacchio" | "melograno" | "sabbia" | "avorio";
@@ -39,6 +39,14 @@ export interface Product {
    * ufficiale (usate anche dal chatbot).
    */
   conservation: string;
+  /** Racconto d'origine, mostrato nella pagina dedicata al prodotto. */
+  story: string;
+  /**
+   * TODO — racconto del processo di lavorazione, da aggiungere quando
+   * disponibile. Finché resta vuoto, la pagina del prodotto mostra un
+   * messaggio placeholder al posto di questa sezione.
+   */
+  process?: string;
 }
 
 export const products: Product[] = [
@@ -51,6 +59,25 @@ export const products: Product[] = [
     tone: "oro",
     image: "/images/prodotto-regina.png",
     conservation: "In luogo fresco e asciutto, in contenitore ermetico, lontano da fonti di calore e umidità.",
+    story: `Il protagonista non è il biscotto.
+
+È il seme.
+
+Il sesamo, in Sicilia chiamato giuggiulena, è arrivato da lontano attraverso le antiche rotte del Mediterraneo. E una volta entrato nella cucina dell'isola, ha trovato un posto praticamente ovunque.
+
+A Palermo finisce anche sopra un biscotto di pasta frolla.
+
+Ma non come decorazione.
+
+Tutto intorno.
+
+Ogni biscotto viene passato nel sesamo prima di entrare in forno. Il calore lo tosta e sprigiona quel profumo che arriva prima ancora del morso.
+
+A Palermo diventano reginelle, mentre in siciliano sono conosciuti come viscotti ca gigiulena: biscotti con il sesamo.
+
+Una storia piccola, ma bellissima.
+
+Perché racconta una cosa tipicamente siciliana: prendere qualcosa arrivato da lontano e farlo diventare così nostro da dimenticarci quasi che un tempo venisse da altrove.`,
   },
   {
     slug: "zuccotti",
@@ -61,6 +88,25 @@ export const products: Product[] = [
     tone: "sabbia",
     image: "/images/prodotto-zuccotti.png",
     conservation: "In luogo fresco e asciutto, in contenitore ermetico, lontano da fonti di calore e umidità.",
+    story: `Qui la storia non parla di Firenze e nemmeno dello zuccotto rinascimentale.
+
+Parla di zuccata.
+
+In Sicilia la zucca viene trasformata lentamente: candita, lasciata riposare, fatta diventare morbida, lucida e intensamente dolce.
+
+E poi incontra quello che la pasticceria siciliana conosce bene: mandorle e cannella.
+
+Il ripieno viene racchiuso nella pasta frolla e nasce uno di quei dolci che, a prima vista, sembrano semplici.
+
+Ma il nome racconta già cosa nascondono.
+
+Lo spezzi e trovi la zuccata. La mandorla. Il profumo della cannella.
+
+Non è un dolce nato per stupire con l'apparenza.
+
+È l'opposto.
+
+È uno di quei dolci siciliani che ti obbligano a rompere la superficie per scoprire la storia che c'è dentro.`,
   },
   {
     slug: "buccellati",
@@ -71,6 +117,25 @@ export const products: Product[] = [
     tone: "melograno",
     image: "/images/prodotto-buccellati.png",
     conservation: "In luogo fresco e asciutto, in contenitore ermetico; una volta aperta la confezione, consumare preferibilmente entro pochi giorni.",
+    story: `Molto prima che il buccellato diventasse un dolce siciliano di Natale, esisteva il buccellatum romano.
+
+Era un pane semplice, asciutto, fatto per durare.
+
+Lo portavano con sé i legionari. Lo mangiavano i naviganti. Doveva essere facile da trasportare e soprattutto non rovinarsi rapidamente.
+
+Il nome stesso viene da buccella: boccone.
+
+Poi quel pane attraversa i secoli e arriva in Sicilia.
+
+E qui cambia completamente vita.
+
+La pasta si arricchisce e dentro entrano i sapori della dispensa: fichi secchi, mandorle, noci, scorze d'agrumi, spezie.
+
+Quello che era nato per accompagnare un viaggio diventa il dolce delle feste.
+
+Da pane da viaggio a dolce da mettere al centro della tavola.
+
+Non è una cattiva evoluzione.`,
   },
   {
     slug: "paste-di-mandorla",
@@ -80,6 +145,21 @@ export const products: Product[] = [
     tone: "sabbia",
     image: "/images/prodotto-paste-mandorla.png",
     conservation: "In luogo fresco e asciutto, in contenitore ermetico a temperatura ambiente.",
+    story: `Prima di diventare un biscotto, la mandorla ha fatto un viaggio.
+
+Le tecniche di lavorazione della frutta secca e dello zucchero arrivano in Sicilia anche attraverso la cultura araba. Poi entrano nei conventi, dove le monache trasformano quella conoscenza in una vera arte.
+
+Mandorle finemente macinate. Zucchero. Acqua.
+
+Niente di più.
+
+Eppure da quell'impasto nasce un mondo intero.
+
+La pasta viene modellata, colorata, trasformata in frutti, pecorelle, dolci delle feste. Diventa persino il rivestimento della cassata.
+
+A Palermo, il lavoro delle monache della Martorana è così importante che il nome del convento finisce per diventare il nome stesso del prodotto.
+
+Una mandorla, da sola, non raccontava ancora nulla. Fu la mano dell'uomo a insegnarle quante storie poteva diventare.`,
   },
   {
     slug: "ciambelle-siciliane",
@@ -89,6 +169,27 @@ export const products: Product[] = [
     tone: "oro",
     image: "/images/prodotto-ciambelle.png",
     conservation: "A temperatura ambiente in contenitore chiuso; da consumare preferibilmente entro 2-3 giorni per apprezzarne al meglio la morbidezza.",
+    story: `Questa è la storia che terrei più vicina alle persone.
+
+Perché le ciambelle non appartengono alle grandi tavole dei re.
+
+Appartengono alle case.
+
+Alle ricette che passavano da una madre a una figlia, da una nonna a una nipote, spesso senza essere mai scritte.
+
+Una ciambella semplice, preparata con ingredienti che una famiglia poteva avere in casa.
+
+E proprio per questo ogni paese poteva avere la sua.
+
+La forma ad anello, il profumo appena uscita dal forno, la consistenza asciutta che la rendeva perfetta da conservare.
+
+Non era un dolce da fotografare.
+
+Era un dolce da tenere in dispensa.
+
+E magari qualcuno arrivava a casa, apriva il contenitore e ne prendeva una senza nemmeno chiedere.
+
+Perché certe ricette non diventano tradizione quando finiscono nei libri. Diventano tradizione quando nessuno sente il bisogno di chiedere chi le ha inventate.`,
   },
   {
     slug: "crostate-artigianali",
@@ -98,6 +199,25 @@ export const products: Product[] = [
     tone: "melograno",
     image: "/images/prodotto-crostata.png",
     conservation: "A temperatura ambiente in contenitore chiuso per 2-3 giorni; una volta tagliate, si consiglia di conservarle in frigorifero.",
+    story: `Nel 1570, a Roma, il cuoco Bartolomeo Scappi pubblica Opera, uno dei più importanti ricettari del Rinascimento.
+
+Tra le sue pagine c'è un intero capitolo dedicato alle crostate.
+
+E qui arriva la sorpresa: quelle crostate non sono necessariamente dolci.
+
+Scappi le prepara con funghi, frutta, formaggi, carne, spezie, zucchero. Alcune sono ricoperte da strisce di pasta, proprio come quelle che riconosciamo ancora oggi.
+
+La crostata, quindi, non nasce come il dolce alla marmellata della domenica.
+
+Nasce molto prima, come un'idea: una pasta che racchiude qualcosa.
+
+Poi i secoli fanno il resto.
+
+La frutta prende il posto della carne, arrivano confetture e creme, la pasta diventa friabile.
+
+E quella vecchia idea del Rinascimento arriva fino alle nostre tavole.
+
+Una crostata cambia ripieno, ma non cambia mai il suo modo di raccontare ciò che c'è dentro.`,
   },
   {
     slug: "sbriciolata-ricotta",
@@ -107,6 +227,23 @@ export const products: Product[] = [
     tone: "notte",
     image: "/images/prodotto-sbriciolata.png",
     conservation: "In frigorifero, per la presenza di ricotta fresca; consumare entro 2-3 giorni dall'acquisto.",
+    story: `Questa storia, in realtà, comincia lontano dalla Sicilia.
+
+Nelle campagne mantovane, molto prima che arrivasse sulle tavole eleganti, esisteva una torta povera fatta con ciò che c'era: farina di mais, grassi e frutta secca.
+
+Era irregolare. Grossolana. E soprattutto si rompeva.
+
+Poi la ricetta arriva alla corte dei Gonzaga, prima del Seicento. Gli ingredienti si raffinano: entrano mandorle, zucchero e farina bianca.
+
+Ma la torta mantiene il suo carattere.
+
+Non si taglia in fette perfette.
+
+Si spezza.
+
+Il nome stesso viene da brìsa, "briciola" nel dialetto mantovano.
+
+È curioso pensare che una preparazione nata nelle cucine contadine sia arrivata alla corte dei nobili senza perdere la sua caratteristica più importante: continuare a sbriciolarsi tra le mani.`,
   },
   {
     slug: "frutta-martorana",
@@ -116,6 +253,27 @@ export const products: Product[] = [
     tone: "pistacchio",
     image: "/images/prodotto-frutta-martorana.png",
     conservation: "In luogo fresco e asciutto, in contenitore chiuso; si conserva bene anche per diverse settimane.",
+    story: `C'è una leggenda che sembra uscita da una favola.
+
+Palermo, un convento, la fine dell'autunno.
+
+Arriva la notizia che un sovrano vuole vedere il meraviglioso giardino delle monache della Martorana. Ma è la stagione sbagliata: gli alberi sono spogli, i frutti non ci sono più.
+
+E allora le monache fanno qualcosa di impensabile.
+
+Prendono mandorle e zucchero e cominciano a modellare la pasta.
+
+Arance. Limoni. Fichi. Pere.
+
+Li colorano uno a uno e li appendono agli alberi.
+
+Da lontano, il giardino sembra tornato improvvisamente vivo.
+
+Solo avvicinandosi si scopre l'inganno.
+
+Non era frutta. Era pasta di mandorle.
+
+La storia è una leggenda, ma il legame con i monasteri palermitani e con la tradizione della pasta di mandorle è antico e documentato. E ancora oggi la Martorana è legata alla Festa dei Morti, quando quei piccoli frutti tornano a riempire le pasticcerie siciliane.`,
   },
   {
     slug: "croccante",
@@ -126,6 +284,21 @@ export const products: Product[] = [
     // Immagine segnaposto: sostituire con una foto reale del prodotto.
     image: "/images/prodotto-croccante.png",
     conservation: "In luogo fresco e asciutto, in contenitore ermetico, lontano dall'umidità.",
+    story: `Prima di essere un dolce, il croccante era soprattutto un modo intelligente di conservare.
+
+Frutta secca, miele o zucchero: ingredienti preziosi, nutrienti e capaci di durare.
+
+In Sicilia questa tradizione incontra anche l'eredità della cucina araba. È da questo mondo che viene fatta risalire la cubaita, il croccante tradizionale dell'isola, il cui nome è collegato all'arabo qubbayt.
+
+Poi arriva il fuoco.
+
+Lo zucchero o il miele diventano caramello. La frutta secca viene incorporata. Tutto viene steso rapidamente prima che indurisca.
+
+E quello che pochi istanti prima era morbido diventa una lastra croccante.
+
+È quasi una piccola magia della cucina antica: calore, zucchero e frutta secca.
+
+Tre cose semplici, trasformate in qualcosa che resiste al tempo.`,
   },
 ];
 

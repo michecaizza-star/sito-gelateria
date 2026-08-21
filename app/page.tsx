@@ -10,8 +10,6 @@ import { Horeca } from "@/components/site/horeca";
 import { Newsletter } from "@/components/site/newsletter";
 import { Contact } from "@/components/site/contact";
 import { Footer } from "@/components/site/footer";
-import { WhatsAppButton } from "@/components/site/whatsapp-button";
-import { Chatbot } from "@/components/site/chatbot";
 
 export default function Home() {
   return (
@@ -30,8 +28,6 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
-      <WhatsAppButton />
-      <Chatbot />
     </>
   );
 }
