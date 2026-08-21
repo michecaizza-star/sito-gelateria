@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { Menu, ShoppingBag, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/site/logo";
@@ -50,13 +51,13 @@ export function Header() {
       )}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-10">
-        <a href="#top" className="flex items-center">
+        <Link href="/#top" className="flex items-center">
           <Logo
             size={40}
             invert={!scrolled}
             className="drop-shadow-[0_1px_8px_rgba(10,47,82,0.35)]"
           />
-        </a>
+        </Link>
 
         <nav className="hidden items-center gap-9 lg:flex">
           {navLinks.map((link) => (

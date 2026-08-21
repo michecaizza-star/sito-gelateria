@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Bot, Send, X } from "lucide-react";
 import { getChatbotReply, type ChatLink } from "@/lib/chatbot";
+import { useChatbot } from "@/lib/chatbot-context";
 
 interface Message {
   role: "user" | "bot";
@@ -19,14 +20,14 @@ const WELCOME: Message = {
 };
 
 export function Chatbot() {
-  const [open, setOpen] = useState(false);
+  const { isOpen, toggleChatbot, closeChatbot, pendingQuery, consumePendingQuery } = useChatbot();
   const [messages, setMessages] = useState<Message[]>([WELCOME]);
   const [input, setInput] = useState("");
   const listRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: "smooth" });
-  }, [messages, open]);
+  }, [messages, isOpen]);
 
   function send(text: string) {
     const trimmed = text.trim();
@@ -40,6 +41,16 @@ export function Chatbot() {
     setInput("");
   }
 
+  useEffect(() => {
+    if (!isOpen || !pendingQuery) return;
+    // Invia automaticamente la domanda pre-compilata (es. da "Chiedi info"
+    // su un prodotto) non appena il pannello si apre.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    send(pendingQuery);
+    consumePendingQuery();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen, pendingQuery]);
+
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     send(input);
@@ -49,15 +60,15 @@ export function Chatbot() {
     <>
       <button
         type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-label={open ? "Chiudi assistente MARÌ" : "Apri assistente MARÌ"}
+        onClick={toggleChatbot}
+        aria-label={isOpen ? "Chiudi assistente MARÌ" : "Apri assistente MARÌ"}
         className="fixed bottom-24 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full border border-oro/40 bg-notte text-oro shadow-[0_10px_30px_rgba(10,47,82,0.35)] transition-transform hover:scale-105 sm:bottom-28 sm:right-8"
       >
-        {open ? <X className="h-6 w-6" /> : <Bot className="h-6 w-6" />}
+        {isOpen ? <X className="h-6 w-6" /> : <Bot className="h-6 w-6" />}
       </button>
 
       <AnimatePresence>
-        {open && (
+        {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: 16, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -72,7 +83,7 @@ export function Chatbot() {
               </span>
               <button
                 type="button"
-                onClick={() => setOpen(false)}
+                onClick={closeChatbot}
                 aria-label="Chiudi"
                 className="text-avorio/70 hover:text-avorio"
               >
@@ -99,7 +110,7 @@ export function Chatbot() {
                             href={l.href}
                             target={l.external ? "_blank" : undefined}
                             rel={l.external ? "noopener noreferrer" : undefined}
-                            onClick={() => !l.external && setOpen(false)}
+                            onClick={() => !l.external && closeChatbot()}
                             className="rounded-full bg-notte px-3 py-1.5 text-xs font-medium text-avorio transition-colors hover:bg-mari"
                           >
                             {l.label}

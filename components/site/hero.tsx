@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowDown, MessageCircle } from "lucide-react";
 import { waLink } from "@/lib/site-content";
@@ -99,12 +100,12 @@ export function Hero() {
               <MessageCircle className="h-4 w-4" />
             </span>
           </a>
-          <a
-            href="#storia"
+          <Link
+            href="/#storia"
             className="inline-flex items-center gap-2 rounded-full border border-avorio/30 px-6 py-3.5 text-sm font-medium text-avorio transition-colors hover:border-avorio/70"
           >
             Scopri MARÌ
-          </a>
+          </Link>
         </motion.div>
 
         <motion.p
@@ -118,7 +119,7 @@ export function Hero() {
       </div>
 
       <motion.a
-        href="#tastalu"
+        href="/#tastalu"
         aria-label="Scorri per scoprire di più"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
