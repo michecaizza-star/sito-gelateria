@@ -44,15 +44,19 @@ interface CartContextValue {
   removeDiscountCode: () => void;
   shippingCost: number | null;
   totalPrice: number | null;
+  note: string;
+  setNote: (note: string) => void;
 }
 
 const CartContext = createContext<CartContextValue | null>(null);
 const STORAGE_KEY = "mari-cart-v1";
 const DISCOUNT_STORAGE_KEY = "mari-discount-v1";
+const NOTE_STORAGE_KEY = "mari-note-v1";
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [discountCode, setDiscountCode] = useState<string | null>(null);
+  const [note, setNote] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [hydrated, setHydrated] = useState(false);
 
@@ -66,6 +70,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       if (raw) setItems(JSON.parse(raw));
       const rawDiscount = window.localStorage.getItem(DISCOUNT_STORAGE_KEY);
       if (rawDiscount) setDiscountCode(rawDiscount);
+      const rawNote = window.localStorage.getItem(NOTE_STORAGE_KEY);
+      if (rawNote) setNote(rawNote);
     } catch {
       // ignore malformed/unavailable storage
     }
@@ -90,6 +96,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       // ignore quota/unavailable storage
     }
   }, [discountCode, hydrated]);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    try {
+      if (note) window.localStorage.setItem(NOTE_STORAGE_KEY, note);
+      else window.localStorage.removeItem(NOTE_STORAGE_KEY);
+    } catch {
+      // ignore quota/unavailable storage
+    }
+  }, [note, hydrated]);
 
   const addItem = useCallback<CartContextValue["addItem"]>((item) => {
     setItems((prev) => {
@@ -121,6 +137,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const clear = useCallback(() => {
     setItems([]);
     setDiscountCode(null);
+    setNote("");
   }, []);
 
   const applyDiscountCode = useCallback((code: string) => {
@@ -180,6 +197,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     removeDiscountCode,
     shippingCost,
     totalPrice,
+    note,
+    setNote,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

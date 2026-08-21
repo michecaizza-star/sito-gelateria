@@ -26,7 +26,7 @@ export function CheckoutModal({
   open: boolean;
   onClose: () => void;
 }) {
-  const { items, subtotal, discountCode, discountAmount, shippingCost, totalPrice, clear } = useCart();
+  const { items, subtotal, discountCode, discountAmount, shippingCost, totalPrice, note, clear } = useCart();
   const [method, setMethod] = useState<Method>("gift");
   const [cardError, setCardError] = useState<string | null>(null);
   const [giftFormStatus, setGiftFormStatus] = useState<GiftFormStatus>("idle");
@@ -149,7 +149,8 @@ export function CheckoutModal({
     }
     if (totalPrice != null) summary.push(`Totale: ${fmt(totalPrice)}`);
     const summaryBlock = summary.length ? `\n\n${summary.join("\n")}` : "";
-    const msg = `Ciao MARÌ! Vorrei ordinare:\n${lines.join("\n")}${summaryBlock}\n\nTastalu 🍋`;
+    const noteBlock = note.trim() ? `\n\nNote: ${note.trim()}` : "";
+    const msg = `Ciao MARÌ! Vorrei ordinare:\n${lines.join("\n")}${summaryBlock}${noteBlock}\n\nTastalu 🍋`;
     window.open(waLink(msg), "_blank", "noopener,noreferrer");
     clear();
     setMethod("done");
