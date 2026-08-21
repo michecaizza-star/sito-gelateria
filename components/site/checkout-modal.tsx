@@ -26,7 +26,7 @@ export function CheckoutModal({
   open: boolean;
   onClose: () => void;
 }) {
-  const { items, totalPrice, clear } = useCart();
+  const { items, subtotal, discountCode, discountAmount, shippingCost, totalPrice, clear } = useCart();
   const [method, setMethod] = useState<Method>("gift");
   const [cardError, setCardError] = useState<string | null>(null);
   const [giftFormStatus, setGiftFormStatus] = useState<GiftFormStatus>("idle");
@@ -140,7 +140,16 @@ export function CheckoutModal({
       (i) =>
         `• ${i.name}${i.flavor ? " – " + i.flavor : ""}${i.size ? " (" + i.size + ")" : ""} x${i.quantity}`
     );
-    const msg = `Ciao MARÌ! Vorrei ordinare:\n${lines.join("\n")}\n\nTastalu 🍋`;
+    const fmt = (n: number) => n.toLocaleString("it-IT", { style: "currency", currency: "EUR" });
+    const summary: string[] = [];
+    if (subtotal != null) summary.push(`Subtotale: ${fmt(subtotal)}`);
+    if (discountCode) summary.push(`Codice ${discountCode}: -${fmt(discountAmount)}`);
+    if (shippingCost != null) {
+      summary.push(`Spedizione: ${shippingCost === 0 ? "gratuita" : fmt(shippingCost)}`);
+    }
+    if (totalPrice != null) summary.push(`Totale: ${fmt(totalPrice)}`);
+    const summaryBlock = summary.length ? `\n\n${summary.join("\n")}` : "";
+    const msg = `Ciao MARÌ! Vorrei ordinare:\n${lines.join("\n")}${summaryBlock}\n\nTastalu 🍋`;
     window.open(waLink(msg), "_blank", "noopener,noreferrer");
     clear();
     setMethod("done");
