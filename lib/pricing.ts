@@ -12,6 +12,7 @@ export const productVariants: Record<string, ProductVariants> = {
   },
   "paste-di-mandorla": {
     flavors: ["S", "Arancia", "Caffè", "Pistacchio", "Mandorla", "Mix"],
+    sizes: ["500g", "1kg"],
   },
   buccellati: {
     sizes: ["250g", "500g"],

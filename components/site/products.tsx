@@ -43,7 +43,9 @@ function ProductRow({ product, index }: { product: Product; index: number }) {
           </p>
         )}
         <h3 className="font-display text-3xl text-notte sm:text-4xl">
-          {product.name}
+          <Link href={`/prodotti/${product.slug}`} className="transition-colors hover:text-mari">
+            {product.name}
+          </Link>
         </h3>
         <p className="mt-4 max-w-md text-base leading-relaxed text-testo/70">
           {product.description}
@@ -106,7 +108,9 @@ export function Products() {
               </p>
               <ProductPanel product={product} />
               <h3 className="mt-4 font-display text-2xl text-notte">
-                {product.name}
+                <Link href={`/prodotti/${product.slug}`} className="transition-colors hover:text-mari">
+                  {product.name}
+                </Link>
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-testo/70">
                 {product.description}

@@ -9,6 +9,7 @@ import { Reveal } from "@/components/site/reveal";
 import { AddToCart } from "@/components/site/add-to-cart";
 import { AskInfoLink } from "@/components/site/ask-info-link";
 import { products, ingredients, type Product } from "@/lib/site-content";
+import { renderInlineMarkdown } from "@/lib/rich-text";
 
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
@@ -85,7 +86,7 @@ export default async function ProductPage({
                 </p>
                 <div className="space-y-4 text-base leading-relaxed text-testo/80">
                   {storyParagraphs.map((paragraph, i) => (
-                    <p key={i}>{paragraph}</p>
+                    <p key={i}>{renderInlineMarkdown(paragraph)}</p>
                   ))}
                 </div>
               </Reveal>
@@ -97,7 +98,7 @@ export default async function ProductPage({
                 {product.process ? (
                   <div className="space-y-4 text-base leading-relaxed text-testo/80">
                     {processParagraphs.map((paragraph, i) => (
-                      <p key={i}>{paragraph}</p>
+                      <p key={i}>{renderInlineMarkdown(paragraph)}</p>
                     ))}
                   </div>
                 ) : (
