@@ -70,10 +70,10 @@ export function CheckoutModal({
     () => extractProvince(comuni).map((p) => ({ label: `${p.nome} (${p.sigla})`, value: p.sigla })),
     [comuni]
   );
-  const cityOptions = useMemo<ComboboxOption[]>(() => {
-    const scoped = shipping.provincia ? comuni.filter((c) => c.s === shipping.provincia) : comuni;
-    return scoped.map((c) => ({ label: c.n, value: c.n }));
-  }, [comuni, shipping.provincia]);
+  const cityOptions = useMemo<ComboboxOption[]>(
+    () => comuni.map((c) => ({ label: c.n, value: c.n })),
+    [comuni]
+  );
   const allCityOptions = useMemo<ComboboxOption[]>(
     () => comuni.map((c) => ({ label: `${c.n} (${c.s})`, value: c.n })),
     [comuni]
