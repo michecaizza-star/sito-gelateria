@@ -7,6 +7,7 @@ import { MateriePrime } from "@/components/site/materie-prime";
 import { SoloSicilia } from "@/components/site/solo-sicilia";
 import { Territorio } from "@/components/site/territorio";
 import { Horeca } from "@/components/site/horeca";
+import { Newsletter } from "@/components/site/newsletter";
 import { Contact } from "@/components/site/contact";
 import { Footer } from "@/components/site/footer";
 import { WhatsAppButton } from "@/components/site/whatsapp-button";
@@ -24,6 +25,7 @@ export default function Home() {
         <SoloSicilia />
         <Territorio />
         <Horeca />
+        <Newsletter />
         <Contact />
       </main>
       <Footer />

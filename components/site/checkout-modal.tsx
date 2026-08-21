@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { CreditCard, MessageCircle, X } from "lucide-react";
+import { CreditCard, Lock, MessageCircle, X } from "lucide-react";
 import { useCart } from "@/lib/cart-context";
-import { waLink } from "@/lib/site-content";
-import { PAYPAL_CLIENT_ID, STRIPE_PAYMENT_LINK_URL } from "@/lib/payments-config";
+import { waLink, GIFT_PROFILE_EMAIL } from "@/lib/site-content";
+import { PAYPAL_CLIENT_ID, NEXI_PAYMENT_LINK_URL } from "@/lib/payments-config";
+
+type GiftFormStatus = "idle" | "sending" | "sent" | "error";
 
 declare global {
   interface Window {
@@ -27,12 +29,46 @@ export function CheckoutModal({
   const { items, totalPrice, clear } = useCart();
   const [method, setMethod] = useState<Method>("choose");
   const [cardError, setCardError] = useState<string | null>(null);
+  const [giftFormStatus, setGiftFormStatus] = useState<GiftFormStatus>("idle");
   const paypalRef = useRef<HTMLDivElement>(null);
 
   function handleClose() {
     setMethod("choose");
     setCardError(null);
+    setGiftFormStatus("idle");
     onClose();
+  }
+
+  async function handleGiftFormSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const data = new FormData(form);
+
+    const payload = {
+      _subject: `Profilo cliente per regalo personalizzato — ${data.get("nome") || ""}`,
+      Nome: data.get("nome"),
+      Cognome: data.get("cognome"),
+      "Età": data.get("eta"),
+      "Dove vive": data.get("dove"),
+      "Qualcosa da condividere": data.get("racconto"),
+    };
+
+    setGiftFormStatus("sending");
+    try {
+      const res = await fetch(`https://formsubmit.co/ajax/${GIFT_PROFILE_EMAIL}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error("request failed");
+      setGiftFormStatus("sent");
+      form.reset();
+    } catch {
+      setGiftFormStatus("error");
+    }
   }
 
   useEffect(() => {
@@ -89,13 +125,13 @@ export function CheckoutModal({
 
   function handleCardCheckout() {
     setCardError(null);
-    if (!STRIPE_PAYMENT_LINK_URL) {
+    if (!NEXI_PAYMENT_LINK_URL) {
       setCardError(
         "Il pagamento con carta non è ancora configurato su questo sito. Completa l'ordine su WhatsApp nel frattempo."
       );
       return;
     }
-    window.open(STRIPE_PAYMENT_LINK_URL, "_blank", "noopener,noreferrer");
+    window.open(NEXI_PAYMENT_LINK_URL, "_blank", "noopener,noreferrer");
   }
 
   function handleWhatsAppOrder() {
@@ -137,12 +173,110 @@ export function CheckoutModal({
             </button>
 
             {method === "done" ? (
-              <div className="py-6 text-center">
+              <div className="max-h-[80vh] overflow-y-auto py-6 text-center">
                 <p className="font-display text-3xl italic text-notte">Grazie!</p>
                 <p className="mt-3 text-sm leading-relaxed text-testo/70">
                   Il tuo ordine è stato inviato. Ti risponderemo al più presto
                   — Tastalu.
                 </p>
+
+                <div className="mt-8 border-t border-notte/10 pt-6 text-left">
+                  {giftFormStatus === "sent" ? (
+                    <p className="text-center font-display text-lg italic text-notte">
+                      Grazie per averci raccontato qualcosa di te! 🎁
+                    </p>
+                  ) : (
+                    <>
+                      <p className="text-center font-display text-lg italic text-notte">
+                        Un piccolo regalo, solo per te
+                      </p>
+                      <p className="mx-auto mt-2 max-w-sm text-center text-xs leading-relaxed text-testo/60">
+                        Se vuoi, raccontaci qualcosa di te: prepareremo una
+                        sorpresa pensata apposta, da consegnarti insieme al
+                        tuo ordine. Campo facoltativo.
+                      </p>
+                      <form onSubmit={handleGiftFormSubmit} className="mt-5 space-y-4">
+                        <div className="grid grid-cols-2 gap-3">
+                          <label className="block">
+                            <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
+                              Nome
+                            </span>
+                            <input
+                              type="text"
+                              name="nome"
+                              className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
+                            />
+                          </label>
+                          <label className="block">
+                            <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
+                              Cognome
+                            </span>
+                            <input
+                              type="text"
+                              name="cognome"
+                              className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
+                            />
+                          </label>
+                          <label className="block">
+                            <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
+                              Età
+                            </span>
+                            <input
+                              type="number"
+                              name="eta"
+                              min={0}
+                              max={120}
+                              className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
+                            />
+                          </label>
+                          <label className="block">
+                            <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
+                              Dove vivi
+                            </span>
+                            <input
+                              type="text"
+                              name="dove"
+                              className="mt-1.5 w-full border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
+                            />
+                          </label>
+                        </div>
+                        <label className="block">
+                          <span className="text-xs font-medium uppercase tracking-[0.1em] text-testo/50">
+                            Raccontaci qualcosa di te
+                          </span>
+                          <textarea
+                            name="racconto"
+                            rows={3}
+                            className="mt-1.5 w-full resize-none border-b border-notte/20 bg-transparent py-1.5 text-sm text-notte outline-none focus:border-oro"
+                          />
+                        </label>
+
+                        <div className="flex items-center justify-between gap-3 pt-1">
+                          <button
+                            type="submit"
+                            disabled={giftFormStatus === "sending"}
+                            className="rounded-full bg-pistacchio px-5 py-2.5 text-xs font-semibold text-notte transition-colors hover:opacity-90 disabled:opacity-60"
+                          >
+                            {giftFormStatus === "sending" ? "Invio…" : "Condividi"}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={handleClose}
+                            className="text-xs text-testo/50 underline"
+                          >
+                            No grazie, magari un&apos;altra volta
+                          </button>
+                        </div>
+                        {giftFormStatus === "error" && (
+                          <p className="text-xs text-melograno">
+                            Qualcosa è andato storto, riprova più tardi.
+                          </p>
+                        )}
+                      </form>
+                    </>
+                  )}
+                </div>
+
                 <button
                   type="button"
                   onClick={handleClose}
@@ -192,7 +326,8 @@ export function CheckoutModal({
                       className="flex w-full items-center justify-center gap-2.5 rounded-full border border-notte/20 py-3.5 text-sm font-semibold text-notte transition-colors hover:border-notte"
                     >
                       <CreditCard className="h-4 w-4" />
-                      Paga con carta
+                      Paga con carta — pagamento sicuro Nexi
+                      <Lock className="h-3.5 w-3.5 text-testo/40" />
                     </button>
                     {totalPrice == null && (
                       <p className="text-center text-xs text-testo/50">

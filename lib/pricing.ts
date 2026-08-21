@@ -25,6 +25,10 @@ export const productVariants: Record<string, ProductVariants> = {
     flavors: ["Ricotta e cioccolato", "Ricotta e arancia"],
     sizes: ["150g", "400g"],
   },
+  croccante: {
+    flavors: ["Mandorla", "Pistacchio"],
+    sizes: ["500g", "1kg"],
+  },
 };
 
 /**
@@ -33,14 +37,15 @@ export const productVariants: Record<string, ProductVariants> = {
  * "Prezzo da definire" al suo posto e non lo somma al totale.
  */
 export const placeholderPrices: Record<string, number | null> = {
-  "biscotti-regina": 8.50,
-  zuccotti: null,
-  buccellati: null,
-  "paste-di-mandorla": null,
-  "ciambelle-siciliane": null,
-  "crostate-artigianali": null,
-  "sbriciolata-ricotta": null,
-  "frutta-martorana": null,
+  "biscotti-regina": 10,
+  zuccotti: 10,
+  buccellati: 10,
+  "paste-di-mandorla": 10,
+  "ciambelle-siciliane": 10,
+  "crostate-artigianali": 10,
+  "sbriciolata-ricotta": 10,
+  "frutta-martorana": 10,
+  croccante: 10,
 };
 
 export function getPrice(slug: string): number | null {

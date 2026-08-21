@@ -13,13 +13,24 @@
 export const PAYPAL_CLIENT_ID = "sb";
 
 /**
- * Stripe non permette più di creare un checkout dinamico solo da
- * codice client (serve sempre un server che generi la sessione di
- * pagamento con la chiave segreta) — quindi con un sito statico come
- * questo, senza backend, l'unica strada realistica è un "Payment
- * Link": crealo da Stripe Dashboard → Payment Links e incolla qui
- * il suo URL. Il pulsante "Paga con carta" porta il cliente lì; il
- * totale del carrello resta visibile nel riepilogo che gli mandi su
- * WhatsApp, per confermare l'importo esatto dell'ordine.
+ * Pagamento con carta — Nexi.
+ *
+ * Nexi (come Stripe) non permette di creare un checkout dinamico solo
+ * da codice client: serve sempre un server che apra la sessione di
+ * pagamento con le credenziali riservate dell'esercente. Su un sito
+ * statico come questo, senza backend, la strada sicura e realistica è
+ * un link di pagamento Nexi già pronto:
+ *
+ * 1. Attiva un contratto Nexi e-commerce (Nexi XPay / Nexi Pay by Link).
+ * 2. Dal pannello Nexi crea un "Link di pagamento" — il pagamento
+ *    avviene sui server Nexi, con i loro standard di sicurezza
+ *    (3-D Secure, PCI-DSS): il sito non gestisce mai il numero di
+ *    carta del cliente.
+ * 3. Incolla qui l'URL del link. Il pulsante "Paga con carta" porta il
+ *    cliente lì; il riepilogo dell'ordine resta visibile su WhatsApp
+ *    per confermare l'importo esatto.
+ *
+ * Finché questo valore resta vuoto, il pulsante mostra un messaggio
+ * chiaro e invita a completare l'ordine su WhatsApp nel frattempo.
  */
-export const STRIPE_PAYMENT_LINK_URL = "";
+export const NEXI_PAYMENT_LINK_URL = "";

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { withBasePath } from "@/lib/base-path";
 
 /**
  * Renders the official MARÌ logo file (/public/logo-mari.png) — never
@@ -20,7 +21,7 @@ export function Logo({
   return (
     <div className={cn("relative aspect-square", className)} style={{ height: size }}>
       <Image
-        src="/logo-mari.png"
+        src={withBasePath("/logo-mari.png")}
         alt="MARÌ"
         fill
         priority

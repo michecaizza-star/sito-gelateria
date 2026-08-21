@@ -6,6 +6,9 @@ export function waLink(message: string = WHATSAPP_MESSAGE) {
 }
 
 export const HORECA_EMAIL = "michecaizza@gmail.com";
+export const NEWSLETTER_EMAIL = "michecaizza@gmail.com";
+export const NEWSLETTER_DISCOUNT_CODE = "TASTALU10";
+export const GIFT_PROFILE_EMAIL = "michecaizza@gmail.com";
 
 export const navLinks = [
   { href: "#storia", label: "Storia" },
@@ -95,6 +98,15 @@ export const products: Product[] = [
     ingredient: "Mandorla siciliana",
     tone: "pistacchio",
     image: "/images/prodotto-frutta-martorana.png",
+  },
+  {
+    slug: "croccante",
+    name: "Croccante",
+    description: "Croccante artigianale alla mandorla o al pistacchio, cotto a mano fino al punto giusto di caramellizzazione.",
+    ingredient: "Mandorla o pistacchio siciliano",
+    tone: "oro",
+    // Immagine segnaposto: sostituire con una foto reale del prodotto.
+    image: "/images/prodotto-croccante.png",
   },
 ];
 
