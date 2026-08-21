@@ -65,9 +65,19 @@ export function Chatbot() {
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="fixed bottom-[9.5rem] right-6 z-50 flex h-[28rem] w-[92vw] max-w-sm flex-col overflow-hidden rounded-[1.5rem] bg-avorio shadow-2xl sm:bottom-[11rem] sm:right-8"
           >
-            <div className="flex items-center gap-2.5 border-b border-notte/10 bg-notte px-5 py-4 text-avorio">
-              <Bot className="h-5 w-5 text-oro" />
-              <p className="font-display text-lg italic">Assistente MARÌ</p>
+            <div className="flex items-center justify-between gap-2.5 border-b border-notte/10 bg-notte px-5 py-4 text-avorio">
+              <span className="flex items-center gap-2.5">
+                <Bot className="h-5 w-5 text-oro" />
+                <p className="font-display text-lg italic">Assistente MARÌ</p>
+              </span>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                aria-label="Chiudi"
+                className="text-avorio/70 hover:text-avorio"
+              >
+                <X className="h-5 w-5" />
+              </button>
             </div>
 
             <div ref={listRef} className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
