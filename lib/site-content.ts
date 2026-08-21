@@ -1,4 +1,4 @@
-export const WHATSAPP_NUMBER = "390000000000"; // TODO: sostituire con il numero WhatsApp reale di MARÌ
+export const WHATSAPP_NUMBER = "393713203449";
 export const WHATSAPP_MESSAGE = "Ciao MARÌ! Vorrei fare un ordine — Tastalu 🍋";
 
 export function waLink(message: string = WHATSAPP_MESSAGE) {
