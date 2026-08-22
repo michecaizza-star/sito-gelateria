@@ -42,7 +42,7 @@ function ProductRow({ product, index }: { product: Product; index: number }) {
             {product.group}
           </p>
         )}
-        <h3 className="font-display text-3xl uppercase text-notte sm:text-4xl">
+        <h3 className="font-accent text-3xl font-semibold uppercase tracking-wide text-notte sm:text-4xl">
           <Link href={`/prodotti/${product.slug}`} className="transition-colors hover:text-mari">
             {product.name}
           </Link>
@@ -96,7 +96,7 @@ export function Products() {
             className="object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-notte/60 via-transparent to-transparent" />
-          <p className="absolute bottom-5 left-6 right-6 font-sans text-lg font-semibold uppercase tracking-[0.1em] text-avorio sm:text-xl">
+          <p className="absolute bottom-5 left-6 right-6 font-display text-xl italic text-avorio sm:text-2xl">
             Il mondo MARÌ, in un unico sguardo.
           </p>
         </Reveal>
@@ -108,7 +108,7 @@ export function Products() {
                 {i === 0 ? "Biscotti siciliani" : " "}
               </p>
               <ProductPanel product={product} />
-              <h3 className="mt-4 font-display text-2xl uppercase text-notte">
+              <h3 className="mt-4 font-accent text-2xl font-semibold uppercase tracking-wide text-notte">
                 <Link href={`/prodotti/${product.slug}`} className="transition-colors hover:text-mari">
                   {product.name}
                 </Link>
