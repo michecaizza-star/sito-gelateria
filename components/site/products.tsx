@@ -29,43 +29,45 @@ function ProductPanel({ product }: { product: Product }) {
 function ProductRow({ product, index }: { product: Product; index: number }) {
   const reversed = index % 2 === 1;
   return (
-    <Reveal
-      y={0}
-      className="grid grid-cols-1 items-center gap-8 border-t border-notte/10 py-14 first:border-t-0 lg:grid-cols-12 lg:gap-10"
-    >
-      <div className={`lg:col-span-5 ${reversed ? "lg:order-2" : ""}`}>
-        <ProductPanel product={product} />
-      </div>
-      <div className={`lg:col-span-7 ${reversed ? "lg:order-1" : ""}`}>
-        {product.group && (
-          <p className="mb-2 text-xs font-medium uppercase tracking-[0.25em] text-oro">
-            {product.group}
+    <Reveal y={0} className="border-t border-notte/10 py-14 first:border-t-0">
+      {/* L'etichetta di categoria precede sempre la foto: sia impilata
+          su mobile, sia sopra l'intera riga a due colonne su desktop,
+          indipendentemente dall'alternanza sinistra/destra. */}
+      {product.group && (
+        <p className="mb-4 text-xs font-medium uppercase tracking-[0.25em] text-oro">
+          {product.group}
+        </p>
+      )}
+      <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-10">
+        <div className={`lg:col-span-5 ${reversed ? "lg:order-2" : ""}`}>
+          <ProductPanel product={product} />
+        </div>
+        <div className={`lg:col-span-7 ${reversed ? "lg:order-1" : ""}`}>
+          <h3 className="font-display text-3xl font-bold uppercase tracking-wide text-notte sm:text-4xl">
+            <Link href={`/prodotti/${product.slug}`} className="transition-colors hover:text-mari">
+              {product.name}
+            </Link>
+          </h3>
+          <p className="mt-4 max-w-md text-base leading-relaxed text-testo/70">
+            {product.description}
           </p>
-        )}
-        <h3 className="font-display text-3xl font-bold uppercase tracking-wide text-notte sm:text-4xl">
-          <Link href={`/prodotti/${product.slug}`} className="transition-colors hover:text-mari">
-            {product.name}
-          </Link>
-        </h3>
-        <p className="mt-4 max-w-md text-base leading-relaxed text-testo/70">
-          {product.description}
-        </p>
-        <p className="mt-4 text-sm text-testo/50">
-          Materia prima protagonista:{" "}
-          <span className="text-testo/80">{product.ingredient}</span>
-        </p>
+          <p className="mt-4 text-sm text-testo/50">
+            Materia prima protagonista:{" "}
+            <span className="text-testo/80">{product.ingredient}</span>
+          </p>
 
-        <AddToCart product={product} />
+          <AddToCart product={product} />
 
-        <div className="mt-4 flex flex-col items-start gap-3">
-          <Link
-            href={`/prodotti/${product.slug}`}
-            className="group/link inline-flex items-center gap-1.5 font-sans text-base font-medium text-notte transition-colors hover:text-mari"
-          >
-            Scopri {product.name}
-            <span className="transition-transform group-hover/link:translate-x-1">→</span>
-          </Link>
-          <AskInfoLink productName={product.name} className="text-base" />
+          <div className="mt-4 flex flex-col items-start gap-3">
+            <Link
+              href={`/prodotti/${product.slug}`}
+              className="group/link inline-flex items-center gap-1.5 font-sans text-base font-medium text-notte transition-colors hover:text-mari"
+            >
+              Scopri {product.name}
+              <span className="transition-transform group-hover/link:translate-x-1">→</span>
+            </Link>
+            <AskInfoLink productName={product.name} className="text-base" />
+          </div>
         </div>
       </div>
     </Reveal>
@@ -73,12 +75,11 @@ function ProductRow({ product, index }: { product: Product; index: number }) {
 }
 
 export function Products() {
-  // Il layout a griglia compatta resta riservato a questi 3 prodotti;
-  // la categoria mostrata sopra ciascuno (product.group) è indipendente
-  // dal layout e può essere condivisa con prodotti mostrati come righe.
-  const gridSlugs = ["biscotti-regina", "zuccotti", "buccellati"];
-  const biscotti = products.filter((p) => gridSlugs.includes(p.slug));
-  const standalone = products.filter((p) => !gridSlugs.includes(p.slug));
+  // Ordine di visualizzazione: Dolci tipici, poi Biscotti siciliani
+  // (griglia compatta), poi Specialità Marì.
+  const dolciTipici = products.filter((p) => p.group === "Dolci tipici");
+  const biscottiSiciliani = products.filter((p) => p.group === "Biscotti siciliani");
+  const specialitaMari = products.filter((p) => p.group === "Specialità Marì");
 
   return (
     <section id="prodotti" className="bg-sabbia/30 py-24 md:py-32">
@@ -105,8 +106,16 @@ export function Products() {
           </p>
         </Reveal>
 
+        {/* Dolci tipici */}
+        <div className="border-t border-notte/10 pt-10">
+          {dolciTipici.map((product, i) => (
+            <ProductRow key={product.slug} product={product} index={i} />
+          ))}
+        </div>
+
+        {/* Biscotti siciliani */}
         <div className="grid grid-cols-1 gap-6 border-t border-notte/10 pt-10 sm:grid-cols-3">
-          {biscotti.map((product, i) => (
+          {biscottiSiciliani.map((product, i) => (
             <Reveal key={product.slug} delay={i * 0.08}>
               <p className="mb-3 text-xs font-medium uppercase tracking-[0.25em] text-oro">
                 {product.group}
@@ -137,8 +146,9 @@ export function Products() {
           ))}
         </div>
 
-        <div className="mt-4">
-          {standalone.map((product, i) => (
+        {/* Specialità Marì */}
+        <div className="border-t border-notte/10 pt-10">
+          {specialitaMari.map((product, i) => (
             <ProductRow key={product.slug} product={product} index={i} />
           ))}
         </div>
