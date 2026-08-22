@@ -35,7 +35,7 @@ function ProductCard({ product, delay = 0 }: { product: Product; delay?: number 
         </p>
       )}
       <ProductPanel product={product} />
-      <h3 className="mt-4 font-display text-2xl font-bold uppercase tracking-wide text-notte">
+      <h3 className="mt-4 font-display text-2xl italic text-notte">
         <Link href={`/prodotti/${product.slug}`} className="transition-colors hover:text-mari">
           {product.name}
         </Link>
@@ -75,7 +75,7 @@ function ProductRow({ product, index }: { product: Product; index: number }) {
           <ProductPanel product={product} />
         </div>
         <div className={`lg:col-span-7 ${reversed ? "lg:order-1" : ""}`}>
-          <h3 className="font-display text-3xl font-bold uppercase tracking-wide text-notte sm:text-4xl">
+          <h3 className="font-display text-3xl italic text-notte sm:text-4xl">
             <Link href={`/prodotti/${product.slug}`} className="transition-colors hover:text-mari">
               {product.name}
             </Link>
