@@ -96,7 +96,7 @@ export function Products() {
             className="object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-notte/60 via-transparent to-transparent" />
-          <p className="absolute bottom-5 left-6 right-6 font-display text-xl italic text-avorio sm:text-2xl">
+          <p className="absolute bottom-5 left-6 right-6 font-sans text-lg font-semibold uppercase tracking-[0.1em] text-avorio sm:text-xl">
             Il mondo MARÌ, in un unico sguardo.
           </p>
         </Reveal>
