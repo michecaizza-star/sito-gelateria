@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter, Fraunces } from "next/font/google";
+import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/lib/cart-context";
 import { ChatbotProvider } from "@/lib/chatbot-context";
@@ -19,15 +19,6 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-// Font "accent" per i nomi dei prodotti: un serif contemporaneo, più
-// caratteristico e scolpito del Playfair della hero, usato apposta per
-// distinguere i nomi prodotto nelle card e nelle pagine dedicate.
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
-  subsets: ["latin"],
-  style: ["normal", "italic"],
-});
-
 export const metadata: Metadata = {
   title: "MARÌ — Tastalu. Solo Sicilia.",
   description:
@@ -38,7 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="it"
-      className={`${playfair.variable} ${inter.variable} ${fraunces.variable} h-full scroll-smooth antialiased`}
+      className={`${playfair.variable} ${inter.variable} h-full scroll-smooth antialiased`}
     >
       <body className="min-h-full flex flex-col bg-avorio text-testo font-sans">
         <CartProvider>
