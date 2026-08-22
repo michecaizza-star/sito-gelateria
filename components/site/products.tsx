@@ -107,7 +107,7 @@ export function Products() {
         </Reveal>
 
         {/* Dolci tipici */}
-        <div className="border-t border-notte/10 pt-10">
+        <div className="border-t border-notte/10">
           {dolciTipici.map((product, i) => (
             <ProductRow key={product.slug} product={product} index={i} />
           ))}
@@ -147,7 +147,7 @@ export function Products() {
         </div>
 
         {/* Specialità Marì */}
-        <div className="border-t border-notte/10 pt-10">
+        <div className="border-t border-notte/10">
           {specialitaMari.map((product, i) => (
             <ProductRow key={product.slug} product={product} index={i} />
           ))}
