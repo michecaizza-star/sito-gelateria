@@ -26,6 +26,38 @@ function ProductPanel({ product }: { product: Product }) {
   );
 }
 
+function ProductCard({ product, delay = 0 }: { product: Product; delay?: number }) {
+  return (
+    <Reveal delay={delay}>
+      {product.group && (
+        <p className="mb-3 text-xs font-medium uppercase tracking-[0.25em] text-oro">
+          {product.group}
+        </p>
+      )}
+      <ProductPanel product={product} />
+      <h3 className="mt-4 font-display text-2xl font-bold uppercase tracking-wide text-notte">
+        <Link href={`/prodotti/${product.slug}`} className="transition-colors hover:text-mari">
+          {product.name}
+        </Link>
+      </h3>
+      <p className="mt-2 text-sm leading-relaxed text-testo/70">{product.description}</p>
+
+      <AddToCart product={product} />
+
+      <div className="mt-3 flex flex-col items-start gap-2.5">
+        <Link
+          href={`/prodotti/${product.slug}`}
+          className="group/link inline-flex items-center gap-1.5 font-sans text-sm font-medium text-notte transition-colors hover:text-mari"
+        >
+          Scopri {product.name}
+          <span className="transition-transform group-hover/link:translate-x-1">→</span>
+        </Link>
+        <AskInfoLink productName={product.name} className="text-sm" />
+      </div>
+    </Reveal>
+  );
+}
+
 function ProductRow({ product, index }: { product: Product; index: number }) {
   const reversed = index % 2 === 1;
   return (
@@ -106,43 +138,17 @@ export function Products() {
           </p>
         </Reveal>
 
-        {/* Dolci tipici */}
-        <div className="border-t border-notte/10">
+        {/* Dolci tipici — stessa griglia compatta dei Biscotti siciliani */}
+        <div className="grid grid-cols-1 gap-x-6 gap-y-14 border-t border-notte/10 pt-10 sm:grid-cols-3">
           {dolciTipici.map((product, i) => (
-            <ProductRow key={product.slug} product={product} index={i} />
+            <ProductCard key={product.slug} product={product} delay={i * 0.08} />
           ))}
         </div>
 
         {/* Biscotti siciliani */}
-        <div className="grid grid-cols-1 gap-6 border-t border-notte/10 pt-10 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-x-6 gap-y-14 border-t border-notte/10 pt-10 sm:grid-cols-3">
           {biscottiSiciliani.map((product, i) => (
-            <Reveal key={product.slug} delay={i * 0.08}>
-              <p className="mb-3 text-xs font-medium uppercase tracking-[0.25em] text-oro">
-                {product.group}
-              </p>
-              <ProductPanel product={product} />
-              <h3 className="mt-4 font-display text-2xl font-bold uppercase tracking-wide text-notte">
-                <Link href={`/prodotti/${product.slug}`} className="transition-colors hover:text-mari">
-                  {product.name}
-                </Link>
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-testo/70">
-                {product.description}
-              </p>
-
-              <AddToCart product={product} />
-
-              <div className="mt-3 flex flex-col items-start gap-2.5">
-                <Link
-                  href={`/prodotti/${product.slug}`}
-                  className="group/link inline-flex items-center gap-1.5 font-sans text-sm font-medium text-notte transition-colors hover:text-mari"
-                >
-                  Scopri {product.name}
-                  <span className="transition-transform group-hover/link:translate-x-1">→</span>
-                </Link>
-                <AskInfoLink productName={product.name} className="text-sm" />
-              </div>
-            </Reveal>
+            <ProductCard key={product.slug} product={product} delay={i * 0.08} />
           ))}
         </div>
 
