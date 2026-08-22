@@ -52,7 +52,7 @@ export interface Product {
 export const products: Product[] = [
   {
     slug: "biscotti-regina",
-    group: "Dolci tipici",
+    group: "Biscotti siciliani",
     name: "Biscotti Regina",
     description: "Biscotti di frolla ricoperti di sesamo, tostato fino a diventare fragrante. Un incontro tra la friabilità della pasta e il gusto intenso della giuggiulena.",
     ingredient: "Sesamo e grano siciliano",
@@ -69,7 +69,7 @@ A Palermo diventano *reginelle*, mentre in siciliano sono conosciuti come *visco
   },
   {
     slug: "zuccotti",
-    group: "Dolci tipici",
+    group: "Biscotti siciliani",
     name: "Zuccotti",
     description: "Piccoli dolci di frolla con un ripieno di mandorle, zuccata e cannella. Un guscio semplice che, appena si rompe, rivela tutti i suoi profumi.",
     ingredient: "Ricetta antica siciliana",
@@ -86,7 +86,7 @@ Non è un dolce nato per stupire con l'apparenza. È l'opposto.
   },
   {
     slug: "buccellati",
-    group: "Dolci tipici",
+    group: "Biscotti siciliani",
     name: "Buccellati",
     description: "Frolla ripiena di fichi secchi, mandorle, agrumi e spezie. Un dolce nato dalla dispensa siciliana e diventato un simbolo delle feste.",
     ingredient: "Fichi e frutta secca",
@@ -137,7 +137,7 @@ Non era un dolce da fotografare. Era un dolce da tenere in dispensa, e magari qu
   },
   {
     slug: "crostate-artigianali",
-    group: "Specialità",
+    group: "Specialità Marì",
     name: "Crostate artigianali",
     description: "Una frolla friabile che racchiude marmellate siciliane, preparate con la frutta e gli agrumi della nostra terra. Un classico che cambia sapore con ogni stagione.",
     ingredient: "Frutta siciliana",
@@ -154,7 +154,7 @@ Poi i secoli fanno il resto. La frutta prende il posto della carne, arrivano con
   },
   {
     slug: "sbriciolata-ricotta",
-    group: "Specialità",
+    group: "Specialità Marì",
     name: "Sbriciolata alla ricotta",
     description: "Frolla friabile, tante briciole dorate e un ripieno morbido al centro. Si spezza, si condivide e difficilmente ci si ferma alla prima fetta.",
     ingredient: "Ricotta siciliana",
