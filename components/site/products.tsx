@@ -28,7 +28,10 @@ function ProductPanel({ product }: { product: Product }) {
 
 function ProductCard({ product, delay = 0 }: { product: Product; delay?: number }) {
   return (
-    <Reveal delay={delay}>
+    <Reveal
+      delay={delay}
+      className="border-b border-notte/10 pb-10 last:border-b-0 last:pb-0 sm:border-b-0 sm:pb-0"
+    >
       {product.group && (
         <p className="mb-3 text-xs font-medium uppercase tracking-[0.25em] text-oro">
           {product.group}
