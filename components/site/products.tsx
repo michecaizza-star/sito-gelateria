@@ -61,7 +61,7 @@ function ProductCard({ product, delay = 0 }: { product: Product; delay?: number 
 function ProductRow({ product, index }: { product: Product; index: number }) {
   const reversed = index % 2 === 1;
   return (
-    <Reveal y={0} className="border-t border-notte/10 py-14 first:border-t-0">
+    <Reveal y={0} className="border-b border-notte/10 py-14 last:border-b-0">
       {/* L'etichetta di categoria precede sempre la foto: sia impilata
           su mobile, sia sopra l'intera riga a due colonne su desktop,
           indipendentemente dall'alternanza sinistra/destra. */}
