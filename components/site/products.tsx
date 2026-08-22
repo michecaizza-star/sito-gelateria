@@ -60,7 +60,7 @@ function ProductRow({ product, index }: { product: Product; index: number }) {
         <div className="mt-4 flex flex-col items-start gap-3">
           <Link
             href={`/prodotti/${product.slug}`}
-            className="group/link inline-flex items-center gap-1.5 font-display text-base italic text-notte transition-colors hover:text-mari"
+            className="group/link inline-flex items-center gap-1.5 font-sans text-base font-medium text-notte transition-colors hover:text-mari"
           >
             Scopri {product.name}
             <span className="transition-transform group-hover/link:translate-x-1">→</span>
@@ -122,7 +122,7 @@ export function Products() {
               <div className="mt-3 flex flex-col items-start gap-2.5">
                 <Link
                   href={`/prodotti/${product.slug}`}
-                  className="group/link inline-flex items-center gap-1.5 font-display text-sm italic text-notte transition-colors hover:text-mari"
+                  className="group/link inline-flex items-center gap-1.5 font-sans text-sm font-medium text-notte transition-colors hover:text-mari"
                 >
                   Scopri {product.name}
                   <span className="transition-transform group-hover/link:translate-x-1">→</span>
