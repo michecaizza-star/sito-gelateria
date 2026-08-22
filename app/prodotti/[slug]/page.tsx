@@ -66,11 +66,6 @@ export default async function ProductPage({
           />
           <div className="absolute inset-0 bg-gradient-to-t from-notte/80 via-notte/15 to-transparent" />
           <Container className="absolute inset-x-0 bottom-8">
-            {product.group && (
-              <p className="mb-2 text-xs font-medium uppercase tracking-[0.25em] text-oro">
-                {product.group}
-              </p>
-            )}
             <h1 className="font-display text-4xl italic text-avorio sm:text-6xl">
               {product.name}
             </h1>
