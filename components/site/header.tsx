@@ -30,7 +30,7 @@ function CartTrigger({ tone }: { tone: "light" | "dark" }) {
   );
 }
 
-export function Header() {
+export function Header({ solid = false }: { solid?: boolean }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -41,20 +41,28 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // "light" = testo/logo chiari su sfondo scuro (hero trasparente, o banner
+  // blu forzato con `solid`). Su `solid` lo sfondo resta sempre blu, quindi
+  // lo stile chiaro non dipende né dallo scroll né dal menu mobile aperto.
+  const light = solid || !scrolled;
+  const mobileLight = solid || !(scrolled || open);
+
   return (
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-40 transition-all duration-500",
-        scrolled || open
-          ? "bg-avorio/90 shadow-sm backdrop-blur-md"
-          : "bg-transparent"
+        solid
+          ? "bg-notte shadow-sm"
+          : scrolled || open
+            ? "bg-avorio/90 shadow-sm backdrop-blur-md"
+            : "bg-transparent"
       )}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-10">
         <Link href="/#top" className="flex items-center">
           <Logo
             size={40}
-            invert={!scrolled}
+            invert={light}
             className="drop-shadow-[0_1px_8px_rgba(10,47,82,0.35)]"
           />
         </Link>
@@ -66,7 +74,7 @@ export function Header() {
               href={link.href}
               className={cn(
                 "text-sm font-medium tracking-wide transition-colors",
-                scrolled ? "text-testo/80 hover:text-notte" : "text-avorio/85 hover:text-avorio"
+                light ? "text-avorio/85 hover:text-avorio" : "text-testo/80 hover:text-notte"
               )}
             >
               {link.label}
@@ -75,16 +83,16 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
-          <CartTrigger tone={scrolled ? "dark" : "light"} />
+          <CartTrigger tone={light ? "light" : "dark"} />
           <a
             href={waLink()}
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
               "rounded-full px-5 py-2.5 font-display text-sm italic transition-colors",
-              scrolled
-                ? "bg-notte text-avorio hover:bg-mari"
-                : "bg-avorio text-notte hover:bg-oro"
+              light
+                ? "bg-avorio text-notte hover:bg-oro"
+                : "bg-notte text-avorio hover:bg-mari"
             )}
           >
             Tastalu — Ordina
@@ -92,12 +100,12 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-1 lg:hidden">
-          <CartTrigger tone={scrolled || open ? "dark" : "light"} />
+          <CartTrigger tone={mobileLight ? "light" : "dark"} />
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
             aria-label={open ? "Chiudi menu" : "Apri menu"}
-            className={cn(scrolled || open ? "text-notte" : "text-avorio")}
+            className={cn(mobileLight ? "text-avorio" : "text-notte")}
           >
             {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>

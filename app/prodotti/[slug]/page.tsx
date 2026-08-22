@@ -53,7 +53,7 @@ export default async function ProductPage({
 
   return (
     <>
-      <Header />
+      <Header solid />
       <main className="pb-24 pt-20 md:pt-24">
         <section className="relative aspect-[16/9] w-full overflow-hidden sm:aspect-[21/9]">
           <Image
