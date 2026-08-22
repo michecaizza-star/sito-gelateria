@@ -52,7 +52,7 @@ export interface Product {
 export const products: Product[] = [
   {
     slug: "biscotti-regina",
-    group: "Biscotti siciliani",
+    group: "Dolci tipici",
     name: "Biscotti Regina",
     description: "Biscotti di frolla ricoperti di sesamo, tostato fino a diventare fragrante. Un incontro tra la friabilità della pasta e il gusto intenso della giuggiulena.",
     ingredient: "Sesamo e grano siciliano",
@@ -69,7 +69,7 @@ A Palermo diventano *reginelle*, mentre in siciliano sono conosciuti come *visco
   },
   {
     slug: "zuccotti",
-    group: "Biscotti siciliani",
+    group: "Dolci tipici",
     name: "Zuccotti",
     description: "Piccoli dolci di frolla con un ripieno di mandorle, zuccata e cannella. Un guscio semplice che, appena si rompe, rivela tutti i suoi profumi.",
     ingredient: "Ricetta antica siciliana",
@@ -86,7 +86,7 @@ Non è un dolce nato per stupire con l'apparenza. È l'opposto.
   },
   {
     slug: "buccellati",
-    group: "Biscotti siciliani",
+    group: "Dolci tipici",
     name: "Buccellati",
     description: "Frolla ripiena di fichi secchi, mandorle, agrumi e spezie. Un dolce nato dalla dispensa siciliana e diventato un simbolo delle feste.",
     ingredient: "Fichi e frutta secca",
@@ -103,6 +103,7 @@ Quello che era nato per accompagnare un viaggio diventa il dolce delle feste: da
   },
   {
     slug: "paste-di-mandorla",
+    group: "Dolci tipici",
     name: "Paste di mandorla",
     description: "Mandorle finemente lavorate con zucchero per ottenere una pasta morbida e profumata. È da qui che nascono alcuni dei dolci più iconici della pasticceria siciliana.",
     ingredient: "Mandorla siciliana",
@@ -119,6 +120,7 @@ A Palermo, il lavoro delle monache della **Martorana** è così importante che i
   },
   {
     slug: "ciambelle-siciliane",
+    group: "Dolci tipici",
     name: "Ciambelle siciliane",
     description: "Ciambelle di pasta dolce, dorate e fragranti, nate dalle antiche ricette delle case siciliane. Semplici da vedere, difficili da dimenticare.",
     ingredient: "Ricetta della tradizione",
@@ -135,6 +137,7 @@ Non era un dolce da fotografare. Era un dolce da tenere in dispensa, e magari qu
   },
   {
     slug: "crostate-artigianali",
+    group: "Specialità",
     name: "Crostate artigianali",
     description: "Una frolla friabile che racchiude marmellate siciliane, preparate con la frutta e gli agrumi della nostra terra. Un classico che cambia sapore con ogni stagione.",
     ingredient: "Frutta siciliana",
@@ -151,6 +154,7 @@ Poi i secoli fanno il resto. La frutta prende il posto della carne, arrivano con
   },
   {
     slug: "sbriciolata-ricotta",
+    group: "Specialità",
     name: "Sbriciolata alla ricotta",
     description: "Frolla friabile, tante briciole dorate e un ripieno morbido al centro. Si spezza, si condivide e difficilmente ci si ferma alla prima fetta.",
     ingredient: "Ricotta siciliana",
@@ -167,6 +171,7 @@ Il nome stesso viene da **brìsa**, "briciola" nel dialetto mantovano.
   },
   {
     slug: "frutta-martorana",
+    group: "Dolci tipici",
     name: "Frutta martorana",
     description: "Piccoli frutti modellati a mano con pasta di mandorla e dipinti uno a uno. Sembrano appena raccolti, ma nascondono un cuore tutto siciliano.",
     ingredient: "Mandorla siciliana",
@@ -183,6 +188,7 @@ La storia è una leggenda, ma il legame con i monasteri palermitani e la tradizi
   },
   {
     slug: "croccante",
+    group: "Dolci tipici",
     name: "Croccante",
     description: "Mandorle tostate o pistacchio, avvolti nel caramello e lavorati fino a diventare sottili e croccanti. Pochi ingredienti, un morso deciso — con il pistacchio il gusto intenso arriva subito, senza troppi giri.",
     ingredient: "Mandorla o pistacchio siciliano",

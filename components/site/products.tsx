@@ -73,8 +73,12 @@ function ProductRow({ product, index }: { product: Product; index: number }) {
 }
 
 export function Products() {
-  const biscotti = products.filter((p) => p.group === "Biscotti siciliani");
-  const standalone = products.filter((p) => !p.group);
+  // Il layout a griglia compatta resta riservato a questi 3 prodotti;
+  // la categoria mostrata sopra ciascuno (product.group) è indipendente
+  // dal layout e può essere condivisa con prodotti mostrati come righe.
+  const gridSlugs = ["biscotti-regina", "zuccotti", "buccellati"];
+  const biscotti = products.filter((p) => gridSlugs.includes(p.slug));
+  const standalone = products.filter((p) => !gridSlugs.includes(p.slug));
 
   return (
     <section id="prodotti" className="bg-sabbia/30 py-24 md:py-32">
@@ -105,7 +109,7 @@ export function Products() {
           {biscotti.map((product, i) => (
             <Reveal key={product.slug} delay={i * 0.08}>
               <p className="mb-3 text-xs font-medium uppercase tracking-[0.25em] text-oro">
-                {i === 0 ? "Biscotti siciliani" : " "}
+                {product.group}
               </p>
               <ProductPanel product={product} />
               <h3 className="mt-4 font-accent text-2xl font-semibold uppercase tracking-wide text-notte">
