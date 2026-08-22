@@ -42,7 +42,7 @@ function ProductRow({ product, index }: { product: Product; index: number }) {
             {product.group}
           </p>
         )}
-        <h3 className="font-accent text-3xl font-semibold uppercase tracking-wide text-notte sm:text-4xl">
+        <h3 className="font-display text-3xl font-bold uppercase tracking-wide text-notte sm:text-4xl">
           <Link href={`/prodotti/${product.slug}`} className="transition-colors hover:text-mari">
             {product.name}
           </Link>
@@ -112,7 +112,7 @@ export function Products() {
                 {product.group}
               </p>
               <ProductPanel product={product} />
-              <h3 className="mt-4 font-accent text-2xl font-semibold uppercase tracking-wide text-notte">
+              <h3 className="mt-4 font-display text-2xl font-bold uppercase tracking-wide text-notte">
                 <Link href={`/prodotti/${product.slug}`} className="transition-colors hover:text-mari">
                   {product.name}
                 </Link>
