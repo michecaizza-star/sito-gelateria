@@ -23,7 +23,7 @@ export function AskInfoLink({
         type="button"
         onClick={() => setOpen((v) => !v)}
         className={cn(
-          "group/link inline-flex items-center gap-1.5 font-display italic text-notte/70 transition-colors hover:text-mari",
+          "group/link inline-flex items-center gap-1.5 font-sans font-medium text-notte/70 transition-colors hover:text-mari",
           className
         )}
       >
