@@ -7,6 +7,7 @@ export function SectionHeading({
   description,
   align = "left",
   tone = "dark",
+  uppercase = false,
   className,
 }: {
   eyebrow?: string;
@@ -14,6 +15,7 @@ export function SectionHeading({
   description?: string;
   align?: "left" | "center";
   tone?: "dark" | "light";
+  uppercase?: boolean;
   className?: string;
 }) {
   return (
@@ -37,6 +39,7 @@ export function SectionHeading({
       <h2
         className={cn(
           "font-display text-4xl leading-[1.05] tracking-tight text-balance sm:text-5xl",
+          uppercase && "uppercase",
           tone === "dark" ? "text-notte" : "text-avorio"
         )}
       >
