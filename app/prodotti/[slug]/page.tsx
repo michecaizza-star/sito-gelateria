@@ -66,7 +66,7 @@ export default async function ProductPage({
           />
           <div className="absolute inset-0 bg-gradient-to-t from-notte/80 via-notte/15 to-transparent" />
           <Container className="absolute inset-x-0 bottom-8">
-            <h1 className="font-display text-4xl font-bold uppercase tracking-wide text-avorio sm:text-6xl">
+            <h1 className="font-display text-4xl italic text-avorio sm:text-6xl">
               {product.name}
             </h1>
           </Container>
@@ -151,7 +151,7 @@ export default async function ProductPage({
             <div className="lg:col-span-5">
               <Reveal delay={0.1} className="lg:sticky lg:top-28">
                 <div className="rounded-[2rem] bg-sabbia/30 p-8">
-                  <h2 className="font-display text-2xl font-bold uppercase tracking-wide text-notte">{product.name}</h2>
+                  <h2 className="font-display text-2xl italic text-notte">{product.name}</h2>
                   <p className="mt-2 text-sm leading-relaxed text-testo/70">
                     {product.description}
                   </p>
