@@ -54,7 +54,7 @@ export const products: Product[] = [
     slug: "biscotti-regina",
     group: "Biscotti siciliani",
     name: "Biscotti Regina",
-    description: "Biscotti tradizionali siciliani ricoperti di sesamo.",
+    description: "Biscotti di frolla ricoperti di sesamo, tostato fino a diventare fragrante. Un incontro tra la friabilità della pasta e il gusto intenso della giuggiulena.",
     ingredient: "Sesamo e grano siciliano",
     tone: "oro",
     image: "/images/prodotto-regina.png",
@@ -71,7 +71,7 @@ A Palermo diventano *reginelle*, mentre in siciliano sono conosciuti come *visco
     slug: "zuccotti",
     group: "Biscotti siciliani",
     name: "Zuccotti",
-    description: "Dolci della tradizione, realizzati artigianalmente.",
+    description: "Piccoli dolci di frolla con un ripieno di mandorle, zuccata e cannella. Un guscio semplice che, appena si rompe, rivela tutti i suoi profumi.",
     ingredient: "Ricetta antica siciliana",
     tone: "sabbia",
     image: "/images/prodotto-zuccotti.png",
@@ -88,7 +88,7 @@ Non è un dolce nato per stupire con l'apparenza. È l'opposto.
     slug: "buccellati",
     group: "Biscotti siciliani",
     name: "Buccellati",
-    description: "Biscotti siciliani ripieni, legati alla tradizione dell'isola.",
+    description: "Frolla ripiena di fichi secchi, mandorle, agrumi e spezie. Un dolce nato dalla dispensa siciliana e diventato un simbolo delle feste.",
     ingredient: "Fichi e frutta secca",
     tone: "melograno",
     image: "/images/prodotto-buccellati.png",
@@ -104,7 +104,7 @@ Quello che era nato per accompagnare un viaggio diventa il dolce delle feste: da
   {
     slug: "paste-di-mandorla",
     name: "Paste di mandorla",
-    description: "Realizzate valorizzando la mandorla siciliana, con la ricetta della tradizione.",
+    description: "Mandorle finemente lavorate con zucchero per ottenere una pasta morbida e profumata. È da qui che nascono alcuni dei dolci più iconici della pasticceria siciliana.",
     ingredient: "Mandorla siciliana",
     tone: "sabbia",
     image: "/images/prodotto-paste-mandorla.png",
@@ -120,7 +120,7 @@ A Palermo, il lavoro delle monache della **Martorana** è così importante che i
   {
     slug: "ciambelle-siciliane",
     name: "Ciambelle siciliane",
-    description: "Ciambelle morbide della tradizione locale, cotte ogni giorno.",
+    description: "Ciambelle di pasta dolce, dorate e fragranti, nate dalle antiche ricette delle case siciliane. Semplici da vedere, difficili da dimenticare.",
     ingredient: "Ricetta della tradizione",
     tone: "oro",
     image: "/images/prodotto-ciambelle.png",
@@ -136,7 +136,7 @@ Non era un dolce da fotografare. Era un dolce da tenere in dispensa, e magari qu
   {
     slug: "crostate-artigianali",
     name: "Crostate artigianali",
-    description: "Realizzate con marmellate e confetture di frutta locale e siciliana.",
+    description: "Una frolla friabile che racchiude marmellate siciliane, preparate con la frutta e gli agrumi della nostra terra. Un classico che cambia sapore con ogni stagione.",
     ingredient: "Frutta siciliana",
     tone: "melograno",
     image: "/images/prodotto-crostata.png",
@@ -152,7 +152,7 @@ Poi i secoli fanno il resto. La frutta prende il posto della carne, arrivano con
   {
     slug: "sbriciolata-ricotta",
     name: "Sbriciolata alla ricotta",
-    description: "Friabile e morbida, realizzata con ricotta siciliana fresca.",
+    description: "Frolla friabile, tante briciole dorate e un ripieno morbido al centro. Si spezza, si condivide e difficilmente ci si ferma alla prima fetta.",
     ingredient: "Ricotta siciliana",
     tone: "notte",
     image: "/images/prodotto-sbriciolata.png",
@@ -168,7 +168,7 @@ Il nome stesso viene da **brìsa**, "briciola" nel dialetto mantovano.
   {
     slug: "frutta-martorana",
     name: "Frutta martorana",
-    description: "Pasta di mandorla modellata e dipinta a mano nelle forme della frutta siciliana.",
+    description: "Piccoli frutti modellati a mano con pasta di mandorla e dipinti uno a uno. Sembrano appena raccolti, ma nascondono un cuore tutto siciliano.",
     ingredient: "Mandorla siciliana",
     tone: "pistacchio",
     image: "/images/prodotto-frutta-martorana.png",
@@ -184,7 +184,7 @@ La storia è una leggenda, ma il legame con i monasteri palermitani e la tradizi
   {
     slug: "croccante",
     name: "Croccante",
-    description: "Croccante artigianale alla mandorla o al pistacchio, cotto a mano fino al punto giusto di caramellizzazione.",
+    description: "Mandorle tostate o pistacchio, avvolti nel caramello e lavorati fino a diventare sottili e croccanti. Pochi ingredienti, un morso deciso — con il pistacchio il gusto intenso arriva subito, senza troppi giri.",
     ingredient: "Mandorla o pistacchio siciliano",
     tone: "oro",
     // Immagine segnaposto: sostituire con una foto reale del prodotto.
