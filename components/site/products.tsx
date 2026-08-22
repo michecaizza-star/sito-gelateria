@@ -42,7 +42,7 @@ function ProductRow({ product, index }: { product: Product; index: number }) {
             {product.group}
           </p>
         )}
-        <h3 className="font-display text-3xl text-notte sm:text-4xl">
+        <h3 className="font-display text-3xl uppercase text-notte sm:text-4xl">
           <Link href={`/prodotti/${product.slug}`} className="transition-colors hover:text-mari">
             {product.name}
           </Link>
@@ -83,6 +83,7 @@ export function Products() {
           eyebrow="Solo Sicilia"
           title="I nostri prodotti"
           description="Ogni prodotto nasce da un ingrediente protagonista e da una lavorazione artigianale, quotidiana, senza scorciatoie."
+          uppercase
           className="mb-10"
         />
 
@@ -107,7 +108,7 @@ export function Products() {
                 {i === 0 ? "Biscotti siciliani" : " "}
               </p>
               <ProductPanel product={product} />
-              <h3 className="mt-4 font-display text-2xl text-notte">
+              <h3 className="mt-4 font-display text-2xl uppercase text-notte">
                 <Link href={`/prodotti/${product.slug}`} className="transition-colors hover:text-mari">
                   {product.name}
                 </Link>
