@@ -25,6 +25,18 @@ export const navLinks = [
 
 export type Tone = "mari" | "notte" | "oro" | "pistacchio" | "melograno" | "sabbia" | "avorio";
 
+export interface NutritionFacts {
+  energyKcal: number;
+  energyKj: number;
+  fat: number;
+  saturatedFat: number;
+  carbs: number;
+  sugars: number;
+  fiber: number;
+  protein: number;
+  salt: number;
+}
+
 export interface Product {
   slug: string;
   group?: string;
@@ -39,6 +51,11 @@ export interface Product {
    * ufficiale (usate anche dal chatbot).
    */
   conservation: string;
+  /**
+   * TODO — valori nutrizionali FITTIZI (per 100 g), segnaposto in
+   * attesa dei dati reali da analisi/etichetta prima della pubblicazione.
+   */
+  nutrition: NutritionFacts;
   /** Racconto d'origine, mostrato nella pagina dedicata al prodotto. */
   story: string;
   /**
@@ -59,6 +76,17 @@ export const products: Product[] = [
     tone: "oro",
     image: "/images/prodotto-regina.png",
     conservation: "In luogo fresco e asciutto, in contenitore ermetico, lontano da fonti di calore e umidità.",
+    nutrition: {
+      energyKcal: 460,
+      energyKj: 1925,
+      fat: 20,
+      saturatedFat: 6,
+      carbs: 58,
+      sugars: 22,
+      fiber: 3,
+      protein: 9,
+      salt: 0.3,
+    },
     story: `Il protagonista non è il biscotto: è il seme. Il sesamo, in Sicilia chiamato **giuggiulena**, è arrivato da lontano attraverso le antiche rotte del Mediterraneo e, una volta entrato nella cucina dell'isola, ha trovato un posto praticamente ovunque.
 
 A Palermo finisce anche sopra un biscotto di pasta frolla — ma non come decorazione: tutto intorno. Ogni biscotto viene passato nel sesamo prima di entrare in forno; il calore lo tosta e sprigiona quel profumo che arriva prima ancora del morso.
@@ -76,6 +104,17 @@ A Palermo diventano *reginelle*, mentre in siciliano sono conosciuti come *visco
     tone: "sabbia",
     image: "/images/prodotto-zuccotti.png",
     conservation: "In luogo fresco e asciutto, in contenitore ermetico, lontano da fonti di calore e umidità.",
+    nutrition: {
+      energyKcal: 420,
+      energyKj: 1758,
+      fat: 16,
+      saturatedFat: 5,
+      carbs: 62,
+      sugars: 28,
+      fiber: 2.5,
+      protein: 7,
+      salt: 0.25,
+    },
     story: `Qui la storia non parla di Firenze e nemmeno dello zuccotto rinascimentale: parla di **zuccata**. In Sicilia la zucca viene trasformata lentamente — candita, lasciata riposare, fatta diventare morbida, lucida e intensamente dolce — e poi incontra quello che la pasticceria siciliana conosce bene: mandorle e cannella.
 
 Il ripieno viene racchiuso nella pasta frolla e nasce uno di quei dolci che, a prima vista, sembrano semplici. Ma il nome racconta già cosa nascondono: lo spezzi e trovi la zuccata, la mandorla, il profumo della cannella.
@@ -93,6 +132,17 @@ Non è un dolce nato per stupire con l'apparenza. È l'opposto.
     tone: "melograno",
     image: "/images/prodotto-buccellati.png",
     conservation: "In luogo fresco e asciutto, in contenitore ermetico; una volta aperta la confezione, consumare preferibilmente entro pochi giorni.",
+    nutrition: {
+      energyKcal: 440,
+      energyKj: 1841,
+      fat: 18,
+      saturatedFat: 5,
+      carbs: 60,
+      sugars: 30,
+      fiber: 4,
+      protein: 7,
+      salt: 0.2,
+    },
     story: `Molto prima che il buccellato diventasse un dolce siciliano di Natale, esisteva il **buccellatum** romano: un pane semplice, asciutto, fatto per durare. Lo portavano con sé i legionari, lo mangiavano i naviganti — doveva essere facile da trasportare e soprattutto non rovinarsi rapidamente. Il nome stesso viene da *buccella*, boccone.
 
 Poi quel pane attraversa i secoli e arriva in Sicilia, e qui cambia completamente vita: la pasta si arricchisce e dentro entrano i sapori della dispensa — fichi secchi, mandorle, noci, scorze d'agrumi, spezie.
@@ -110,6 +160,17 @@ Quello che era nato per accompagnare un viaggio diventa il dolce delle feste: da
     tone: "sabbia",
     image: "/images/prodotto-paste-mandorla.png",
     conservation: "In luogo fresco e asciutto, in contenitore ermetico a temperatura ambiente.",
+    nutrition: {
+      energyKcal: 480,
+      energyKj: 2008,
+      fat: 24,
+      saturatedFat: 3,
+      carbs: 55,
+      sugars: 48,
+      fiber: 4,
+      protein: 10,
+      salt: 0.05,
+    },
     story: `Prima di diventare un biscotto, la mandorla ha fatto un viaggio. Le tecniche di lavorazione della frutta secca e dello zucchero arrivano in Sicilia anche attraverso la cultura araba; poi entrano nei conventi, dove le monache trasformano quella conoscenza in una vera arte.
 
 Mandorle finemente macinate, zucchero, acqua: niente di più. Eppure da quell'impasto nasce un mondo intero. La pasta viene modellata, colorata, trasformata in frutti, pecorelle, dolci delle feste — diventa persino il rivestimento della cassata.
@@ -127,6 +188,17 @@ A Palermo, il lavoro delle monache della **Martorana** è così importante che i
     tone: "oro",
     image: "/images/prodotto-ciambelle.png",
     conservation: "A temperatura ambiente in contenitore chiuso; da consumare preferibilmente entro 2-3 giorni per apprezzarne al meglio la morbidezza.",
+    nutrition: {
+      energyKcal: 400,
+      energyKj: 1674,
+      fat: 14,
+      saturatedFat: 4,
+      carbs: 60,
+      sugars: 20,
+      fiber: 2,
+      protein: 8,
+      salt: 0.4,
+    },
     story: `Questa è la storia che terrei più vicina alle persone, perché le ciambelle non appartengono alle grandi tavole dei re: appartengono alle case. Alle ricette che passavano da una madre a una figlia, da una nonna a una nipote, spesso senza essere mai scritte.
 
 Una ciambella semplice, preparata con ingredienti che una famiglia poteva avere in casa — e proprio per questo ogni paese poteva avere la sua. La forma ad anello, il profumo appena uscita dal forno, la consistenza asciutta che la rendeva perfetta da conservare.
@@ -144,6 +216,17 @@ Non era un dolce da fotografare. Era un dolce da tenere in dispensa, e magari qu
     tone: "melograno",
     image: "/images/prodotto-crostata.png",
     conservation: "A temperatura ambiente in contenitore chiuso per 2-3 giorni; una volta tagliate, si consiglia di conservarle in frigorifero.",
+    nutrition: {
+      energyKcal: 380,
+      energyKj: 1590,
+      fat: 14,
+      saturatedFat: 6,
+      carbs: 58,
+      sugars: 30,
+      fiber: 2,
+      protein: 6,
+      salt: 0.3,
+    },
     story: `Nel 1570, a Roma, il cuoco **Bartolomeo Scappi** pubblica *Opera*, uno dei più importanti ricettari del Rinascimento. Tra le sue pagine c'è un intero capitolo dedicato alle crostate — e qui arriva la sorpresa: quelle crostate non sono necessariamente dolci. Scappi le prepara con funghi, frutta, formaggi, carne, spezie, zucchero; alcune sono ricoperte da strisce di pasta, proprio come quelle che riconosciamo ancora oggi.
 
 La crostata, quindi, non nasce come il dolce alla marmellata della domenica: nasce molto prima, come un'idea — una pasta che racchiude qualcosa.
@@ -161,6 +244,17 @@ Poi i secoli fanno il resto. La frutta prende il posto della carne, arrivano con
     tone: "notte",
     image: "/images/prodotto-sbriciolata.png",
     conservation: "In frigorifero, per la presenza di ricotta fresca; consumare entro 2-3 giorni dall'acquisto.",
+    nutrition: {
+      energyKcal: 410,
+      energyKj: 1716,
+      fat: 20,
+      saturatedFat: 10,
+      carbs: 45,
+      sugars: 22,
+      fiber: 1.5,
+      protein: 8,
+      salt: 0.35,
+    },
     story: `Questa storia, in realtà, comincia lontano dalla Sicilia. Nelle campagne mantovane, molto prima che arrivasse sulle tavole eleganti, esisteva una torta povera fatta con ciò che c'era: farina di mais, grassi e frutta secca. Era irregolare, grossolana, e soprattutto si rompeva.
 
 Poi la ricetta arriva alla corte dei Gonzaga, prima del Seicento: gli ingredienti si raffinano, entrano mandorle, zucchero e farina bianca. Ma la torta mantiene il suo carattere — non si taglia in fette perfette, si spezza.
@@ -178,6 +272,17 @@ Il nome stesso viene da **brìsa**, "briciola" nel dialetto mantovano.
     tone: "pistacchio",
     image: "/images/prodotto-frutta-martorana.png",
     conservation: "In luogo fresco e asciutto, in contenitore chiuso; si conserva bene anche per diverse settimane.",
+    nutrition: {
+      energyKcal: 470,
+      energyKj: 1967,
+      fat: 22,
+      saturatedFat: 2.5,
+      carbs: 60,
+      sugars: 55,
+      fiber: 3.5,
+      protein: 9,
+      salt: 0.02,
+    },
     story: `C'è una leggenda che sembra uscita da una favola. Palermo, un convento, la fine dell'autunno: arriva la notizia che un sovrano vuole vedere il meraviglioso giardino delle monache della **Martorana**. Ma è la stagione sbagliata — gli alberi sono spogli, i frutti non ci sono più.
 
 E allora le monache fanno qualcosa di impensabile: prendono mandorle e zucchero e cominciano a modellare la pasta. Arance, limoni, fichi, pere — le colorano una a una e le appendono agli alberi. Da lontano, il giardino sembra tornato improvvisamente vivo. Solo avvicinandosi si scopre l'inganno: non era frutta, era pasta di mandorle.
@@ -196,6 +301,17 @@ La storia è una leggenda, ma il legame con i monasteri palermitani e la tradizi
     // Immagine segnaposto: sostituire con una foto reale del prodotto.
     image: "/images/prodotto-croccante.png",
     conservation: "In luogo fresco e asciutto, in contenitore ermetico, lontano dall'umidità.",
+    nutrition: {
+      energyKcal: 510,
+      energyKj: 2134,
+      fat: 25,
+      saturatedFat: 3,
+      carbs: 60,
+      sugars: 55,
+      fiber: 5,
+      protein: 10,
+      salt: 0.05,
+    },
     story: `Prima di essere un dolce, il croccante era soprattutto un modo intelligente di conservare: frutta secca, miele o zucchero, ingredienti preziosi, nutrienti e capaci di durare. In Sicilia questa tradizione incontra anche l'eredità della cucina araba — è da questo mondo che viene fatta risalire la **cubaita**, il croccante tradizionale dell'isola, il cui nome è collegato all'arabo *qubbayt*.
 
 Poi arriva il fuoco. Lo zucchero o il miele diventano caramello, la frutta secca viene incorporata, tutto viene steso rapidamente prima che indurisca — e quello che pochi istanti prima era morbido diventa una lastra croccante.

@@ -146,6 +146,39 @@ export default async function ProductPage({
                   </div>
                 )}
               </Reveal>
+
+              <Reveal delay={0.2}>
+                <p className="mb-4 text-xs font-medium uppercase tracking-[0.25em] text-oro">
+                  Valori nutrizionali
+                </p>
+                <p className="mb-4 text-sm text-testo/50">
+                  Valori medi per 100 g di prodotto — indicativi, in attesa dei dati reali di analisi.
+                </p>
+                <dl className="divide-y divide-notte/10 text-sm">
+                  {[
+                    ["Energia", `${product.nutrition.energyKcal} kcal / ${product.nutrition.energyKj} kJ`],
+                    ["Grassi", `${product.nutrition.fat} g`],
+                    ["di cui acidi grassi saturi", `${product.nutrition.saturatedFat} g`],
+                    ["Carboidrati", `${product.nutrition.carbs} g`],
+                    ["di cui zuccheri", `${product.nutrition.sugars} g`],
+                    ["Fibre", `${product.nutrition.fiber} g`],
+                    ["Proteine", `${product.nutrition.protein} g`],
+                    ["Sale", `${product.nutrition.salt} g`],
+                  ].map(([label, value]) => (
+                    <div key={label} className="flex items-center justify-between py-2.5">
+                      <dt className="text-testo/70">{label}</dt>
+                      <dd className="font-medium text-notte">{value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </Reveal>
+
+              <Reveal delay={0.25}>
+                <p className="mb-4 text-xs font-medium uppercase tracking-[0.25em] text-oro">
+                  Conservazione
+                </p>
+                <p className="text-base leading-relaxed text-testo/80">{product.conservation}</p>
+              </Reveal>
             </div>
 
             <div className="lg:col-span-5">
