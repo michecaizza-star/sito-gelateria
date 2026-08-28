@@ -146,39 +146,6 @@ export default async function ProductPage({
                   </div>
                 )}
               </Reveal>
-
-              <Reveal delay={0.2}>
-                <p className="mb-4 text-xs font-medium uppercase tracking-[0.25em] text-oro">
-                  Valori nutrizionali
-                </p>
-                <p className="mb-4 text-sm text-testo/50">
-                  Valori medi per 100 g di prodotto — indicativi, in attesa dei dati reali di analisi.
-                </p>
-                <dl className="divide-y divide-notte/10 text-sm">
-                  {[
-                    ["Energia", `${product.nutrition.energyKcal} kcal / ${product.nutrition.energyKj} kJ`],
-                    ["Grassi", `${product.nutrition.fat} g`],
-                    ["di cui acidi grassi saturi", `${product.nutrition.saturatedFat} g`],
-                    ["Carboidrati", `${product.nutrition.carbs} g`],
-                    ["di cui zuccheri", `${product.nutrition.sugars} g`],
-                    ["Fibre", `${product.nutrition.fiber} g`],
-                    ["Proteine", `${product.nutrition.protein} g`],
-                    ["Sale", `${product.nutrition.salt} g`],
-                  ].map(([label, value]) => (
-                    <div key={label} className="flex items-center justify-between py-2.5">
-                      <dt className="text-testo/70">{label}</dt>
-                      <dd className="font-medium text-notte">{value}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </Reveal>
-
-              <Reveal delay={0.25}>
-                <p className="mb-4 text-xs font-medium uppercase tracking-[0.25em] text-oro">
-                  Conservazione
-                </p>
-                <p className="text-base leading-relaxed text-testo/80">{product.conservation}</p>
-              </Reveal>
             </div>
 
             <div className="lg:col-span-5">
@@ -196,6 +163,41 @@ export default async function ProductPage({
                       Hai altre domande su questo prodotto?
                     </p>
                     <AskInfoLink productName={product.name} className="text-base" />
+                  </div>
+                </div>
+              </Reveal>
+
+              <Reveal delay={0.2} className="mt-8">
+                <div className="rounded-[2rem] border border-oro/30 bg-avorio p-8">
+                  <p className="mb-4 text-xs font-medium uppercase tracking-[0.25em] text-oro">
+                    Valori nutrizionali
+                  </p>
+                  <p className="mb-4 text-sm text-testo/50">
+                    Valori medi per 100 g di prodotto — indicativi, in attesa dei dati reali di analisi.
+                  </p>
+                  <dl className="divide-y divide-notte/10 text-sm">
+                    {[
+                      ["Energia", `${product.nutrition.energyKcal} kcal / ${product.nutrition.energyKj} kJ`],
+                      ["Grassi", `${product.nutrition.fat} g`],
+                      ["di cui acidi grassi saturi", `${product.nutrition.saturatedFat} g`],
+                      ["Carboidrati", `${product.nutrition.carbs} g`],
+                      ["di cui zuccheri", `${product.nutrition.sugars} g`],
+                      ["Fibre", `${product.nutrition.fiber} g`],
+                      ["Proteine", `${product.nutrition.protein} g`],
+                      ["Sale", `${product.nutrition.salt} g`],
+                    ].map(([label, value]) => (
+                      <div key={label} className="flex items-center justify-between py-2.5">
+                        <dt className="text-testo/70">{label}</dt>
+                        <dd className="font-medium text-notte">{value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+
+                  <div className="mt-8 border-t border-notte/10 pt-6">
+                    <p className="mb-3 text-xs font-medium uppercase tracking-[0.25em] text-oro">
+                      Conservazione
+                    </p>
+                    <p className="text-base leading-relaxed text-testo/80">{product.conservation}</p>
                   </div>
                 </div>
               </Reveal>

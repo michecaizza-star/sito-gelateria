@@ -19,9 +19,9 @@ export default function Home() {
         <Hero />
         <Tastalu />
         <Story />
+        <SoloSicilia />
         <Products />
         <MateriePrime />
-        <SoloSicilia />
         <Territorio />
         <Horeca />
         <Newsletter />
