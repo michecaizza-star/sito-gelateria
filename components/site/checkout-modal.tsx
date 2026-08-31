@@ -52,6 +52,7 @@ export function CheckoutModal({
   const [giftData, setGiftData] = useState<GiftData>(EMPTY_GIFT);
   const [cardError, setCardError] = useState<string | null>(null);
   const [shippingTouched, setShippingTouched] = useState(false);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [comuni, setComuni] = useState<Comune[]>([]);
   const paypalRef = useRef<HTMLDivElement>(null);
 
@@ -108,6 +109,7 @@ export function CheckoutModal({
     setGiftData(EMPTY_GIFT);
     setCardError(null);
     setShippingTouched(false);
+    setAcceptedTerms(false);
     onClose();
   }
 
@@ -500,10 +502,41 @@ export function CheckoutModal({
 
                 {method === "choose" && (
                   <div className="mt-6 space-y-3">
+                    <label className="flex items-start gap-2.5 text-xs text-testo/70">
+                      <input
+                        type="checkbox"
+                        checked={acceptedTerms}
+                        onChange={(e) => setAcceptedTerms(e.target.checked)}
+                        className="mt-0.5 h-4 w-4 shrink-0 accent-notte"
+                      />
+                      <span>
+                        Ho letto e accetto i{" "}
+                        <a
+                          href="/termini-vendita"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="underline decoration-oro underline-offset-4"
+                        >
+                          Termini e Condizioni di Vendita
+                        </a>{" "}
+                        e la{" "}
+                        <a
+                          href="/privacy"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="underline decoration-oro underline-offset-4"
+                        >
+                          Privacy Policy
+                        </a>
+                        .
+                      </span>
+                    </label>
+
                     <button
                       type="button"
                       onClick={handleWhatsAppOrder}
-                      className="flex w-full items-center justify-center gap-2.5 rounded-full bg-pistacchio py-3.5 text-sm font-semibold text-notte transition-colors hover:opacity-90"
+                      disabled={!acceptedTerms}
+                      className="flex w-full items-center justify-center gap-2.5 rounded-full bg-pistacchio py-3.5 text-sm font-semibold text-notte transition-colors hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
                     >
                       <MessageCircle className="h-4 w-4" />
                       Ordina su WhatsApp
@@ -511,7 +544,7 @@ export function CheckoutModal({
                     <button
                       type="button"
                       onClick={() => setMethod("paypal")}
-                      disabled={totalPrice == null}
+                      disabled={totalPrice == null || !acceptedTerms}
                       className="flex w-full items-center justify-center gap-2.5 rounded-full border border-notte/20 py-3.5 text-sm font-semibold text-notte transition-colors hover:border-notte disabled:cursor-not-allowed disabled:opacity-40"
                     >
                       Paga con PayPal
@@ -519,7 +552,8 @@ export function CheckoutModal({
                     <button
                       type="button"
                       onClick={handleCardCheckout}
-                      className="flex w-full items-center justify-center gap-2.5 rounded-full border border-notte/20 py-3.5 text-sm font-semibold text-notte transition-colors hover:border-notte"
+                      disabled={!acceptedTerms}
+                      className="flex w-full items-center justify-center gap-2.5 rounded-full border border-notte/20 py-3.5 text-sm font-semibold text-notte transition-colors hover:border-notte disabled:cursor-not-allowed disabled:opacity-40"
                     >
                       <CreditCard className="h-4 w-4" />
                       Paga con carta — pagamento sicuro Nexi
