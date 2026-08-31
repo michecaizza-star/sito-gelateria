@@ -34,6 +34,9 @@ export function Footer() {
           <a href="/cookie" className="hover:text-avorio">
             Cookie
           </a>
+          <a href="/termini-vendita" className="hover:text-avorio">
+            Termini e condizioni
+          </a>
         </nav>
 
         <div className="flex gap-4">

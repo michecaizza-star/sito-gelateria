@@ -7,6 +7,7 @@ import { CartDrawer } from "@/components/site/cart-drawer";
 import { NewsletterPopup } from "@/components/site/newsletter-popup";
 import { WhatsAppButton } from "@/components/site/whatsapp-button";
 import { Chatbot } from "@/components/site/chatbot";
+import { CookieConsentBanner } from "@/components/site/cookie-consent";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -39,6 +40,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <NewsletterPopup />
             <WhatsAppButton />
             <Chatbot />
+            <CookieConsentBanner />
           </ChatbotProvider>
         </CartProvider>
       </body>
