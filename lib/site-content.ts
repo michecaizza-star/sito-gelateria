@@ -428,6 +428,8 @@ export const contactInfo = {
   instagram: "https://instagram.com/mari.sicilia", // TODO: verificare handle reale
   facebook: "https://facebook.com/mari.sicilia", // TODO: verificare handle reale
   mapsQuery: "Via Edison 189, Campobello di Licata AG",
+  companyName: "MARÌ di [Nome Cognome]", // TODO: sostituire con la ragione sociale reale
+  vatNumber: "IT00000000000", // TODO: sostituire con la Partita IVA / Codice Fiscale reale
 };
 
 export const territoryTrail = [
