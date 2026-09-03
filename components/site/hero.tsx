@@ -5,7 +5,6 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowDown, MessageCircle } from "lucide-react";
 import { waLink } from "@/lib/site-content";
-import { withBasePath } from "@/lib/base-path";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -16,7 +15,7 @@ export function Hero() {
       className="relative flex min-h-[100svh] w-full items-end overflow-hidden bg-notte text-avorio"
     >
       <Image
-        src={withBasePath("/images/hero-sicilia.png")}
+        src="/images/hero-sicilia.png"
         alt="Campagne siciliane, agrumeti e mandorleti al tramonto"
         fill
         priority

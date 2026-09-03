@@ -1,5 +1,3 @@
-import { withBasePath } from "@/lib/base-path";
-
 export interface Comune {
   n: string; // nome del comune
   p: string; // nome della provincia
@@ -14,7 +12,7 @@ let cache: Promise<Comune[]> | null = null;
 // Dati: https://github.com/matteocontrini/comuni-json
 export function loadComuni(): Promise<Comune[]> {
   if (!cache) {
-    cache = fetch(withBasePath("/data/comuni-italiani.json")).then((res) => res.json());
+    cache = fetch("/data/comuni-italiani.json").then((res) => res.json());
   }
   return cache;
 }
