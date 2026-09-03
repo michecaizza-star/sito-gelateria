@@ -552,11 +552,18 @@ export function CheckoutModal({
                     <button
                       type="button"
                       onClick={handleCardCheckout}
-                      disabled={!acceptedTerms}
+                      disabled={!acceptedTerms || !NEXI_PAYMENT_LINK_URL}
+                      title={
+                        NEXI_PAYMENT_LINK_URL
+                          ? undefined
+                          : "Pagamento con carta non ancora attivo: usa WhatsApp o PayPal nel frattempo."
+                      }
                       className="flex w-full items-center justify-center gap-2.5 rounded-full border border-notte/20 py-3.5 text-sm font-semibold text-notte transition-colors hover:border-notte disabled:cursor-not-allowed disabled:opacity-40"
                     >
                       <CreditCard className="h-4 w-4" />
-                      Paga con carta — pagamento sicuro Nexi
+                      {NEXI_PAYMENT_LINK_URL
+                        ? "Paga con carta — pagamento sicuro Nexi"
+                        : "Paga con carta — presto disponibile"}
                       <Lock className="h-3.5 w-3.5 text-testo/40" />
                     </button>
                     {totalPrice == null && (

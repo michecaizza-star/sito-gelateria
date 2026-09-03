@@ -7,7 +7,7 @@ export default function CookiePage() {
     <main className="mx-auto max-w-2xl px-6 py-28 md:px-10">
       <p className="text-xs font-medium uppercase tracking-[0.3em] text-oro">MARÌ</p>
       <h1 className="mt-3 font-display text-4xl text-notte">Cookie Policy</h1>
-      <p className="mt-2 text-sm text-testo/50">Ultimo aggiornamento: 31 agosto 2026</p>
+      <p className="mt-2 text-sm text-testo/50">Ultimo aggiornamento: 3 settembre 2026</p>
 
       <ManageCookiePreferencesButton />
 
@@ -39,6 +39,18 @@ export default function CookiePage() {
               passando da una pagina all&apos;altra del sito.
             </li>
             <li>
+              <strong className="font-medium text-notte">Dati di spedizione e nota d&apos;ordine</strong>{" "}
+              — durante il checkout, nome, telefono, indirizzo e
+              un&apos;eventuale nota vengono salvati temporaneamente sul tuo
+              dispositivo per non farteli riscrivere se torni indietro.
+              Vengono cancellati automaticamente non appena l&apos;ordine
+              viene inviato (su WhatsApp o PayPal).
+            </li>
+            <li>
+              <strong className="font-medium text-notte">Codice sconto</strong> —
+              ricorda un eventuale codice sconto applicato al carrello.
+            </li>
+            <li>
               <strong className="font-medium text-notte">Preferenze del popup newsletter</strong>{" "}
               — ricorda se hai già visto o chiuso il popup di iscrizione,
               per non mostrartelo ripetutamente.
@@ -68,13 +80,44 @@ export default function CookiePage() {
         </section>
 
         <section>
+          <h2 className="font-display text-xl text-notte">
+            Cookie di terze parti — PayPal
+          </h2>
+          <p className="mt-2">
+            Se scegli di pagare con PayPal, il modulo di pagamento è
+            fornito direttamente da PayPal e incorporato nella pagina di
+            checkout: PayPal può impostare propri cookie tecnici e di
+            sicurezza necessari a completare il pagamento, secondo la sua{" "}
+            <a
+              href="https://www.paypal.com/it/webapps/mpp/ua/privacy-full"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline decoration-oro underline-offset-4"
+            >
+              informativa privacy
+            </a>
+            . Questi cookie vengono caricati solo quando selezioni PayPal
+            come metodo di pagamento, non durante la normale navigazione
+            del sito.
+          </p>
+        </section>
+
+        <section>
           <h2 className="font-display text-xl text-notte">Link e servizi esterni</h2>
           <p className="mt-2">
             Il sito include collegamenti a WhatsApp, Instagram e Facebook:
             si tratta di semplici link che aprono i rispettivi servizi in
-            una nuova scheda. Non incorporiamo widget o contenuti di
-            queste piattaforme all&apos;interno delle pagine, che quindi non
-            impostano cookie propri finché non li visiti direttamente.
+            una nuova scheda, senza incorporare widget o contenuti di
+            queste piattaforme nelle pagine, che quindi non impostano
+            cookie propri finché non li visiti direttamente. Diverso è il
+            caso di PayPal, descritto sopra, e dell&apos;invio dei moduli
+            (newsletter, richieste Horeca): per come funziona il sito
+            (senza un proprio server), questi moduli vengono recapitati
+            tramite un fornitore esterno — dettagli nella nostra{" "}
+            <Link href="/privacy" className="underline decoration-oro underline-offset-4">
+              Privacy Policy
+            </Link>
+            .
           </p>
         </section>
 
