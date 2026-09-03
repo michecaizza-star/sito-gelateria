@@ -61,7 +61,7 @@ export function Header({ solid = false }: { solid?: boolean }) {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-10">
         <Link href="/#top" className="flex items-center">
           <Logo
-            size={40}
+            size={58}
             invert={light}
             className="drop-shadow-[0_1px_8px_rgba(10,47,82,0.35)]"
           />
