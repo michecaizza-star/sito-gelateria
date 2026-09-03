@@ -150,7 +150,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!hydrated) return;
     try {
-      window.localStorage.setItem(SHIPPING_STORAGE_KEY, JSON.stringify(shipping));
+      if (isShippingComplete(shipping) || shipping.infoConsegna.trim()) {
+        window.localStorage.setItem(SHIPPING_STORAGE_KEY, JSON.stringify(shipping));
+      } else {
+        window.localStorage.removeItem(SHIPPING_STORAGE_KEY);
+      }
     } catch {
       // ignore quota/unavailable storage
     }
@@ -187,6 +191,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setItems([]);
     setDiscountCode(null);
     setNote("");
+    // Dati personali (nome, telefono, indirizzo) non servono più una volta
+    // che l'ordine è stato inviato: non li teniamo nel browser del cliente
+    // più a lungo del necessario.
+    setShipping(EMPTY_SHIPPING);
   }, []);
 
   const applyDiscountCode = useCallback((code: string) => {
