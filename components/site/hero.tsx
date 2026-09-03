@@ -32,7 +32,7 @@ export function Hero() {
           pressed into paper. Same artwork, just tinted for this effect. */}
       <div className="pointer-events-none absolute -right-[15%] -top-[10%] h-[80%] w-[80%] opacity-[0.16] sm:h-[65%] sm:w-[65%]">
         <Image
-          src="/logo-mari.png"
+          src="/logo-mari.svg"
           alt=""
           fill
           className="object-contain"

@@ -2,10 +2,10 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 /**
- * Renders the official MARÌ logo file (/public/logo-mari.png) — never
- * recreate or reinterpret this mark. The file has been processed to a
- * transparent background so it blends directly into any section
- * background instead of sitting in a visible box.
+ * Renders the official MARÌ logo as a vector (/public/logo-mari.svg) —
+ * never recreate or reinterpret this mark. Traced from the client's
+ * source artwork so it stays crisp at any size, unlike the old raster
+ * PNG which went grainy when scaled up (e.g. the Hero watermark).
  */
 export function Logo({
   className,
@@ -20,7 +20,7 @@ export function Logo({
   return (
     <div className={cn("relative aspect-square", className)} style={{ height: size }}>
       <Image
-        src="/logo-mari.png"
+        src="/logo-mari.svg"
         alt="MARÌ"
         fill
         priority
