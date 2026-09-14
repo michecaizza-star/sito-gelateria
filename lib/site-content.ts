@@ -5,8 +5,8 @@ export function waLink(message: string = WHATSAPP_MESSAGE) {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 }
 
-export const HORECA_EMAIL = "assistenzaclienti.maritastalu@gmail.com";
-export const NEWSLETTER_EMAIL = "assistenzaclienti.maritastalu@gmail.com";
+export const HORECA_EMAIL = "info.maritastalu@gmail.com";
+export const NEWSLETTER_EMAIL = "info.maritastalu@gmail.com";
 export const NEWSLETTER_DISCOUNT_CODE = "TASTALU10";
 export const NEWSLETTER_DISCOUNT_RATE = 0.1;
 export const GIFT_PROFILE_EMAIL = "ordini.maritastalu@gmail.com";
@@ -14,7 +14,11 @@ export const GIFT_PROFILE_EMAIL = "ordini.maritastalu@gmail.com";
 // e in futuro Nexi): a differenza dell'ordine su WhatsApp — che il
 // cliente stesso invia dal proprio telefono — questi pagamenti non
 // avvisano altrimenti nessuno, quindi il riepilogo va spedito qui.
+// Non è mostrata pubblicamente sul sito.
 export const ORDER_NOTIFICATION_EMAIL = "ordini.maritastalu@gmail.com";
+// Email pubblica dedicata all'assistenza per un ordine già effettuato
+// (diversa da quella per domande generali/Horeca/newsletter qui sopra).
+export const CUSTOMER_SUPPORT_EMAIL = "assistenzaclienti.maritastalu@gmail.com";
 
 export const FREE_SHIPPING_THRESHOLD = 75;
 export const SHIPPING_COST = 4.99;
@@ -429,7 +433,7 @@ export const contactInfo = {
   addressLine2: "Campobello di Licata (AG), Sicilia",
   address: "Via Edison 189, Campobello di Licata (AG), Sicilia",
   phone: "+39 000 000 0000", // TODO: sostituire con il numero reale
-  email: "assistenzaclienti.maritastalu@gmail.com",
+  email: "info.maritastalu@gmail.com",
   instagram: "https://instagram.com/mari.sicilia", // TODO: verificare handle reale
   facebook: "https://facebook.com/mari.sicilia", // TODO: verificare handle reale
   mapsQuery: "Via Edison 189, Campobello di Licata AG",
