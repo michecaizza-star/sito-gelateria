@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { CreditCard, Lock, MessageCircle, X } from "lucide-react";
 import { useCart, isShippingComplete } from "@/lib/cart-context";
 import { waLink, GIFT_PROFILE_EMAIL, ORDER_NOTIFICATION_EMAIL } from "@/lib/site-content";
-import { PAYPAL_CLIENT_ID, NEXI_PAYMENT_LINK_URL } from "@/lib/payments-config";
+import { PAYPAL_CLIENT_ID, NEXI_PAYMENT_LINK_URL, ORDER_LOG_WEBHOOK_URL } from "@/lib/payments-config";
 import { loadComuni, extractProvince, type Comune } from "@/lib/comuni";
 import { Combobox, type ComboboxOption } from "@/components/site/combobox";
 
@@ -150,12 +150,59 @@ export function CheckoutModal({
     });
   }, [giftData]);
 
+  // Registro ordini su Google Sheet (vedi ORDER_LOG_WEBHOOK_URL): restituisce
+  // il numero d'ordine assegnato dal foglio (progressivo, una riga = un
+  // ordine), così lo stesso numero può comparire anche nell'email di
+  // notifica. Se il webhook non è ancora configurato, non fa nulla.
+  const logOrder = useCallback(
+    async (paymentMethod: string, status: string): Promise<string | null> => {
+      if (!ORDER_LOG_WEBHOOK_URL) return null;
+      const fmt = (n: number) => n.toLocaleString("it-IT", { style: "currency", currency: "EUR" });
+      const products = items
+        .map(
+          (i) =>
+            `${i.name}${i.flavor ? " – " + i.flavor : ""}${i.size ? " (" + i.size + ")" : ""} x${i.quantity}`
+        )
+        .join("; ");
+      try {
+        const res = await fetch(ORDER_LOG_WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({
+            paymentMethod,
+            status,
+            products,
+            subtotal: subtotal != null ? fmt(subtotal) : "n/d",
+            discount: discountCode ? `${discountCode}: -${fmt(discountAmount)}` : "—",
+            shipping: shippingCost === 0 ? "gratuita" : shippingCost != null ? fmt(shippingCost) : "n/d",
+            total: totalPrice != null ? fmt(totalPrice) : "n/d",
+            customer: `${shipping.nome} ${shipping.cognome}`.trim() || "n/d",
+            phone: shipping.telefono || "n/d",
+            address: isShippingComplete(shipping)
+              ? `${shipping.indirizzo}, ${shipping.cap} ${shipping.citta} (${shipping.provincia})`
+              : "n/d",
+            deliveryInfo: shipping.infoConsegna || "—",
+            note: note || "—",
+          }),
+        });
+        const data = await res.json();
+        return typeof data.orderNumber === "string" || typeof data.orderNumber === "number"
+          ? String(data.orderNumber)
+          : null;
+      } catch {
+        // registro best-effort, non blocca il completamento dell'ordine
+        return null;
+      }
+    },
+    [items, subtotal, discountCode, discountAmount, shippingCost, totalPrice, shipping, note]
+  );
+
   // A differenza di un ordine su WhatsApp — che il cliente stesso invia
   // dal proprio telefono, quindi ti arriva già così — un pagamento
   // completato con PayPal (o Nexi, quando attivo) non avvisa altrimenti
   // nessuno: il riepilogo va spedito via email.
   const sendOrderNotification = useCallback(
-    (paymentMethod: string) => {
+    (paymentMethod: string, orderNumber: string | null) => {
       const fmt = (n: number) => n.toLocaleString("it-IT", { style: "currency", currency: "EUR" });
       const products = items
         .map(
@@ -163,6 +210,7 @@ export function CheckoutModal({
             `${i.name}${i.flavor ? " – " + i.flavor : ""}${i.size ? " (" + i.size + ")" : ""} x${i.quantity}`
         )
         .join("\n");
+      const orderLabel = orderNumber ? `#${orderNumber}` : "";
       fetch(`https://formsubmit.co/ajax/${ORDER_NOTIFICATION_EMAIL}`, {
         method: "POST",
         headers: {
@@ -170,7 +218,8 @@ export function CheckoutModal({
           Accept: "application/json",
         },
         body: JSON.stringify({
-          _subject: `Nuovo ordine MARÌ — ${paymentMethod}`,
+          _subject: `Nuovo ordine MARÌ ${orderLabel} — ${paymentMethod}`.trim(),
+          ...(orderNumber ? { "Numero ordine": orderNumber } : {}),
           "Metodo di pagamento": paymentMethod,
           Prodotti: products,
           Subtotale: subtotal != null ? fmt(subtotal) : "n/d",
@@ -213,7 +262,8 @@ export function CheckoutModal({
             actions: { order: { capture: () => Promise<unknown> } }
           ) => {
             await actions.order.capture();
-            sendOrderNotification("PayPal");
+            const orderNumber = await logOrder("PayPal", "Pagato");
+            sendOrderNotification("PayPal", orderNumber);
             sendGiftProfileIfAny();
             clear();
             setMethod("done");
@@ -244,7 +294,7 @@ export function CheckoutModal({
     return () => {
       cancelled = true;
     };
-  }, [method, totalPrice, clear, sendGiftProfileIfAny, sendOrderNotification]);
+  }, [method, totalPrice, clear, sendGiftProfileIfAny, sendOrderNotification, logOrder]);
 
   function handleCardCheckout() {
     setCardError(null);
@@ -277,6 +327,10 @@ export function CheckoutModal({
     const noteBlock = note.trim() ? `\n\nNote: ${note.trim()}` : "";
     const msg = `Ciao MARÌ! Vorrei ordinare:\n${lines.join("\n")}${summaryBlock}${shippingBlock}${noteBlock}\n\nTastalu 🍋`;
     window.open(waLink(msg), "_blank", "noopener,noreferrer");
+    // Il popup WhatsApp deve aprirsi sincronamente sul click (altrimenti
+    // il browser lo blocca): il salvataggio nel registro ordini parte
+    // dopo, senza attenderlo, e non ritarda né blocca nulla per il cliente.
+    logOrder("WhatsApp", "Da confermare");
     sendGiftProfileIfAny();
     clear();
     setMethod("done");
