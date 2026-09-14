@@ -62,31 +62,33 @@ export function Contact() {
 
                 <div className="flex gap-4">
                   <Mail className="mt-0.5 h-5 w-5 shrink-0 text-oro" />
-                  <div className="space-y-3">
-                    <div>
-                      <p className="text-sm font-medium">Email — info e richieste</p>
-                      <a
-                        href={`mailto:${contactInfo.email}`}
-                        className="mt-1 block text-sm text-avorio/75 hover:text-avorio"
-                      >
-                        {contactInfo.email}
-                      </a>
-                      <p className="mt-0.5 text-xs text-avorio/50">
-                        Domande generali, collaborazioni Horeca, newsletter.
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium">Email — assistenza clienti</p>
-                      <a
-                        href={`mailto:${CUSTOMER_SUPPORT_EMAIL}`}
-                        className="mt-1 block text-sm text-avorio/75 hover:text-avorio"
-                      >
-                        {CUSTOMER_SUPPORT_EMAIL}
-                      </a>
-                      <p className="mt-0.5 text-xs text-avorio/50">
-                        Per chi ha già effettuato un ordine.
-                      </p>
-                    </div>
+                  <div>
+                    <p className="text-sm font-medium">Email — info e richieste</p>
+                    <a
+                      href={`mailto:${contactInfo.email}`}
+                      className="mt-1 block text-sm text-avorio/75 hover:text-avorio"
+                    >
+                      {contactInfo.email}
+                    </a>
+                    <p className="mt-0.5 text-xs text-avorio/50">
+                      Domande generali, collaborazioni Horeca, newsletter.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <Mail className="mt-0.5 h-5 w-5 shrink-0 text-oro" />
+                  <div>
+                    <p className="text-sm font-medium">Email — assistenza clienti</p>
+                    <a
+                      href={`mailto:${CUSTOMER_SUPPORT_EMAIL}`}
+                      className="mt-1 block text-sm text-avorio/75 hover:text-avorio"
+                    >
+                      {CUSTOMER_SUPPORT_EMAIL}
+                    </a>
+                    <p className="mt-0.5 text-xs text-avorio/50">
+                      Per chi ha già effettuato un ordine.
+                    </p>
                   </div>
                 </div>
 
