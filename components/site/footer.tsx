@@ -66,6 +66,10 @@ export function Footer() {
           </p>
           <p className="mt-2">© {new Date().getFullYear()} MARÌ — Tutti i diritti riservati</p>
           <p className="mt-1 text-avorio/40">
+            {contactInfo.companyName} — P.IVA {contactInfo.vatNumber} — Sede
+            legale: {contactInfo.legalAddress}
+          </p>
+          <p className="mt-1 text-avorio/40">
             Immagini dei prodotti generate con intelligenza artificiale, a scopo illustrativo.
           </p>
         </div>

@@ -2,15 +2,15 @@ import Link from "next/link";
 import { contactInfo, FREE_SHIPPING_THRESHOLD, SHIPPING_COST } from "@/lib/site-content";
 
 // TODO: testo predisposto come base standard per un e-commerce alimentare
-// italiano B2C; far verificare/validare da un legale con i dati reali
-// dell'attività (ragione sociale, P.IVA, REA, eventuale iscrizione
-// registro imprese) prima della pubblicazione definitiva.
+// italiano B2C; far verificare/validare da un legale prima della
+// pubblicazione definitiva. Mancano ancora email e telefono aziendali
+// reali (vedi TODO su contactInfo in lib/site-content.ts).
 export default function TerminiVenditaPage() {
   return (
     <main className="mx-auto max-w-3xl px-6 py-28 md:px-10">
       <p className="text-xs font-medium uppercase tracking-[0.3em] text-oro">MARÌ</p>
       <h1 className="mt-3 font-display text-4xl text-notte">Termini e Condizioni di Vendita</h1>
-      <p className="mt-2 text-sm text-testo/50">Ultimo aggiornamento: 31 agosto 2026</p>
+      <p className="mt-2 text-sm text-testo/50">Ultimo aggiornamento: 14 settembre 2026</p>
 
       <div className="mt-10 space-y-8 text-base leading-relaxed text-testo/80">
         <section>
@@ -28,9 +28,9 @@ export default function TerminiVenditaPage() {
         <section>
           <h2 className="font-display text-xl text-notte">2. Il Venditore</h2>
           <p className="mt-2">
-            {contactInfo.companyName}, con sede in {contactInfo.address} —
-            P.IVA {contactInfo.vatNumber}. Contatti: {contactInfo.email},{" "}
-            {contactInfo.phone}.
+            {contactInfo.companyName}, con sede legale in{" "}
+            {contactInfo.legalAddress} — P.IVA {contactInfo.vatNumber}.
+            Contatti: {contactInfo.email}, {contactInfo.phone}.
           </p>
         </section>
 
