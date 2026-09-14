@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MessageCircle } from "lucide-react";
+import { Mail, MessageCircle } from "lucide-react";
 import { Container } from "@/components/site/container";
 import { Logo } from "@/components/site/logo";
 import { FacebookIcon, InstagramIcon } from "@/components/site/social-icons";
@@ -17,6 +17,14 @@ export function Footer() {
           <p>{contactInfo.addressLine1}</p>
           <p>{contactInfo.addressLine2}</p>
         </div>
+
+        <a
+          href={`mailto:${contactInfo.email}`}
+          className="inline-flex items-center gap-1.5 text-sm text-avorio/70 hover:text-avorio"
+        >
+          <Mail className="h-3.5 w-3.5" />
+          {contactInfo.email}
+        </a>
 
         <nav className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm">
           <a href={waLink()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 hover:text-avorio">
