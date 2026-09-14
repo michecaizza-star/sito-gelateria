@@ -3,25 +3,25 @@ import { contactInfo } from "@/lib/site-content";
 
 // TODO: testo predisposto come base standard di informativa privacy per un
 // e-commerce alimentare italiano B2C ai sensi del Regolamento (UE) 2016/679
-// (GDPR); far verificare/validare da un legale con i dati reali
-// dell'attività (ragione sociale, P.IVA, indirizzo) prima della
-// pubblicazione definitiva. Il sito è statico (GitHub Pages, nessun server
-// né database proprio): i dati raccolti nei moduli transitano solo verso i
-// fornitori terzi elencati alla sezione 4.
+// (GDPR); far verificare/validare da un legale prima della pubblicazione
+// definitiva. Mancano ancora email e telefono aziendali reali (vedi TODO su
+// contactInfo in lib/site-content.ts). Il sito è statico (GitHub Pages,
+// nessun server né database proprio): i dati raccolti nei moduli
+// transitano solo verso i fornitori terzi elencati alla sezione 4.
 export default function PrivacyPage() {
   return (
     <main className="mx-auto max-w-3xl px-6 py-28 md:px-10">
       <p className="text-xs font-medium uppercase tracking-[0.3em] text-oro">MARÌ</p>
       <h1 className="mt-3 font-display text-4xl text-notte">Privacy Policy</h1>
-      <p className="mt-2 text-sm text-testo/50">Ultimo aggiornamento: 3 settembre 2026</p>
+      <p className="mt-2 text-sm text-testo/50">Ultimo aggiornamento: 14 settembre 2026</p>
 
       <div className="mt-10 space-y-8 text-base leading-relaxed text-testo/80">
         <section>
           <h2 className="font-display text-xl text-notte">1. Titolare del trattamento</h2>
           <p className="mt-2">
             Il Titolare del trattamento dei dati personali raccolti tramite
-            questo sito è {contactInfo.companyName}, con sede in{" "}
-            {contactInfo.address} — P.IVA {contactInfo.vatNumber}. Per
+            questo sito è {contactInfo.companyName}, con sede legale in{" "}
+            {contactInfo.legalAddress} — P.IVA {contactInfo.vatNumber}. Per
             qualsiasi richiesta relativa ai tuoi dati personali puoi
             scrivere a{" "}
             <a
