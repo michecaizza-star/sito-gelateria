@@ -4,7 +4,7 @@ import { Container } from "@/components/site/container";
 import { SectionHeading } from "@/components/site/section-heading";
 import { Reveal } from "@/components/site/reveal";
 import { FacebookIcon, InstagramIcon } from "@/components/site/social-icons";
-import { contactInfo, openingHours, waLink, ORDER_NOTIFICATION_EMAIL } from "@/lib/site-content";
+import { contactInfo, openingHours, waLink } from "@/lib/site-content";
 
 export function Contact() {
   const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
@@ -62,31 +62,17 @@ export function Contact() {
 
                 <div className="flex gap-4">
                   <Mail className="mt-0.5 h-5 w-5 shrink-0 text-oro" />
-                  <div className="space-y-3">
-                    <div>
-                      <p className="text-sm font-medium">Email — info e richieste</p>
-                      <a
-                        href={`mailto:${contactInfo.email}`}
-                        className="mt-1 block text-sm text-avorio/75 hover:text-avorio"
-                      >
-                        {contactInfo.email}
-                      </a>
-                      <p className="mt-0.5 text-xs text-avorio/50">
-                        Domande generali, collaborazioni Horeca, newsletter.
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium">Email — ordini</p>
-                      <a
-                        href={`mailto:${ORDER_NOTIFICATION_EMAIL}`}
-                        className="mt-1 block text-sm text-avorio/75 hover:text-avorio"
-                      >
-                        {ORDER_NOTIFICATION_EMAIL}
-                      </a>
-                      <p className="mt-0.5 text-xs text-avorio/50">
-                        Solo per assistenza su un ordine già effettuato.
-                      </p>
-                    </div>
+                  <div>
+                    <p className="text-sm font-medium">Email — assistenza clienti</p>
+                    <a
+                      href={`mailto:${contactInfo.email}`}
+                      className="mt-1 block text-sm text-avorio/75 hover:text-avorio"
+                    >
+                      {contactInfo.email}
+                    </a>
+                    <p className="mt-0.5 text-xs text-avorio/50">
+                      Domande sui prodotti, ordini, collaborazioni Horeca.
+                    </p>
                   </div>
                 </div>
 
