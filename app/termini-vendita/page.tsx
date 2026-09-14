@@ -3,8 +3,8 @@ import { contactInfo, FREE_SHIPPING_THRESHOLD, SHIPPING_COST } from "@/lib/site-
 
 // TODO: testo predisposto come base standard per un e-commerce alimentare
 // italiano B2C; far verificare/validare da un legale prima della
-// pubblicazione definitiva. Mancano ancora email e telefono aziendali
-// reali (vedi TODO su contactInfo in lib/site-content.ts).
+// pubblicazione definitiva. Manca ancora il telefono aziendale reale
+// (vedi TODO su contactInfo in lib/site-content.ts).
 export default function TerminiVenditaPage() {
   return (
     <main className="mx-auto max-w-3xl px-6 py-28 md:px-10">

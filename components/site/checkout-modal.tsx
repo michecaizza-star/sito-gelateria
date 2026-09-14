@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } fro
 import { AnimatePresence, motion } from "framer-motion";
 import { CreditCard, Lock, MessageCircle, X } from "lucide-react";
 import { useCart, isShippingComplete } from "@/lib/cart-context";
-import { waLink, GIFT_PROFILE_EMAIL } from "@/lib/site-content";
+import { waLink, GIFT_PROFILE_EMAIL, ORDER_NOTIFICATION_EMAIL } from "@/lib/site-content";
 import { PAYPAL_CLIENT_ID, NEXI_PAYMENT_LINK_URL } from "@/lib/payments-config";
 import { loadComuni, extractProvince, type Comune } from "@/lib/comuni";
 import { Combobox, type ComboboxOption } from "@/components/site/combobox";
@@ -150,6 +150,48 @@ export function CheckoutModal({
     });
   }, [giftData]);
 
+  // A differenza di un ordine su WhatsApp — che il cliente stesso invia
+  // dal proprio telefono, quindi ti arriva già così — un pagamento
+  // completato con PayPal (o Nexi, quando attivo) non avvisa altrimenti
+  // nessuno: il riepilogo va spedito via email.
+  const sendOrderNotification = useCallback(
+    (paymentMethod: string) => {
+      const fmt = (n: number) => n.toLocaleString("it-IT", { style: "currency", currency: "EUR" });
+      const products = items
+        .map(
+          (i) =>
+            `${i.name}${i.flavor ? " – " + i.flavor : ""}${i.size ? " (" + i.size + ")" : ""} x${i.quantity}`
+        )
+        .join("\n");
+      fetch(`https://formsubmit.co/ajax/${ORDER_NOTIFICATION_EMAIL}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          _subject: `Nuovo ordine MARÌ — ${paymentMethod}`,
+          "Metodo di pagamento": paymentMethod,
+          Prodotti: products,
+          Subtotale: subtotal != null ? fmt(subtotal) : "n/d",
+          ...(discountCode ? { [`Codice ${discountCode}`]: `-${fmt(discountAmount)}` } : {}),
+          Spedizione: shippingCost === 0 ? "gratuita" : shippingCost != null ? fmt(shippingCost) : "n/d",
+          Totale: totalPrice != null ? fmt(totalPrice) : "n/d",
+          Cliente: `${shipping.nome} ${shipping.cognome}`.trim() || "n/d",
+          Telefono: shipping.telefono || "n/d",
+          Indirizzo: isShippingComplete(shipping)
+            ? `${shipping.indirizzo}, ${shipping.cap} ${shipping.citta} (${shipping.provincia})`
+            : "n/d",
+          "Info consegna": shipping.infoConsegna || "—",
+          Note: note || "—",
+        }),
+      }).catch(() => {
+        // invio best-effort, non blocca il completamento dell'ordine
+      });
+    },
+    [items, subtotal, discountCode, discountAmount, shippingCost, totalPrice, shipping, note]
+  );
+
   useEffect(() => {
     if (method !== "paypal" || !paypalRef.current || totalPrice == null) return;
     let cancelled = false;
@@ -171,6 +213,7 @@ export function CheckoutModal({
             actions: { order: { capture: () => Promise<unknown> } }
           ) => {
             await actions.order.capture();
+            sendOrderNotification("PayPal");
             sendGiftProfileIfAny();
             clear();
             setMethod("done");
@@ -201,7 +244,7 @@ export function CheckoutModal({
     return () => {
       cancelled = true;
     };
-  }, [method, totalPrice, clear, sendGiftProfileIfAny]);
+  }, [method, totalPrice, clear, sendGiftProfileIfAny, sendOrderNotification]);
 
   function handleCardCheckout() {
     setCardError(null);
