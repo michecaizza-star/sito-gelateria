@@ -34,3 +34,23 @@ export const PAYPAL_CLIENT_ID = "sb";
  * chiaro e invita a completare l'ordine su WhatsApp nel frattempo.
  */
 export const NEXI_PAYMENT_LINK_URL = "";
+
+/**
+ * Registro ordini — Google Sheet.
+ *
+ * Il sito non ha un database proprio, quindi il "registro ordini" è un
+ * Google Apps Script pubblicato come Web App: ogni ordine (WhatsApp o
+ * PayPal) gli manda una riga da scrivere su un Google Sheet, e lo
+ * script risponde con il numero d'ordine assegnato (progressivo, in
+ * base alla riga). Quel numero viene poi usato anche nell'email di
+ * notifica dell'ordine (per i pagamenti PayPal), così il numero sul
+ * foglio e quello arrivato via email coincidono sempre.
+ *
+ * Per attivarlo: vedi le istruzioni passo passo in
+ * scripts/google-apps-script-order-log.gs (crea il Google Sheet,
+ * incolla lo script in Estensioni → Apps Script, distribuiscilo come
+ * Web App e incolla qui l'URL ottenuto).
+ * Finché resta vuoto, gli ordini funzionano lo stesso ma non vengono
+ * salvati da nessuna parte oltre a WhatsApp/email.
+ */
+export const ORDER_LOG_WEBHOOK_URL = "";
