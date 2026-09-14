@@ -4,7 +4,7 @@ import { contactInfo } from "@/lib/site-content";
 // TODO: testo predisposto come base standard di informativa privacy per un
 // e-commerce alimentare italiano B2C ai sensi del Regolamento (UE) 2016/679
 // (GDPR); far verificare/validare da un legale prima della pubblicazione
-// definitiva. Mancano ancora email e telefono aziendali reali (vedi TODO su
+// definitiva. Manca ancora il telefono aziendale reale (vedi TODO su
 // contactInfo in lib/site-content.ts). Il sito è statico (GitHub Pages,
 // nessun server né database proprio): i dati raccolti nei moduli
 // transitano solo verso i fornitori terzi elencati alla sezione 4.

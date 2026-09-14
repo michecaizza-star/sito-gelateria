@@ -5,11 +5,16 @@ export function waLink(message: string = WHATSAPP_MESSAGE) {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 }
 
-export const HORECA_EMAIL = "michecaizza@gmail.com";
-export const NEWSLETTER_EMAIL = "michecaizza@gmail.com";
+export const HORECA_EMAIL = "info.maritastalu@gmail.com";
+export const NEWSLETTER_EMAIL = "info.maritastalu@gmail.com";
 export const NEWSLETTER_DISCOUNT_CODE = "TASTALU10";
 export const NEWSLETTER_DISCOUNT_RATE = 0.1;
-export const GIFT_PROFILE_EMAIL = "michecaizza@gmail.com";
+export const GIFT_PROFILE_EMAIL = "ordini.maritastalu@gmail.com";
+// Notifica d'ordine per i pagamenti che non passano da WhatsApp (PayPal,
+// e in futuro Nexi): a differenza dell'ordine su WhatsApp — che il
+// cliente stesso invia dal proprio telefono — questi pagamenti non
+// avvisano altrimenti nessuno, quindi il riepilogo va spedito qui.
+export const ORDER_NOTIFICATION_EMAIL = "ordini.maritastalu@gmail.com";
 
 export const FREE_SHIPPING_THRESHOLD = 75;
 export const SHIPPING_COST = 4.99;
@@ -424,7 +429,7 @@ export const contactInfo = {
   addressLine2: "Campobello di Licata (AG), Sicilia",
   address: "Via Edison 189, Campobello di Licata (AG), Sicilia",
   phone: "+39 000 000 0000", // TODO: sostituire con il numero reale
-  email: "ciao@mari-sicilia.it", // TODO: sostituire con l'indirizzo email reale
+  email: "info.maritastalu@gmail.com",
   instagram: "https://instagram.com/mari.sicilia", // TODO: verificare handle reale
   facebook: "https://facebook.com/mari.sicilia", // TODO: verificare handle reale
   mapsQuery: "Via Edison 189, Campobello di Licata AG",
