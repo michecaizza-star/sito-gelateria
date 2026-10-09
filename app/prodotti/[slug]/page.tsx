@@ -73,7 +73,7 @@ export default async function ProductPage({
         </section>
 
         <Container className="pt-14 md:pt-20">
-          <div className="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-12">
+          <div className="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:items-start lg:gap-12">
             <div className="space-y-16 lg:col-span-7">
               <Reveal>
                 <p className="mb-4 text-xs font-medium uppercase tracking-[0.25em] text-oro">
@@ -149,58 +149,60 @@ export default async function ProductPage({
             </div>
 
             <div className="lg:col-span-5">
-              <Reveal delay={0.1} className="lg:sticky lg:top-28">
-                <div className="rounded-[2rem] bg-sabbia/30 p-8">
-                  <h2 className="font-display text-2xl italic text-notte">{product.name}</h2>
-                  <p className="mt-2 text-sm leading-relaxed text-testo/70">
-                    {product.description}
-                  </p>
-
-                  <AddToCart product={product} />
-
-                  <div className="mt-8 border-t border-notte/10 pt-6">
-                    <p className="mb-3 text-sm text-testo/70">
-                      Hai altre domande su questo prodotto?
+              <div className="lg:sticky lg:top-28">
+                <Reveal delay={0.1}>
+                  <div className="rounded-[2rem] bg-sabbia/30 p-8">
+                    <h2 className="font-display text-2xl italic text-notte">{product.name}</h2>
+                    <p className="mt-2 text-sm leading-relaxed text-testo/70">
+                      {product.description}
                     </p>
-                    <AskInfoLink productName={product.name} className="text-base" />
+
+                    <AddToCart product={product} />
+
+                    <div className="mt-8 border-t border-notte/10 pt-6">
+                      <p className="mb-3 text-sm text-testo/70">
+                        Hai altre domande su questo prodotto?
+                      </p>
+                      <AskInfoLink productName={product.name} className="text-base" />
+                    </div>
                   </div>
-                </div>
-              </Reveal>
+                </Reveal>
 
-              <Reveal delay={0.2} className="mt-8">
-                <div className="rounded-[2rem] border border-oro/30 bg-avorio p-8">
-                  <p className="mb-4 text-xs font-medium uppercase tracking-[0.25em] text-oro">
-                    Valori nutrizionali
-                  </p>
-                  <p className="mb-4 text-sm text-testo/50">
-                    Valori medi per 100 g di prodotto — indicativi, in attesa dei dati reali di analisi.
-                  </p>
-                  <dl className="divide-y divide-notte/10 text-sm">
-                    {[
-                      ["Energia", `${product.nutrition.energyKcal} kcal / ${product.nutrition.energyKj} kJ`],
-                      ["Grassi", `${product.nutrition.fat} g`],
-                      ["di cui acidi grassi saturi", `${product.nutrition.saturatedFat} g`],
-                      ["Carboidrati", `${product.nutrition.carbs} g`],
-                      ["di cui zuccheri", `${product.nutrition.sugars} g`],
-                      ["Fibre", `${product.nutrition.fiber} g`],
-                      ["Proteine", `${product.nutrition.protein} g`],
-                      ["Sale", `${product.nutrition.salt} g`],
-                    ].map(([label, value]) => (
-                      <div key={label} className="flex items-center justify-between py-2.5">
-                        <dt className="text-testo/70">{label}</dt>
-                        <dd className="font-medium text-notte">{value}</dd>
-                      </div>
-                    ))}
-                  </dl>
-
-                  <div className="mt-8 border-t border-notte/10 pt-6">
-                    <p className="mb-3 text-xs font-medium uppercase tracking-[0.25em] text-oro">
-                      Conservazione
+                <Reveal delay={0.2} className="mt-8">
+                  <div className="rounded-[2rem] border border-oro/30 bg-avorio p-8">
+                    <p className="mb-4 text-xs font-medium uppercase tracking-[0.25em] text-oro">
+                      Valori nutrizionali
                     </p>
-                    <p className="text-base leading-relaxed text-testo/80">{product.conservation}</p>
+                    <p className="mb-4 text-sm text-testo/50">
+                      Valori medi per 100 g di prodotto — indicativi, in attesa dei dati reali di analisi.
+                    </p>
+                    <dl className="divide-y divide-notte/10 text-sm">
+                      {[
+                        ["Energia", `${product.nutrition.energyKcal} kcal / ${product.nutrition.energyKj} kJ`],
+                        ["Grassi", `${product.nutrition.fat} g`],
+                        ["di cui acidi grassi saturi", `${product.nutrition.saturatedFat} g`],
+                        ["Carboidrati", `${product.nutrition.carbs} g`],
+                        ["di cui zuccheri", `${product.nutrition.sugars} g`],
+                        ["Fibre", `${product.nutrition.fiber} g`],
+                        ["Proteine", `${product.nutrition.protein} g`],
+                        ["Sale", `${product.nutrition.salt} g`],
+                      ].map(([label, value]) => (
+                        <div key={label} className="flex items-center justify-between py-2.5">
+                          <dt className="text-testo/70">{label}</dt>
+                          <dd className="font-medium text-notte">{value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+
+                    <div className="mt-8 border-t border-notte/10 pt-6">
+                      <p className="mb-3 text-xs font-medium uppercase tracking-[0.25em] text-oro">
+                        Conservazione
+                      </p>
+                      <p className="text-base leading-relaxed text-testo/80">{product.conservation}</p>
+                    </div>
                   </div>
-                </div>
-              </Reveal>
+                </Reveal>
+              </div>
             </div>
           </div>
         </Container>
